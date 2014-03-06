@@ -1,8 +1,8 @@
 # Help Stack
+HelpStack provides you with a simple way of adding a great in-App support for your iOS App users. You can integrate any of your favorite HelpDesk solution at ease. It currently comes with three plugged in Help desk solutions - *Desk.com*, *Zendesk* and *HappyFox* along with customizable and simple UI to interact with the user. 
+### How to use Help Stack
 
-## How to use Help Stack
-
-HelpStack provides you with a simple way of providing great in-App support to your iOS App users. It currently comes with three plugged in Help desk solutions - Desk.com, Zendesk and HappyFox along with customizable and simple UI to interact with the user. Integrating HelpStack into your app is an easy three-step process:
+Integrating HelpStack into your app is an easy three-step process:
 
 1.	Install HelpStack and its dependencies 
 2.	Configure your desired Help desk solution
@@ -14,7 +14,7 @@ Use Cocoa Pods to install HelpStack and its dependencies. HelpStack dependencies
 
 	Pod “HelpStack”
 
-HelpStack requires Xcode 5.0 targeting iOS 6 and above.
+HelpStack requires Xcode 5.0 targeting iOS 7 and above.
 
 
 ### Configuring Help Stack gears
@@ -34,7 +34,7 @@ To integrate your existing HappyFox account into HelpStack, you just have to inc
 
 	Configuring HappyFox in HelpStack primarily requires the base URL, API Key and Auth code for authenticating the registered HappyFox user. 
 
-	You will find the API key and Auth code in the ‘Integrations’ page of your HappyFox account under ‘Manage’. You can generate an API key and Auth code by clicking on the API configure link.
+	You will find the API key and Auth code in the ‘*Integrations*’ page of your HappyFox account under ‘*Manage*’. You can generate an API key and Auth code by clicking on the API configure link.
 
 * Getting the Priority ID and Category ID
 
@@ -53,7 +53,7 @@ To integrate your existing HappyFox account into HelpStack, you just have to inc
 		https://example.happyfox.com/api/1.1/json/priorities/ 
 		https://example.happyfox.com/api/1.1/json/categories/
 
-* Getting the section ID
+* Getting the section ID (Optional)
 
 	Section ID is to filter and show the Knowledge Based articles. If section ID is not provided, then all the KB articles in all the sections are fetched and showed. If you want HelpStack to fetch KB articles of a specific section, provide the appropriate section ID. The following URL command gives all the sections with their IDs.	
 
