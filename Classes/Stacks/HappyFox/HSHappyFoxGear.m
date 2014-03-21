@@ -17,16 +17,21 @@
 @property (nonatomic, strong) NSString *auth_code;
 @property (nonatomic, strong) NSString *instanceUrl;
 @property (nonatomic, strong) NSDictionary *articleSections;
+@property (nonatomic, strong) NSString *hfPriorityID;
+@property (nonatomic, strong) NSString *hfCategoryID;
 
 @end
 
 @implementation HSHappyFoxGear
 
-- (id)initWithInstanceUrl:(NSString*) instanceUrl apiKey:(NSString *)api_key authoCode:(NSString *)auth_code{
+- (id)initWithInstanceUrl:(NSString*) instanceUrl apiKey:(NSString *)api_key authoCode:(NSString *)auth_code priorityID: (NSString *)priority_ID categoryID: (NSString *) category_ID;
+{
     if ( (self = [super init]) ) {
         self.api_key = api_key;
         self.auth_code = auth_code;
         self.instanceUrl = instanceUrl;
+        self.hfCategoryID = category_ID;
+        self.hfPriorityID = priority_ID;
         self.networkManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:instanceUrl]];
         [self.networkManager setRequestSerializer:[AFJSONRequestSerializer serializer]];
         [self.networkManager setResponseSerializer:[AFJSONResponseSerializer serializer]];
@@ -41,14 +46,14 @@
     
     if (section == nil){
         NSString *url = @"api/1.1/json/kb/sections/";
-        if(self.sectionID){
+        if(self.hfSectionID){
             url = @"api/1.1/json/kb/section/";
-            url = [url stringByAppendingString:self.sectionID];
+            url = [url stringByAppendingString:self.hfSectionID];
             url = [url stringByAppendingString:@"/"];
         }
         [self.networkManager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             self.articleSections = responseObject;
-            if(self.sectionID){
+            if(self.hfSectionID){
                 NSMutableArray *articles = [self getArticlesFromSection:responseObject];
                 success(articles);
             }else{

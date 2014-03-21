@@ -11,7 +11,6 @@
 
 @interface HAGearEmail : HSGear
 
-
 - (id)initWithSupportEmailAddress:(NSString*)emailAddress articlePath:(NSString *)articlePath;
 
 @end

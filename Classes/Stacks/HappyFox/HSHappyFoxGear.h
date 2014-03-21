@@ -27,25 +27,11 @@
 ///----------------------------------------------------------
 
 /**
- The priority ID denotes the priority with which the tickets get created
- 
- @warning `hfPriorityID` must not be `nil`.
- */
-@property (nonatomic, strong) NSString *hfPriorityID;
-
-/**
- The category ID denotes the category in which the tickets get created
- 
- @warning `hfCategoryID` must not be `nil`.
- */
-@property (nonatomic, strong) NSString *hfCategoryID;
-
-/**
  The section ID which contains the relevant KB Articles to be fetched. By default this property is nil and if section ID is not
  
  provided, the KB Articles of all sections will be fetched.
  */
-@property (nonatomic, strong) NSString *sectionID;
+@property (nonatomic, strong) NSString *hfSectionID;
 
 ///-------------------------------------------
 /// @name Creating and Initializing HSHappyFox
@@ -60,7 +46,7 @@
  @param api_key The API key as username required for authentication
  @param auth_code The Authentication code as password for authentication
  */
-- (id)initWithInstanceUrl:(NSString *) instanceUrl apiKey:(NSString *)api_key authoCode:(NSString *)auth_code;
+- (id)initWithInstanceUrl:(NSString *) instanceUrl apiKey:(NSString *)api_key authoCode:(NSString *)auth_code priorityID: (NSString *)priority_ID categoryID: (NSString *) category_ID;
 
 
 @end

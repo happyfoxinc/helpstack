@@ -93,6 +93,7 @@
 }
 
 - (void)setCustomThemeProperties:(NSDictionary *)customThemeProperties {
+    
     if (customThemeProperties) {
         _customThemeProperties = customThemeProperties;
         [self refreshAppearanceProperties]; //if theme exist, those colors or fonts get set.
@@ -100,6 +101,7 @@
 }
 
 - (void)refreshAppearanceProperties {
+    
     [self getNavigationBarProperties];
     [self getTableViewCellProperties];
     [self getTableHeaderProperties];
@@ -116,8 +118,8 @@
     self.navBarImageName = nil;
     
     NSDictionary *navBarDict = [self.customThemeProperties objectForKey:@"NavigationBar"];
-    //NavigationBar background Color
     
+    //NavigationBar background Color
     NSString *colorString = [navBarDict objectForKey:@"BackgroundColor"];
     if(colorString != nil){
         UIColor *bgColor = [UIColor colorFromRGBString:colorString];
@@ -155,6 +157,7 @@
 }
 
 - (void)getTableViewCellProperties {
+    
     self.cellBgColor = DEFAULT_CELL_BACKGROUNDCOLOR;
 
     //Background Color
@@ -169,6 +172,7 @@
 }
 
 - (void)getTableHeaderProperties {
+    
     self.headerBgColor = DEFAULT_HEADER_BACKGROUNDCOLOR;
     self.headerTitleColor = DEFAULT_HEADER_TITLECOLOR;
     self.headerTitleFont = DEFAULT_HEADER_TITLEFONT;
@@ -204,6 +208,7 @@
 }
 
 - (void)getLabelProperties {
+    
     self.labelBgColor = DEFAULT_LABEL_BACKGROUNDCOLOR;
     self.labelColor = DEFAULT_LABEL_COLOR;
     self.labelFont = DEFAULT_LABEL_FONT;
@@ -241,6 +246,7 @@
 
 /* Background Color - this goes as the background color for all the HelpStack screens */
 - (UIColor *)getBackgroundColor {
+    
     UIColor *bgColor = DEFAULT_BACKGROUNDCOLOR;
 
     NSString *bgImageFileName = [self.customThemeProperties objectForKey:@"BackgroundImageName"];
@@ -282,22 +288,12 @@
         }
     }
 
+    NSMutableDictionary *textAttributes = [[NSMutableDictionary alloc] init];
+    [textAttributes setObject:self.navBarTitleColor forKey:NSForegroundColorAttributeName];
+    [textAttributes setObject:self.navBarTitleFont forKey:NSFontAttributeName];
+    [navigationBar setTitleTextAttributes:textAttributes];
+    [navigationBar setBarStyle:UIBarStyleDefault];
     
-    if ([HSAppearance isIOS6]) {
-        NSMutableDictionary *textAttributes = [[NSMutableDictionary alloc] init];
-        [textAttributes setObject:self.navBarTitleColor forKey:UITextAttributeTextColor];
-        [textAttributes setObject:self.navBarTitleFont forKey:UITextAttributeFont];
-        [textAttributes setObject:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0] forKey:UITextAttributeTextShadowColor];
-        [navigationBar setTitleTextAttributes:textAttributes];
-        [navigationBar setBarStyle:UIBarStyleDefault];
-    }
-    else {
-        NSMutableDictionary *textAttributes = [[NSMutableDictionary alloc] init];
-        [textAttributes setObject:self.navBarTitleColor forKey:NSForegroundColorAttributeName];
-        [textAttributes setObject:self.navBarTitleFont forKey:NSFontAttributeName];
-        [navigationBar setTitleTextAttributes:textAttributes];
-        [navigationBar setBarStyle:UIBarStyleDefault];
-    }
 }
 
 #pragma mark - TableView Customization
@@ -347,11 +343,13 @@
     (Cell Labels will take up customization as per label properties
  */
 - (void)customizeCell:(UITableViewCell *)cell {
+    
     cell.backgroundColor = self.cellBgColor;
 }
 
 #pragma mark - Label Customization
 - (void)customizeTextLabel:(UILabel *)title {
+    
     title.font = self.labelFont;
     title.textColor = self.labelColor;
     title.backgroundColor = self.labelBgColor;
@@ -360,6 +358,7 @@
 #pragma mark - Text View customization
 
 - (void)customizeTextView:(UITextView *)textView {
+    
     UIColor *bgColor = DEFAULT_TEXTVIEW_BACKGROUNDCOLOR;
     UIColor *textViewColor = DEFAULT_TEXTVIEW_TEXTCOLOR;
     UIFont *textFont = DEFAULT_TEXTVIEW_FONT;
@@ -400,6 +399,7 @@
 #pragma mark - Button customization
 
 - (void)customizeButton:(UIButton *)button {
+    
     UIColor *bgColor = DEFAULT_BUTTON_BACKGROUNDCOLOR;
     UIColor *buttonTitleColor = DEFAULT_BUTTON_TITLECOLOR;
     UIFont *buttonTitleFont = DEFAULT_BUTTON_TITLEFONT;
@@ -449,12 +449,14 @@
  */
 
 - (void)customizeRightBubble:(UIView *)bubble {
+    
     bubble.layer.borderColor = DEFAULT_CHATBUBBLE_BORDERCOLOR.CGColor;
     bubble.layer.borderWidth = 0.3;
     bubble.backgroundColor = self.headerBgColor;
 }
 
 - (void)customizeLeftBubble:(UIView *)bubble {
+    
     bubble.layer.borderColor = DEFAULT_CHATBUBBLE_BORDERCOLOR.CGColor;
     bubble.layer.borderWidth = 0.3;
     bubble.backgroundColor = self.cellBgColor;
@@ -462,34 +464,40 @@
 
 /* Chat texts appears same as the Cell view Texts - Takes up the label properties */
 - (void)customizeBubbleText:(UITextView *)BubbleText {
+    
     BubbleText.backgroundColor = [UIColor clearColor];
     BubbleText.textColor = self.labelColor;
     BubbleText.font = self.labelFont;
 }
 
 -(void)customizeRightBubbleText:(UITextView *)BubbleText{
+    
     BubbleText.backgroundColor = [UIColor clearColor];
     BubbleText.textColor = self.headerTitleColor;
     BubbleText.font = self.labelFont;
 }
 
 -(void)customizeLeftBubbleText:(UITextView *)BubbleText{
+    
     BubbleText.backgroundColor = [UIColor clearColor];
     BubbleText.textColor = self.labelColor;
     BubbleText.font = self.labelFont;
 }
 
 -(UIFont *)getBubbleTextFont{
+    
     return self.labelFont;
 }
 
 //is this an iPhone5
 + (BOOL)isTall {
+    
     UIScreen* screen = [UIScreen mainScreen];
     return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && (screen.bounds.size.height * screen.scale) == 1136);
 }
 
 + (BOOL)isIPad{
+    
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
         return YES;
     }
@@ -497,6 +505,7 @@
 }
 
 + (BOOL)isIOS6 {
+    
     return [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0;
 }
 

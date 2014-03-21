@@ -32,23 +32,26 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    
-    [super viewDidLoad];
     
     self.bubbleWidth = 250.0;
     [self addMessageView];
     
     self.chatTableView.backgroundColor = [UIColor clearColor];
-    
     self.loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.loadingIndicator.center = self.chatTableView.center;
-    
     [self.chatTableView addSubview:self.loadingIndicator];
     [self.loadingIndicator startAnimating];
+    
     self.bottomMessageView.hidden = YES;
     self.sendReplyIndicator.hidden = YES;
+    self.sendButton.enabled = NO;
+    self.sendButton.alpha = 0.5;
+    self.currentStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
+    self.navigationItem.title = self.selectedTicket.subject;
     
     /**
         Single tapping anywhere on the chat table view to hide the keyboard
@@ -57,13 +60,7 @@
     hideKeyboard.numberOfTapsRequired = 1;
     [self.chatTableView addGestureRecognizer:hideKeyboard];
     
-    self.navigationItem.title = self.selectedTicket.subject;
-    
     [self getTicketUpdates];
-    self.sendButton.enabled = NO;
-    self.sendButton.alpha = 0.5;
-    
-    self.currentStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -131,7 +128,7 @@
 }
 
 /**
-    Callback method whenever the messageTextView increases in size, accordingly push the chattableView up
+    Callback method whenever the messageTextView increases in size, accordingly push the chat tableView up
  */
 - (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
 {
@@ -152,7 +149,7 @@
 }
 
 -(void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView{
-    //Growing text view did change
+   
     if([growingTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""].length > 0){
         self.sendButton.enabled = YES;
         self.sendButton.alpha = 1.0;
@@ -163,6 +160,7 @@
 }
 
 -(void)growingTextViewDidEndEditing:(HPGrowingTextView *)growingTextView{
+    
     if([growingTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""].length > 0){
         self.sendButton.enabled = YES;
         self.sendButton.alpha = 1.0;
@@ -172,9 +170,12 @@
     }
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-  //  [self.messageText resignFirstResponder];
+-(void)removeInsetsOnChatTable{
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0 , 0.0);
+    self.chatTableView.contentInset = contentInsets;
+    self.chatTableView.scrollIndicatorInsets = contentInsets;
+    
+    [self scrollDownToLastMessage];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -189,12 +190,9 @@
     [self.messageText.internalTextView setNeedsDisplay];
 }
 
--(void)removeInsetsOnChatTable{
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0 , 0.0);
-    self.chatTableView.contentInset = contentInsets;
-    self.chatTableView.scrollIndicatorInsets = contentInsets;
+-(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
     
-    [self scrollDownToLastMessage];
+    [[HSAppearance instance] customizeNavigationBar:viewController.navigationController.navigationBar];
 }
 
 #pragma mark - Attachment functions
@@ -203,6 +201,7 @@
     Shows the attachment selected when adding a reply
  */
 - (void)showAttachments{
+    
     if(self.attachments.count == 0){
         self.messageText.internalTextView.inputAccessoryView = nil;
         [self.messageText.internalTextView reloadInputViews];
@@ -214,20 +213,8 @@
     }
 }
 
-/**
-    This method is called whenever user presses addAttachmentButton. Only one attachment is supported for each reply.
-    
-    If no attachment is selected, opens the gallery. If attachment is selected already, it shows the requried options
- 
-    to change or delete the already selected attachment.
-*/
-
--(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
-    NSLog(@"Showing picker");
-    [[HSAppearance instance] customizeNavigationBar:viewController.navigationController.navigationBar];
-}
-
 - (IBAction)addAttachment:(id)sender{
+    
     if(self.attachments == nil || self.attachments.count == 0){
         [self openImagePicker];
     }else{
@@ -236,8 +223,6 @@
                                 @"Change",
                                 @"Delete",
                                 nil];
-        
-        
         if ([HSAppearance isIPad]) {
             [popup showFromRect:[self.addAttachmentButton bounds] inView:self.addAttachmentButton animated:YES];
         }
@@ -248,6 +233,7 @@
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
     switch(buttonIndex){
         case 0:
             [self openImagePicker];
@@ -264,6 +250,7 @@
 }
 
 - (void)openImagePicker {
+    
     self.enteredMsg = self.messageText.text;
     self.messageText.text = @"";
     [self.messageText resignFirstResponder];
@@ -276,6 +263,7 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    
     if(self.attachments == nil){
         self.attachments = [[NSMutableArray alloc] init];
     }
@@ -313,12 +301,13 @@
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     self.messageText.text = self.enteredMsg;
-  //  [self.messageText becomeFirstResponder];
 }
 
 - (void)openAttachment:(UIButton *)sender{
+    
     UITableViewCell *cell = (UITableViewCell *)[[[sender.superview superview] superview] superview]; //ios7
     NSIndexPath *indexPath = [self.chatTableView indexPathForCell:cell];
     HSUpdate* updateToShow = [self.ticketSource updateAtPosition:indexPath.section];
@@ -407,6 +396,7 @@
 #pragma mark - Ticket fetch and update functions
 
 -(void)getTicketUpdates{
+    
     [self.ticketSource prepareUpdate:self.selectedTicket success:^{
         self.bottomMessageView.hidden = NO;
         [self.loadingIndicator stopAnimating];
@@ -422,12 +412,12 @@
 }
 
 -(void)updateTicket:(NSString *)ticketMessage{
+    
     HSTicketReply *tickUpdate = [[HSTicketReply alloc] init];
     tickUpdate.content = self.messageText.text;
     if(self.attachments != nil && self.attachments.count > 0){
         tickUpdate.attachments = self.attachments;
     }
-    // self.enteredMsg = @"";
     self.sendButton.hidden = YES;
     self.sendReplyIndicator.hidden = NO;
     [self.sendReplyIndicator startAnimating];
@@ -435,25 +425,31 @@
     HSIssueDetailViewController *weakSelf = self;
 
     [self.ticketSource addReply:tickUpdate ticket:self.selectedTicket success:^{
-        NSLog(@"ticket updated");
-        [weakSelf.sendReplyIndicator stopAnimating];
-        weakSelf.sendReplyIndicator.hidden = YES;
-        weakSelf.sendButton.hidden = NO;
-        [weakSelf.attachments removeAllObjects];
-        [weakSelf showAttachments];
-        [weakSelf.chatTableView reloadData];
-        weakSelf.messageText.text = @"";
-        [weakSelf.messageText resignFirstResponder];
-        [weakSelf removeInsetsOnChatTable];
+        [weakSelf onTicketUpdated];
     }failure:^(NSError* e){
-        [weakSelf.sendReplyIndicator stopAnimating];
-        weakSelf.sendReplyIndicator.hidden = YES;
-        weakSelf.sendButton.hidden = NO;
-        [weakSelf removeInsetsOnChatTable];
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Some error." message:@"There was some error in sending your reply. Is your internet ON? Can you try after sometime?" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alertView show];
-
+        [weakSelf onTicketUpdateFailed];
     }];
+}
+
+-(void)onTicketUpdated{
+    [self.sendReplyIndicator stopAnimating];
+    self.sendReplyIndicator.hidden = YES;
+    self.sendButton.hidden = NO;
+    [self.attachments removeAllObjects];
+    [self showAttachments];
+    [self.chatTableView reloadData];
+    self.messageText.text = @"";
+    [self.messageText resignFirstResponder];
+    [self removeInsetsOnChatTable];
+}
+
+-(void)onTicketUpdateFailed{
+    [self.sendReplyIndicator stopAnimating];
+    self.sendReplyIndicator.hidden = YES;
+    self.sendButton.hidden = NO;
+    [self removeInsetsOnChatTable];
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Some error." message:@"There was some error in sending your reply. Is your internet ON? Can you try after sometime?" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+    [alertView show];
 }
 
 #pragma mark - Table view data source
@@ -469,110 +465,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
-
-    HSUpdate* updateToShow = [self.ticketSource updateAtPosition:indexPath.section];
+    
     if(indexPath.row == 2){
-        static NSString *CellIdentifier = @"InfoCell";
-        
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor clearColor];
-        
-        NSArray *subviews = [cell.contentView subviews];
-        for(UIView *view in subviews){
-            [view removeFromSuperview];
-        }
-        
-        UIView *cellView = [[UIView alloc] init];
-        if(updateToShow.updateType == HATypeStaffReply){
-            cellView.frame = CGRectMake(10.0, 0, self.bubbleWidth, 20.0);
-        }else{
-            cellView.frame = CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 0, self.bubbleWidth, 20.0);
-        }
-        cellView.backgroundColor = [UIColor clearColor];
-        HSLabel *timestamp = [[HSLabel alloc] initWithFrame:CGRectMake(0, -2.0, 120.0, 20.0)];
-        timestamp.font = [UIFont fontWithName:timestamp.font.fontName size:10.0];
-        timestamp.text =   [updateToShow updatedAtString];
-        [cellView addSubview:timestamp];
-        
-        if(updateToShow.attachments != nil && updateToShow.attachments.count > 0){
-            UIButton *attachmentBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.bubbleWidth - 30.0, 0, 30.0, 25.0)];
-            UIImage *btnImage = [UIImage imageNamed:@"attach.png"];
-            [attachmentBtn setBackgroundImage:btnImage forState:UIControlStateNormal];
-            [attachmentBtn addTarget:self action:@selector(openAttachment:) forControlEvents:UIControlEventTouchUpInside];
-            [cellView addSubview:attachmentBtn];
-        }
-        [cell.contentView addSubview:cellView];
+        UITableViewCell *cell = [self getInfoCellForTable:tableView forIndexPath:indexPath];
         return cell;
-        
     }else if(indexPath.row == 1){
-
-        static NSString *CellIdentifier = @"MessageCell";
-
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-
-        UIView *messageView;
-        UITextView *messageTextView;
-        NSArray *subviews = [cell.contentView subviews];
-        for(UIView *view in subviews){
-            [view removeFromSuperview];
-        }
-        
-        if(updateToShow.updateType == HATypeStaffReply){
-            messageView = [[HSChatBubbleLeft alloc] initWithFrame:CGRectMake(10, 0.0, self.bubbleWidth, cell.frame.size.height)];
-            messageTextView = ((HSChatBubbleLeft *)messageView).messageTextView;
-        }else{
-            messageView = [[HSChatBubbleRight alloc] initWithFrame:CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 0, self.bubbleWidth, cell.frame.size.height)];
-            messageTextView = ((HSChatBubbleRight *)messageView).messageTextView;
-        }
-
-        [cell.contentView addSubview:messageView];
-        cell.contentView.backgroundColor = [UIColor clearColor];
-        
-        NSString *messageContent = [updateToShow content];
-        if([messageContent stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0){
-            messageContent = @"No Message";
-            messageTextView.textColor = [UIColor grayColor];
-            messageTextView.font = [UIFont fontWithName:messageTextView.font.fontName size:12.0];
-        }
-
-        messageTextView.text = messageContent;
-
-        cell.backgroundColor = [UIColor clearColor];
+        UITableViewCell *cell = [self getMessageCellForTable:tableView forIndexPath:indexPath];
         return cell;
     }else{
-        static NSString *CellIdentifier = @"InfoCell";
-        
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor clearColor];
-       
-        NSArray *subviews = [cell.contentView subviews];
-        for(UIView *view in subviews){
-            [view removeFromSuperview];
-        }
-        
-        HSLabel *nameLabel = [[HSLabel alloc] init];
-        nameLabel.tag = 1;
-        
-        NSString *nameString = @"";
-        if(updateToShow.updateType == HATypeStaffReply){
-            nameLabel.frame = CGRectMake(10.0, 12.0, 120.0, 20.0);
-            if(updateToShow.from){
-                nameString = updateToShow.from;
-            }else{
-                nameString = @"Staff";
-            }
-           
-        }else{
-            nameLabel.frame = CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 12.0, 120.0, 20.0);
-            nameString = @"Me";
-        }
-        [cell.contentView addSubview:nameLabel];
-        //Overriding timestamp font and size
-        nameLabel.font = [UIFont fontWithName:nameLabel.font.fontName size:10.0];
-        nameLabel.text = nameString;
+        UITableViewCell *cell = [self getSenderInfoCellForTable:tableView forIndexPath:indexPath];
         return cell;
-
     }
 }
 
@@ -595,7 +497,6 @@
                                                 [UIColor blackColor], NSForegroundColorAttributeName,
                                                 nil];
      
-        NSLog(@"Message - %@", messageText);
         NSAttributedString *msgText = [[NSAttributedString alloc] initWithString:messageText attributes:attrsDictionary];
         CGSize maximumLabelSize = CGSizeMake(self.bubbleWidth - 20, CGFLOAT_MAX);
         CGRect newTextSize = [msgText boundingRectWithSize:maximumLabelSize options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) context:nil];
@@ -606,6 +507,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     UITableViewCell *cell = [self.chatTableView cellForRowAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor clearColor];
     HSUpdate* updateToShow = [self.ticketSource updateAtPosition:indexPath.section];
@@ -615,6 +517,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.chatTableView.frame.size.width, 5.0)];
     footerView.backgroundColor = [UIColor clearColor];
     return footerView;
@@ -628,25 +531,134 @@
     UIView *messageView = (UIView *)[cell viewWithTag:4];
     UILabel *attachmentLabel = (UILabel *)[cell viewWithTag:5];
 
-    if(senderLabel != nil){
+    if(senderLabel){
         [senderLabel removeFromSuperview];
     }
 
-    if(messageLabel != nil){
+    if(messageLabel){
         [messageLabel removeFromSuperview];
     }
 
-    if(timeLabel != nil){
+    if(timeLabel){
         [timeLabel removeFromSuperview];
     }
     
-    if(messageView != nil){
+    if(messageView){
         [messageView removeFromSuperview];
     }
     
-    if(attachmentLabel != nil){
+    if(attachmentLabel){
         [attachmentLabel removeFromSuperview];
     }
+}
+
+-(UITableViewCell *)getInfoCellForTable:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath{
+    
+    HSUpdate* updateToShow = [self.ticketSource updateAtPosition:indexPath.section];
+    static NSString *CellIdentifier = @"InfoCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor clearColor];
+    
+    NSArray *subviews = [cell.contentView subviews];
+    for(UIView *view in subviews){
+        [view removeFromSuperview];
+    }
+    
+    UIView *cellView = [[UIView alloc] init];
+    if(updateToShow.updateType == HATypeStaffReply){
+        cellView.frame = CGRectMake(10.0, 0, self.bubbleWidth, 20.0);
+    }else{
+        cellView.frame = CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 0, self.bubbleWidth, 20.0);
+    }
+    cellView.backgroundColor = [UIColor clearColor];
+    HSLabel *timestamp = [[HSLabel alloc] initWithFrame:CGRectMake(0, -2.0, 120.0, 20.0)];
+    timestamp.font = [UIFont fontWithName:timestamp.font.fontName size:10.0];
+    timestamp.text =   [updateToShow updatedAtString];
+    [cellView addSubview:timestamp];
+    
+    if(updateToShow.attachments != nil && updateToShow.attachments.count > 0){
+        UIButton *attachmentBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.bubbleWidth - 30.0, 0, 30.0, 25.0)];
+        UIImage *btnImage = [UIImage imageNamed:@"attach.png"];
+        [attachmentBtn setBackgroundImage:btnImage forState:UIControlStateNormal];
+        [attachmentBtn addTarget:self action:@selector(openAttachment:) forControlEvents:UIControlEventTouchUpInside];
+        [cellView addSubview:attachmentBtn];
+    }
+    [cell.contentView addSubview:cellView];
+    return cell;
+}
+
+-(UITableViewCell *)getMessageCellForTable:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath{
+    
+    HSUpdate* updateToShow = [self.ticketSource updateAtPosition:indexPath.section];
+    static NSString *CellIdentifier = @"MessageCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    UIView *messageView;
+    UITextView *messageTextView;
+    NSArray *subviews = [cell.contentView subviews];
+    for(UIView *view in subviews){
+        [view removeFromSuperview];
+    }
+    
+    if(updateToShow.updateType == HATypeStaffReply){
+        messageView = [[HSChatBubbleLeft alloc] initWithFrame:CGRectMake(10, 0.0, self.bubbleWidth, cell.frame.size.height)];
+        messageTextView = ((HSChatBubbleLeft *)messageView).messageTextView;
+    }else{
+        messageView = [[HSChatBubbleRight alloc] initWithFrame:CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 0, self.bubbleWidth, cell.frame.size.height)];
+        messageTextView = ((HSChatBubbleRight *)messageView).messageTextView;
+    }
+    
+    [cell.contentView addSubview:messageView];
+    cell.contentView.backgroundColor = [UIColor clearColor];
+    
+    NSString *messageContent = [updateToShow content];
+    if([messageContent stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0){
+        messageContent = @"No Message";
+        messageTextView.textColor = [UIColor grayColor];
+        messageTextView.font = [UIFont fontWithName:messageTextView.font.fontName size:12.0];
+    }
+    
+    messageTextView.text = messageContent;
+    
+    cell.backgroundColor = [UIColor clearColor];
+    return cell;
+}
+
+-(UITableViewCell *)getSenderInfoCellForTable:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath{
+    
+    HSUpdate* updateToShow = [self.ticketSource updateAtPosition:indexPath.section];
+    static NSString *CellIdentifier = @"InfoCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor clearColor];
+    
+    NSArray *subviews = [cell.contentView subviews];
+    for(UIView *view in subviews){
+        [view removeFromSuperview];
+    }
+    
+    HSLabel *nameLabel = [[HSLabel alloc] init];
+    nameLabel.tag = 1;
+    
+    NSString *nameString = @"";
+    if(updateToShow.updateType == HATypeStaffReply){
+        nameLabel.frame = CGRectMake(10.0, 12.0, 120.0, 20.0);
+        if(updateToShow.from){
+            nameString = updateToShow.from;
+        }else{
+            nameString = @"Staff";
+        }
+        
+    }else{
+        nameLabel.frame = CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 12.0, 120.0, 20.0);
+        nameString = @"Me";
+    }
+    [cell.contentView addSubview:nameLabel];
+    //Overriding timestamp font and size
+    nameLabel.font = [UIFont fontWithName:nameLabel.font.fontName size:10.0];
+    nameLabel.text = nameString;
+    return cell;
 }
 
 /**

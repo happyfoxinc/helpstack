@@ -10,7 +10,6 @@
 
 #import "HAGearEmail.h"
 
-
 @interface HAGearEmail ()
 
 @end
