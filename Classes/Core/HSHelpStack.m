@@ -7,7 +7,6 @@
 //
 
 #import "HSHelpStack.h"
-#import "HSMainListViewController.h"
 
 
 @interface HSHelpStack ()
