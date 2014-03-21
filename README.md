@@ -1,8 +1,11 @@
 # Help Stack
-
+HelpStack provides you with a simple way of adding a great in-App support for your iOS App users. You can integrate any of your favorite HelpDesk solution at ease. It currently comes with three plugged in Help desk solutions - *Desk.com*, *Zendesk* and *HappyFox* along with customizable and simple UI to interact with the user. 
 ## How to use Help Stack
 
 HelpStack provides you with a simple way of great in-App support to your iOS App users. It currently comes with three plugged in Help desk solutions - Desk.com, Zendesk and HappyFox along with customizable and simple UI to interact with the user. Integrating HelpStack into your app is an easy three-step process:
+=======
+Integrating HelpStack into your app is an easy three-step process:
+>>>>>>> 02c573b8c6e1482e7f57e1b9b51be3e597afe9e0
 
 1.	Install HelpStack and its dependencies 
 2.	Configure your desired Help desk solution
@@ -53,8 +56,7 @@ To integrate your existing HappyFox account into HelpStack, you just have to inc
 		https://example.happyfox.com/api/1.1/json/priorities/ 
 		https://example.happyfox.com/api/1.1/json/categories/
 
-* Getting the section ID (optional)
-
+* Getting the section ID (Optional)
 	Section ID is to filter and show the Knowledge Based articles. If section ID is not provided, then all the KB articles in all the sections are fetched and showed. If you want HelpStack to fetch KB articles of a specific section, provide the appropriate section ID. The following URL command gives all the sections with their IDs.	
 
 		For sections and its IDs:
