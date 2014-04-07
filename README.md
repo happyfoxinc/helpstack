@@ -1,11 +1,8 @@
 # Help Stack
 HelpStack provides you with a simple way of adding a great in-App support for your iOS App users. You can integrate any of your favorite HelpDesk solution at ease. It currently comes with three plugged in Help desk solutions - *Desk.com*, *Zendesk* and *HappyFox* along with customizable and simple UI to interact with the user. 
-## How to use Help Stack
 
-HelpStack provides you with a simple way of great in-App support to your iOS App users. It currently comes with three plugged in Help desk solutions - Desk.com, Zendesk and HappyFox along with customizable and simple UI to interact with the user. Integrating HelpStack into your app is an easy three-step process:
-=======
+## How to use Help Stack
 Integrating HelpStack into your app is an easy three-step process:
->>>>>>> 02c573b8c6e1482e7f57e1b9b51be3e597afe9e0
 
 1.	Install HelpStack and its dependencies 
 2.	Configure your desired Help desk solution
