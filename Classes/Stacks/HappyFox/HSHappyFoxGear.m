@@ -65,7 +65,6 @@
         }];
     } else {
         NSString *section_id = section.kb_id;
-        NSLog(@"section id is %@",section_id);
         for(id section in self.articleSections){
             if([[[section objectForKey:@"id"] stringValue] isEqualToString:section_id]){
                 NSMutableArray *kbArticles = [self getArticlesFromSection:section];

@@ -33,13 +33,17 @@
 
 
 - (void)setThemeFrompList:(NSString *)pListPath {
+    [self.appearance setCustomThemeProperties:[self readThemePropertiesFrompList:pListPath]];
+}
+
+- (NSDictionary *)readThemePropertiesFrompList:(NSString *)pListPath {
     NSString *filePath = [[NSBundle mainBundle] pathForResource:pListPath ofType:@"plist"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if([fileManager fileExistsAtPath:filePath]){
         NSDictionary *properties = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-        [self.appearance setCustomThemeProperties:properties];
-       // self.appearance.customThemeProperties = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+        return properties;
     }
+    return nil;
 }
 /**
     start HelpStackController for given gear.
