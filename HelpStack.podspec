@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://happyfox.com"
   s.license      = 'MIT'
   s.author       = { "Nalin Chhajer" => "nalinchhajer@yahoo.com" }
-  s.platform     = :ios, '6.0'
+  s.platform     = :ios, '7.0'
   s.source       = { :git => "https://github.com/happyfoxinc/helpstack.git", :tag => "1.0", :submodules => true }
   s.resources    = ['Resources/*.png','Resources/*.storyboard']
   s.dependency 'AFNetworking', '~> 2.0'
