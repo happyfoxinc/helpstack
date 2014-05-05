@@ -94,10 +94,8 @@
 
 - (void)setCustomThemeProperties:(NSDictionary *)customThemeProperties {
     
-    if (customThemeProperties) {
-        _customThemeProperties = customThemeProperties;
-        [self refreshAppearanceProperties]; //if theme exist, those colors or fonts get set.
-    }
+    _customThemeProperties = customThemeProperties;
+    [self refreshAppearanceProperties]; //if theme exist, those colors or fonts get set.
 }
 
 - (void)refreshAppearanceProperties {

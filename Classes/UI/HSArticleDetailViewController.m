@@ -9,7 +9,7 @@
 #import "HSArticleDetailViewController.h"
 #import "HSHelpStack.h"
 
-#define HTML_WRAPPER_WITH_TITLE @"<!DOCTYPE html><html><head><style>body{font:14.0px helvetica} .heading{}</style></head><body><h3 class='heading'>%@</h3>%@</body></html>"
+#define HTML_WRAPPER_WITH_TITLE @"<!DOCTYPE html><html><head><link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'><style>body{padding: 0 8px} .heading{ font-family: 'Helvetica Neue'; font-size: 20px; color: #000000; padding: 8px 0; line-height:30px;} .content{ font-family: 'Open Sans', sans-serif;  font-size: 16px; color: #313131; line-height:30px;} p{ line-height: 1.5; text-align: left !important; }</style></head><body><h2 class='heading'>%@</h3><div class='content'>%@</div></body></html>"
 
 @interface HSArticleDetailViewController ()<UIWebViewDelegate>
 
@@ -29,7 +29,7 @@
     self.navigationItem.rightBarButtonItem = rightBarButton;
     self.loadingView.hidden = YES;
     
-    self.title = @"";
+    self.title = @"Article";
     
     NSString* content;
     if(self.article.htmlContent) {
