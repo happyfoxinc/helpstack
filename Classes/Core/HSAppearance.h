@@ -34,4 +34,5 @@
 + (BOOL)isIPad;
 + (BOOL)isIOS6;
 
+
 @end
