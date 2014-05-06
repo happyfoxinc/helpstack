@@ -23,6 +23,7 @@
 #import "HSLabel.h"
 #import "HSTableViewHeaderCell.h"
 #import <MessageUI/MessageUI.h>
+#import "HSActivityIndicatorView.h"
 
 /*
  To report issue using email:
@@ -33,7 +34,7 @@
     UINavigationController* newTicketNavController;
 }
 
-@property(nonatomic, strong) UIActivityIndicatorView *loadingView;
+@property(nonatomic, strong) HSActivityIndicatorView *loadingView;
 
 @end
 
@@ -49,7 +50,7 @@ BOOL finishedLoadingTickets = NO;
     self.kbSource = [HSKBSource createInstance];
     self.ticketSource = [HSTicketSource createInstance];
     
-    self.loadingView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20.0, 20.0)];
+    self.loadingView = [[HSActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20.0, 20.0)];
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:self.loadingView];
     self.navigationItem.rightBarButtonItem = rightBarButton;
     

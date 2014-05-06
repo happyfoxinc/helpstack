@@ -284,7 +284,6 @@
     {
         [self.attachments removeAllObjects];
         ALAssetRepresentation *assetRep = [imageAsset defaultRepresentation];
-        NSLog(@"[imageRep filename] : %@", [assetRep filename]);
         CGImageRef cgImg = [assetRep fullResolutionImage];
         NSString *filename = [assetRep filename];
         UIImage *img = [UIImage imageWithCGImage:cgImg];
@@ -701,7 +700,8 @@
     }else if(update.attachments.count == 1){
         HSAttachmentsViewController *attachmentsVC = (HSAttachmentsViewController *)[segue destinationViewController];
         HSAttachment *attachment = [update.attachments objectAtIndex:0];
-        attachmentsVC.url = attachment.url;
+        attachmentsVC.attachment = attachment;
+        
     }
    
 }
