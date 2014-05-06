@@ -8,13 +8,14 @@
 
 #import "HSArticleDetailViewController.h"
 #import "HSHelpStack.h"
+#import "HSActivityIndicatorView.h"
 
 #define HTML_WRAPPER_WITH_TITLE @"<!DOCTYPE html><html><head><link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'><style>body{padding: 0 8px} .heading{ font-family: 'Helvetica Neue'; font-size: 20px; color: #000000; padding: 8px 0; line-height:30px;} .content{ font-family: 'Open Sans', sans-serif;  font-size: 16px; color: #313131; line-height:30px;} p{ line-height: 1.5; text-align: left !important; }</style></head><body><h2 class='heading'>%@</h3><div class='content'>%@</div></body></html>"
 
 @interface HSArticleDetailViewController ()<UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (nonatomic, strong) UIActivityIndicatorView *loadingView;
+@property (nonatomic, strong) HSActivityIndicatorView *loadingView;
 
 @end
 
@@ -24,7 +25,7 @@
 {
     [super viewDidLoad];
 
-    self.loadingView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20.0, 20.0)];
+    self.loadingView = [[HSActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20.0, 20.0)];
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:self.loadingView];
     self.navigationItem.rightBarButtonItem = rightBarButton;
     self.loadingView.hidden = YES;

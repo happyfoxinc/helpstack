@@ -76,9 +76,8 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSIndexPath *indexPath = (NSIndexPath *)sender;
     HSAttachment *attachment = [self.attachmentsList objectAtIndex:indexPath.row];
-    NSString *attachmentUrl = attachment.url;
     HSAttachmentsViewController *viewController = (HSAttachmentsViewController *)[segue destinationViewController];
-    viewController.url = attachmentUrl;
+    viewController.attachment = attachment;
 }
 
 @end

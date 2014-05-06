@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HSViewController.h"
+#import "HSAttachment.h"
 
 /**
     HSAttachmentsViewController class is used to show the attachments of Issues, if any
@@ -15,6 +16,7 @@
 @interface HSAttachmentsViewController : HSViewController
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (nonatomic, strong) NSString *url;
+
+@property (nonatomic, strong) HSAttachment *attachment;
 
 @end

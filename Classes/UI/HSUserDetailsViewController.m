@@ -8,6 +8,7 @@
 
 #import "HSUserDetailsViewController.h"
 #import "HSHelpStack.h"
+#import "HSActivityIndicatorView.h"
 
 @interface HSUserDetailsViewController ()<UITextFieldDelegate>
 
@@ -40,7 +41,7 @@
 {
     if([self checkValidity]) {
 
-        UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        HSActivityIndicatorView* indicatorView = [[HSActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20.0, 20.0)];
         [indicatorView startAnimating];
 
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
