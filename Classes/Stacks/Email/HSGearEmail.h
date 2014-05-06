@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "HSGear.h"
 
-@interface HAGearEmail : HSGear
+@interface HSGearEmail : HSGear
 
 - (id)initWithSupportEmailAddress:(NSString*)emailAddress articlePath:(NSString *)articlePath;
 

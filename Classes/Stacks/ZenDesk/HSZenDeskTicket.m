@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Anand. All rights reserved.
 //
 
-#import "HAZenDeskTicket.h"
-#import "HAZenDeskTicketUpdate.h"
+#import "HSZenDeskTicket.h"
+#import "HSZenDeskTicketUpdate.h"
 
-@interface HAZenDeskTicket()
+@interface HSZenDeskTicket()
 
 @end
 
-@implementation HAZenDeskTicket
+@implementation HSZenDeskTicket
 
 - (id)initWithRequestFields:(NSDictionary*)fields {
     if (self = [super init]) {

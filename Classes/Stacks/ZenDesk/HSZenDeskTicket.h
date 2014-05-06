@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "HSTicket.h"
 
-@interface HAZenDeskTicket : HSTicket
+@interface HSZenDeskTicket : HSTicket
 
 - (id)initWithRequestFields:(NSDictionary*)fields;
 - (id)initWithTicketFields:(NSDictionary*)fields;

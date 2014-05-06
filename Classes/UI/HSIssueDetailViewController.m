@@ -94,7 +94,7 @@
 - (void)addMessageView {
   //  self.messageText = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(35, 6, self.messageTextSuperView.frame.size.width, 40)];
     if(!self.messageText){
-        self.messageText = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(0, 0, self.messageTextSuperView.frame.size.width, self.messageTextSuperView.frame.size.height)];
+        self.messageText = [[HSGrowingTextView alloc] initWithFrame:CGRectMake(0, 0, self.messageTextSuperView.frame.size.width, self.messageTextSuperView.frame.size.height)];
     }else{
         CGRect msgTextFrame = self.messageText.frame;
         msgTextFrame.size.width = self.messageTextSuperView.frame.size.width;
@@ -130,7 +130,7 @@
 /**
     Callback method whenever the messageTextView increases in size, accordingly push the chat tableView up
  */
-- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
+- (void)growingTextView:(HSGrowingTextView *)growingTextView willChangeHeight:(float)height
 {
     float diff = (growingTextView.frame.size.height - height);
 	CGRect msgViewFrame = self.bottomMessageView.frame;
@@ -148,7 +148,7 @@
 	self.bottomMessageView.frame = msgViewFrame;
 }
 
--(void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView{
+-(void)growingTextViewDidChange:(HSGrowingTextView *)growingTextView{
    
     if([growingTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""].length > 0){
         self.sendButton.enabled = YES;
@@ -159,7 +159,7 @@
     }
 }
 
--(void)growingTextViewDidEndEditing:(HPGrowingTextView *)growingTextView{
+-(void)growingTextViewDidEndEditing:(HSGrowingTextView *)growingTextView{
     
     if([growingTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""].length > 0){
         self.sendButton.enabled = YES;
@@ -649,7 +649,7 @@
         }else{
             nameString = @"Staff";
         }
-        
+        nameString = @"Smith";
     }else{
         nameLabel.frame = CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 12.0, 120.0, 20.0);
         nameString = @"Me";

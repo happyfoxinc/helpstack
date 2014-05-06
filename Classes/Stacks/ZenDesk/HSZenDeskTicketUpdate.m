@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Anand. All rights reserved.
 //
 
-#import "HAZenDeskTicketUpdate.h"
+#import "HSZenDeskTicketUpdate.h"
 #import "HSAttachment.h"
 
-@interface HAZenDeskTicketUpdate ()
+@interface HSZenDeskTicketUpdate ()
 
 @end
 
-@implementation HAZenDeskTicketUpdate
+@implementation HSZenDeskTicketUpdate
 
 - (id)initWithAudit:(NSDictionary *) audit usersDictionary:(NSArray *) usersDictionary {
     if(self = [super init]) {

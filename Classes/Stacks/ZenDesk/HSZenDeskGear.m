@@ -10,8 +10,8 @@
 #import <AFNetworkActivityIndicatorManager.h>
 
 #import "HSZenDeskGear.h"
-#import "HAZenDeskTicket.h"
-#import "HAZenDeskTicketUpdate.h"
+#import "HSZenDeskTicket.h"
+#import "HSZenDeskTicketUpdate.h"
 
 /**
  Zendesk implementation. It implements HAGear and self assign HAGearProtocol.
@@ -56,7 +56,7 @@
  */
 - (void)createNewTicket:(HSNewTicket *)newTicket byUser:(HSUser *)user success:(void (^)(HSTicket* ticket, HSUser * user))success failure:(void (^)(NSError* e))failure {
     
-    [self createNewZendeskTicket:newTicket forUser:user success:^(HAZenDeskTicket *ticket) {
+    [self createNewZendeskTicket:newTicket forUser:user success:^(HSZenDeskTicket *ticket) {
         
         success(ticket, user);
         
@@ -69,7 +69,7 @@
  */
 - (void)fetchAllUpdateForTicket:(HSTicket *)ticket forUser:(HSUser *)user success:(void (^)(NSMutableArray* updateArray))success failure:(void (^)(NSError* e))failure {
     
-    HAZenDeskTicket* zenticket = (HAZenDeskTicket*)ticket;
+    HSZenDeskTicket* zenticket = (HSZenDeskTicket*)ticket;
     
     [self reloadTicket:zenticket.ticketID success:^(NSMutableArray *ticketUpdate) {
         
@@ -84,9 +84,9 @@
  */
 - (void)addReply:(HSTicketReply *)reply forTicket:(HSTicket *)ticket byUser:(HSUser *)user success:(void (^)(HSUpdate* update))success failure:(void (^)(NSError* e))failure {
     
-    HAZenDeskTicket* zenticket = (HAZenDeskTicket*)ticket;
+    HSZenDeskTicket* zenticket = (HSZenDeskTicket*)ticket;
     
-    [self addReply:reply.content ticketId:zenticket.ticketID attachments:reply.attachments forUser:(HSUser *)user success:^(HAZenDeskTicketUpdate *ticketUpdate) {
+    [self addReply:reply.content ticketId:zenticket.ticketID attachments:reply.attachments forUser:(HSUser *)user success:^(HSZenDeskTicketUpdate *ticketUpdate) {
         
         success(ticketUpdate);
         
@@ -97,7 +97,7 @@
 #pragma mark- helper methods
 
 
-- (void) createNewZendeskTicket:(HSNewTicket *)newTicket forUser:(HSUser *)user success:(void (^)(HAZenDeskTicket* ticket))operationSuccess failure:(void (^)(NSError *))operationFailure {
+- (void) createNewZendeskTicket:(HSNewTicket *)newTicket forUser:(HSUser *)user success:(void (^)(HSZenDeskTicket* ticket))operationSuccess failure:(void (^)(NSError *))operationFailure {
     // If attachments are there convert attachments to string token
     // Perform action
     [self uploadAttachments:newTicket.attachments success:^(NSArray *attachmentTokens){
@@ -116,7 +116,7 @@
         
         [self.networkManager POST:url parameters:ticketDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
             // Save ticket details so next time it is ready for user to use.
-            HAZenDeskTicket* ticket = [[HAZenDeskTicket alloc] initWithTicketFields:responseObject];
+            HSZenDeskTicket* ticket = [[HSZenDeskTicket alloc] initWithTicketFields:responseObject];
             operationSuccess(ticket);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             operationFailure(error);
@@ -183,13 +183,13 @@
         NSMutableArray* ticketUpdateArray = [[NSMutableArray alloc] init];
         
         for (NSDictionary *object in auditsDictionary) {
-            HAZenDeskTicketUpdate* update = [[HAZenDeskTicketUpdate alloc] initWithAudit:object usersDictionary:usersDictionary];
+            HSZenDeskTicketUpdate* update = [[HSZenDeskTicketUpdate alloc] initWithAudit:object usersDictionary:usersDictionary];
             [ticketUpdateArray addObject:update];
         }
         
         // TODO: filter only public update
         NSMutableArray* filteredArray = [[NSMutableArray alloc] initWithArray:[ticketUpdateArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-            HAZenDeskTicketUpdate* update = evaluatedObject;
+            HSZenDeskTicketUpdate* update = evaluatedObject;
             return [update publicNote];
         }]]];
         
@@ -204,7 +204,7 @@
     
 }
 
-- (void)addReply:(NSString *)message ticketId:(NSString *)ticketId attachments:(NSArray *)attachments forUser:(HSUser *)user success:(void (^) (HAZenDeskTicketUpdate* ticketUpdate))success failure:(void (^)(NSError *))failure {
+- (void)addReply:(NSString *)message ticketId:(NSString *)ticketId attachments:(NSArray *)attachments forUser:(HSUser *)user success:(void (^) (HSZenDeskTicketUpdate* ticketUpdate))success failure:(void (^)(NSError *))failure {
 
     
     // If attachments are there convert attachments to string token
@@ -216,7 +216,7 @@
         [self.networkManager.requestSerializer setAuthorizationHeaderFieldWithUsername:[user.email stringByAppendingString:@"/token"] password:self.apiToken];
         [self.networkManager PUT:url parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
-            HAZenDeskTicketUpdate* update = [[HAZenDeskTicketUpdate alloc] initWithAuthorName:user.name message:message];
+            HSZenDeskTicketUpdate* update = [[HSZenDeskTicketUpdate alloc] initWithAuthorName:user.name message:message];
             success(update);
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HSTicket.h"
-#import "HPGrowingTextView.h"
+#import "HSGrowingTextView.h"
 #import "HSTicketSource.h"
 #import "HSViewController.h"
 #import "HSButton.h"
@@ -29,7 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *addAttachmentButton;
 //@property (nonatomic, strong) HPGrowingTextView *messageText;
 @property (nonatomic, assign) float bubbleWidth;
-@property (strong, nonatomic) IBOutlet HPGrowingTextView *messageText;
+@property (strong, nonatomic) IBOutlet HSGrowingTextView *messageText;
 @property (weak, nonatomic) IBOutlet UIView *messageTextSuperView;
 
 - (IBAction)sendReply:(id)sender;

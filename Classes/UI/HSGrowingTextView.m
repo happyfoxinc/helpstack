@@ -25,16 +25,16 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#import "HPGrowingTextView.h"
+#import "HSGrowingTextView.h"
 #import "HSTextViewInternal.h"
 
-@interface HPGrowingTextView(private)
+@interface HSGrowingTextView(private)
 -(void)commonInitialiser;
 -(void)resizeTextView:(NSInteger)newSizeH;
 -(void)growDidStop;
 @end
 
-@implementation HPGrowingTextView
+@implementation HSGrowingTextView
 @synthesize internalTextView;
 @synthesize delegate;
 @synthesize maxHeight;

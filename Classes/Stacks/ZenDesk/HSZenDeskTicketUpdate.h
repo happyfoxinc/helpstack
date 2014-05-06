@@ -8,7 +8,7 @@
 
 #import "HSUpdate.h"
 
-@interface HAZenDeskTicketUpdate : HSUpdate
+@interface HSZenDeskTicketUpdate : HSUpdate
 
 @property (nonatomic, assign) Boolean publicNote;
 

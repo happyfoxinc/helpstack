@@ -34,7 +34,7 @@ float keyboardH;
 
 - (void)addMessageView{
     
-    self.messageText = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(57, 5, 420, 42)];
+    self.messageText = [[HSGrowingTextView alloc] initWithFrame:CGRectMake(57, 5, 420, 42)];
     self.messageText.isScrollable = NO;
     self.messageText.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
 	self.messageText.minNumberOfLines = 1;

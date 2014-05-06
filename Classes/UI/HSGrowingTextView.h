@@ -33,30 +33,30 @@
 	#define NSTextAlignment UITextAlignment
 #endif
 
-@class HPGrowingTextView;
+@class HSGrowingTextView;
 @class HSTextViewInternal;
 
 @protocol HPGrowingTextViewDelegate
 
 @optional
-- (BOOL)growingTextViewShouldBeginEditing:(HPGrowingTextView *)growingTextView;
-- (BOOL)growingTextViewShouldEndEditing:(HPGrowingTextView *)growingTextView;
+- (BOOL)growingTextViewShouldBeginEditing:(HSGrowingTextView *)growingTextView;
+- (BOOL)growingTextViewShouldEndEditing:(HSGrowingTextView *)growingTextView;
 
-- (void)growingTextViewDidBeginEditing:(HPGrowingTextView *)growingTextView;
-- (void)growingTextViewDidEndEditing:(HPGrowingTextView *)growingTextView;
+- (void)growingTextViewDidBeginEditing:(HSGrowingTextView *)growingTextView;
+- (void)growingTextViewDidEndEditing:(HSGrowingTextView *)growingTextView;
 
-- (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
-- (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView;
+- (BOOL)growingTextView:(HSGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+- (void)growingTextViewDidChange:(HSGrowingTextView *)growingTextView;
 
-- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height;
-- (void)growingTextView:(HPGrowingTextView *)growingTextView didChangeHeight:(float)height;
+- (void)growingTextView:(HSGrowingTextView *)growingTextView willChangeHeight:(float)height;
+- (void)growingTextView:(HSGrowingTextView *)growingTextView didChangeHeight:(float)height;
 
-- (void)growingTextViewDidChangeSelection:(HPGrowingTextView *)growingTextView;
-- (BOOL)growingTextViewShouldReturn:(HPGrowingTextView *)growingTextView;
+- (void)growingTextViewDidChangeSelection:(HSGrowingTextView *)growingTextView;
+- (BOOL)growingTextViewShouldReturn:(HSGrowingTextView *)growingTextView;
 
 @end
 
-@interface HPGrowingTextView : UIView <UITextViewDelegate> {
+@interface HSGrowingTextView : UIView <UITextViewDelegate> {
 	HSTextViewInternal *internalTextView;	
 	
 	int minHeight;

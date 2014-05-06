@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "HAGearEmail.h"
+#import "HSGearEmail.h"
 
-@interface HAGearEmail ()
+@interface HSGearEmail ()
 
 @end
 
-@implementation HAGearEmail
+@implementation HSGearEmail
 
 - (id)initWithSupportEmailAddress:(NSString*)emailAddress articlePath:(NSString *)articlePath
 {
