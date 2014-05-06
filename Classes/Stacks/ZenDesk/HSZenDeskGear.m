@@ -31,11 +31,14 @@
 
 @implementation HSZenDeskGear
 
-- (id)initWithInstanceUrl:(NSString *)instanceUrl {
-
+- (id)initWithInstanceUrl:(NSString*)instanceUrl staffEmailAddress:(NSString *)staffEmailAddress
+                 apiToken:(NSString *)apiToken localArticlePath:(NSString *)localArticlePath {
     if (self = [super init]) {
         
         self.instanceUrl = instanceUrl;
+        self.staffEmailAddress = staffEmailAddress;
+        self.apiToken = apiToken;
+        self.localArticlePath = localArticlePath;
         
         self.networkManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:instanceUrl]];
         
