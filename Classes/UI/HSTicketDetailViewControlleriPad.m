@@ -70,7 +70,6 @@ float keyboardH;
         float topspace = centreP.y - (formsheetFrame.size.height/2);
         bottomspace = viewFrame.size.height - topspace - formsheetFrame.size.height;
     }
-    NSLog(@"Bottom space %f",bottomspace);
     // get keyboard size and loctaion
 	CGRect keyboardBounds;
     [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];

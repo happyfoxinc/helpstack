@@ -223,7 +223,6 @@
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
-    NSLog(@"Showing picker");
     [[HSAppearance instance] customizeNavigationBar:viewController.navigationController.navigationBar];
 }
 
@@ -339,7 +338,6 @@
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *imageAsset)
     {
         ALAssetRepresentation *assetRep = [imageAsset defaultRepresentation];
-        NSLog(@"[imageRep filename] : %@", [assetRep filename]);
         
         CGImageRef cgImg = [assetRep fullResolutionImage];
         UIImage *img = [UIImage imageWithCGImage:cgImg];
