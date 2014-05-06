@@ -19,7 +19,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"Update From: %@ \nContent: %@\nUpdatedTime: %@\nType: %@", _from, _content, [self updatedAtString], [self updateTypeString]];
+    return [NSString stringWithFormat:@"\nUpdate -> From: %@ \nContent: %@\nUpdatedTime: %@\nType: %@", _from, _content, [self updatedAtString], [self updateTypeString]];
 }
 
 - (NSString *)updateTypeString {
