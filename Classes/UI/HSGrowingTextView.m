@@ -81,6 +81,7 @@
     internalTextView.contentInset = UIEdgeInsetsZero;		
     internalTextView.showsHorizontalScrollIndicator = NO;
     internalTextView.text = @"-";
+    internalTextView.backgroundColor = [UIColor greenColor];
     [self addSubview:internalTextView];
     
     minHeight = internalTextView.frame.size.height;
@@ -95,6 +96,10 @@
 
     [self setPlaceholderColor:[UIColor lightGrayColor]];
     internalTextView.displayPlaceHolder = YES;
+}
+
+-(void)refreshFrame:(CGRect)newFrame {
+    internalTextView.frame = newFrame;
 }
 
 -(CGSize)sizeThatFits:(CGSize)size

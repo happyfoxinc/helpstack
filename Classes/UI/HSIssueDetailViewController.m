@@ -38,7 +38,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     self.bubbleWidth = 250.0;
-    [self addMessageView];
     
     self.chatTableView.backgroundColor = [UIColor clearColor];
     self.loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -61,6 +60,7 @@
     [self.chatTableView addGestureRecognizer:hideKeyboard];
     
     [self getTicketUpdates];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -71,10 +71,10 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     if(self.enteredMsg){
-        [self.messageText becomeFirstResponder];
         self.messageText.text = self.enteredMsg;
         self.enteredMsg = nil;
     }
+  //  [self.messageText becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -94,7 +94,8 @@
 - (void)addMessageView {
   //  self.messageText = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(35, 6, self.messageTextSuperView.frame.size.width, 40)];
     if(!self.messageText){
-        self.messageText = [[HSGrowingTextView alloc] initWithFrame:CGRectMake(0, 0, self.messageTextSuperView.frame.size.width, self.messageTextSuperView.frame.size.height)];
+        self.messageText = [[HSGrowingTextView alloc] initWithFrame:CGRectMake(self.messageTextSuperView.frame.origin.x, self.messageTextSuperView.frame.origin.y, self.messageTextSuperView.frame.size.width, self.messageTextSuperView.frame.size.height)];
+        self.messageText.editable = YES;
     }else{
         CGRect msgTextFrame = self.messageText.frame;
         msgTextFrame.size.width = self.messageTextSuperView.frame.size.width;
@@ -109,7 +110,7 @@
     UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     
     if (UIInterfaceOrientationIsLandscape(currentOrientation)){
-        self.messageText.maxHeight = 80.0f;
+        self.messageText.maxHeight = 50.0f;
     }else{
         self.messageText.maxHeight = 200.0f;
     }
@@ -122,7 +123,9 @@
     self.messageText.textColor = [UIColor darkGrayColor];
     self.messageText.placeholder = @"Reply here";
     self.messageText.internalTextView.layer.cornerRadius = 5.0;
-    [self.messageTextSuperView addSubview:self.messageText];
+  //  [self.messageTextSuperView addSubview:self.messageText];
+    [self.messageText removeFromSuperview];
+    [self.bottomMessageView addSubview:self.messageText];
     
     self.sendButton.titleLabel.textColor = [UIColor darkGrayColor];
 }
@@ -137,7 +140,8 @@
     msgViewFrame.size.height -= diff;
     msgViewFrame.origin.y += diff;
     
-    self.messageTextSuperView.frame = growingTextView.frame;
+   // self.messageTextSuperView.frame = growingTextView.frame;
+    self.messageText.frame = growingTextView.frame;
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.chatTableView.contentInset.bottom - diff , 0.0);
     self.chatTableView.contentInset = contentInsets;
@@ -184,7 +188,7 @@
     [self.messageText removeFromSuperview];
     NSString *msgAdded = self.messageText.text;
     [self addMessageView];
-    [self.messageText becomeFirstResponder];
+   // [self.messageText becomeFirstResponder];
     self.messageText.text = msgAdded;
     [self.messageText setNeedsDisplay];
     [self.messageText.internalTextView setNeedsDisplay];
@@ -399,13 +403,14 @@
     
     [self.ticketSource prepareUpdate:self.selectedTicket success:^{
         self.bottomMessageView.hidden = NO;
+        [self addMessageView];
         [self.loadingIndicator stopAnimating];
         [self.chatTableView reloadData];
         [self scrollDownToLastMessage];
     } failure:^(NSError* e){
         self.bottomMessageView.hidden = NO;
         [self.loadingIndicator stopAnimating];
-
+        [self addMessageView];
         UIAlertView* errorAlert = [[UIAlertView alloc] initWithTitle:@"Couldnt get replies" message:@"There was some error loading the replies. Please check if your internet connection is ON." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [errorAlert show];
     }];

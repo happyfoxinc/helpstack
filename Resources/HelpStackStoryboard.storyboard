@@ -457,9 +457,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="VEd-GX-VW4"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="46" id="r6N-Az-Zoq"/>
                                             <constraint firstAttribute="width" constant="46" id="r9t-s2-xzs"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="rEY-MM-UEy"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Send">
@@ -489,7 +487,7 @@
                                         <rect key="frame" x="285" y="12" width="20" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="caF-bA-v3Y">
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="caF-bA-v3Y">
                                         <rect key="frame" x="43" y="5" width="226" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -503,17 +501,15 @@
                                     <constraint firstItem="1DX-py-x4b" firstAttribute="centerX" secondItem="wxK-OQ-di3" secondAttribute="centerX" id="2Re-6B-i6d"/>
                                     <constraint firstAttribute="bottom" secondItem="Szx-vb-Fom" secondAttribute="bottom" constant="8" id="2r7-YI-MDy"/>
                                     <constraint firstAttribute="trailing" secondItem="caF-bA-v3Y" secondAttribute="trailing" constant="51" id="5QG-Qv-bjr"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1DX-py-x4b" secondAttribute="trailing" constant="2" id="69H-7H-U8a"/>
+                                    <constraint firstAttribute="trailing" secondItem="1DX-py-x4b" secondAttribute="trailing" constant="2" id="69H-7H-U8a"/>
                                     <constraint firstItem="Szx-vb-Fom" firstAttribute="leading" secondItem="vxc-PN-oSd" secondAttribute="leading" constant="4" id="A81-SU-VLF"/>
                                     <constraint firstItem="caF-bA-v3Y" firstAttribute="leading" secondItem="vxc-PN-oSd" secondAttribute="leading" constant="43" id="Daa-Xd-a3h"/>
                                     <constraint firstAttribute="bottom" secondItem="caF-bA-v3Y" secondAttribute="bottom" constant="7" id="HYF-Iy-zHw"/>
                                     <constraint firstItem="caF-bA-v3Y" firstAttribute="leading" secondItem="Szx-vb-Fom" secondAttribute="trailing" constant="15" id="L2g-uG-5mh"/>
                                     <constraint firstItem="1DX-py-x4b" firstAttribute="centerY" secondItem="wxK-OQ-di3" secondAttribute="centerY" id="MDf-ve-sna"/>
                                     <constraint firstAttribute="height" constant="44" id="SfT-f9-IsY"/>
-                                    <constraint firstItem="caF-bA-v3Y" firstAttribute="leading" secondItem="vxc-PN-oSd" secondAttribute="leading" constant="43" id="Trh-EG-7Ro"/>
                                     <constraint firstItem="1DX-py-x4b" firstAttribute="top" secondItem="vxc-PN-oSd" secondAttribute="top" constant="7" id="Uod-hN-NBZ"/>
                                     <constraint firstAttribute="trailing" secondItem="1DX-py-x4b" secondAttribute="trailing" constant="2" id="bbr-TW-3Zn"/>
-                                    <constraint firstItem="1DX-py-x4b" firstAttribute="leading" secondItem="caF-bA-v3Y" secondAttribute="trailing" constant="3" id="kUN-Tx-Tax"/>
                                     <constraint firstAttribute="bottom" secondItem="1DX-py-x4b" secondAttribute="bottom" constant="7" id="sC2-Rz-kwG"/>
                                     <constraint firstItem="caF-bA-v3Y" firstAttribute="top" secondItem="vxc-PN-oSd" secondAttribute="top" constant="5" id="zPt-ry-Qmw"/>
                                 </constraints>

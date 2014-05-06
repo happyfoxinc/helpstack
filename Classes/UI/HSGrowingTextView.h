@@ -119,5 +119,6 @@
 
 // call to force a height change (e.g. after you change max/min lines)
 - (void)refreshHeight;
+- (void)refreshFrame:(CGRect)newFrame;
 
 @end
