@@ -144,7 +144,7 @@ float keyboardH;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-    [self.messageText becomeFirstResponder];
+   // [self.messageText becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning

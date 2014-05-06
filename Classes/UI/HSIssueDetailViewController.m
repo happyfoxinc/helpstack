@@ -653,7 +653,6 @@
         }else{
             nameString = @"Staff";
         }
-        nameString = @"Smith";
     }else{
         nameLabel.frame = CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 12.0, 120.0, 20.0);
         nameString = @"Me";
