@@ -27,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet HSButton *sendButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *sendReplyIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *addAttachmentButton;
-//@property (nonatomic, strong) HPGrowingTextView *messageText;
 @property (nonatomic, assign) float bubbleWidth;
 @property (strong, nonatomic) IBOutlet HSGrowingTextView *messageText;
 @property (weak, nonatomic) IBOutlet UIView *messageTextSuperView;

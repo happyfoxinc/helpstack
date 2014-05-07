@@ -140,13 +140,12 @@
     msgViewFrame.size.height -= diff;
     msgViewFrame.origin.y += diff;
     
-   // self.messageTextSuperView.frame = growingTextView.frame;
     self.messageText.frame = growingTextView.frame;
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.chatTableView.contentInset.bottom - diff , 0.0);
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
-    
+
     [self scrollDownToLastMessage];
     
 	self.bottomMessageView.frame = msgViewFrame;
@@ -182,14 +181,28 @@
     [self scrollDownToLastMessage];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self removeInsetsOnChatTable];
+}
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self.chatTableView reloadData];
-    [self.messageText removeFromSuperview];
+    CGRect msgTextFrame = self.messageText.frame;
+    msgTextFrame.size.width = self.messageTextSuperView.frame.size.width;
+    msgTextFrame.size.height = self.messageTextSuperView.frame.size.height;
+    self.messageText.frame = msgTextFrame;
+    UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    if (UIInterfaceOrientationIsLandscape(currentOrientation)){
+        self.messageText.maxHeight = 50.0f;
+    }else{
+        self.messageText.maxHeight = 200.0f;
+    }
+    
     NSString *msgAdded = self.messageText.text;
-    [self addMessageView];
-   // [self.messageText becomeFirstResponder];
     self.messageText.text = msgAdded;
+    
     [self.messageText setNeedsDisplay];
     [self.messageText.internalTextView setNeedsDisplay];
 }
@@ -231,7 +244,7 @@
             [popup showFromRect:[self.addAttachmentButton bounds] inView:self.addAttachmentButton animated:YES];
         }
         else {
-            [popup showInView:[UIApplication sharedApplication].keyWindow];
+            [popup showInView:[self.navigationController view]];
         }
     }
 }
@@ -609,6 +622,7 @@
     if(updateToShow.updateType == HATypeStaffReply){
         messageView = [[HSChatBubbleLeft alloc] initWithFrame:CGRectMake(10, 0.0, self.bubbleWidth, cell.frame.size.height)];
         messageTextView = ((HSChatBubbleLeft *)messageView).messageTextView;
+        
     }else{
         messageView = [[HSChatBubbleRight alloc] initWithFrame:CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 0, self.bubbleWidth, cell.frame.size.height)];
         messageTextView = ((HSChatBubbleRight *)messageView).messageTextView;
