@@ -141,7 +141,7 @@
     
     HSAttachment* attachment = [attachments objectAtIndex:0]; // only 1 attachments upload
     
-    NSString* URLString = [NSString stringWithFormat:@"%@api/v2/uploads.json?filename=%@", self.instanceUrl, attachment.fileName];
+    NSString* URLString = [[NSURL URLWithString:[NSString stringWithFormat:@"api/v2/uploads.json?filename=%@", attachment.fileName] relativeToURL:[NSURL URLWithString:self.instanceUrl]] absoluteString];
     
     AFHTTPRequestOperationManager* attachmentnetworkManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:self.instanceUrl]];
     
