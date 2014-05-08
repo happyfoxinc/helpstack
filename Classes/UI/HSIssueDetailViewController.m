@@ -14,7 +14,6 @@
 #import "HSChatBubbleLeft.h"
 #import "HSChatBubbleRight.h"
 #import "HSLabel.h"
-#import "HSSmallLabel.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @interface HSIssueDetailViewController ()
@@ -591,7 +590,7 @@
     }
     
     cellView.backgroundColor = [UIColor clearColor];
-    HSSmallLabel *timestamp = [[HSSmallLabel alloc] initWithFrame:CGRectMake(0, -2.0, 120.0, 20.0)];
+    HSLabel *timestamp = [[HSLabel alloc] initWithFrame:CGRectMake(0, -2.0, 120.0, 20.0)];
     timestamp.font = [UIFont fontWithName:timestamp.font.fontName size:10.0];
     timestamp.text =   [updateToShow updatedAtString];
     [cellView addSubview:timestamp];
@@ -670,7 +669,7 @@
         [view removeFromSuperview];
     }
     
-    HSSmallLabel *nameLabel = [[HSSmallLabel alloc] init];
+    HSLabel *nameLabel = [[HSLabel alloc] init];
     nameLabel.tag = 1;
     
     NSString *nameString = @"";
