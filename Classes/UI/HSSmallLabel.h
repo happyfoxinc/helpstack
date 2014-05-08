@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "HSHelpStack.h"
 
-@interface HSLabel : UILabel
+@interface HSSmallLabel : UILabel
 
 @end

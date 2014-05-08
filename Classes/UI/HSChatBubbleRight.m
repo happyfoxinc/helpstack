@@ -40,10 +40,10 @@
     }
     self.messageTextView.frame = CGRectMake(0, -5, self.frame.size.width, self.frame.size.height);
     self.messageTextView.userInteractionEnabled = NO;
-    [self addSubview:self.messageTextView];
     [[[HSHelpStack instance] appearance] customizeRightBubble:self];
     [[[HSHelpStack instance] appearance] customizeRightBubbleText:self.messageTextView];
     self.layer.cornerRadius = 5.0;
+    [self addSubview:self.messageTextView];
     return self.messageTextView;
 }
 

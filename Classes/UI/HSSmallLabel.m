@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Anand. All rights reserved.
 //
 
-#import "HSLabel.h"
+#import "HSSmallLabel.h"
 
-@implementation HSLabel
+@implementation HSSmallLabel
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -16,7 +16,7 @@
     
     if (self) {
         // Initialization code
-        [[[HSHelpStack instance] appearance] customizeTextLabel:self];
+        [[[HSHelpStack instance] appearance] customizeSmallTextLabel:self];
     }
     
     return self;

@@ -26,10 +26,11 @@
 - (void)customizeButton:(UIButton *)button;
 - (void)customizeRightBubble:(UIView *)bubble;
 - (void)customizeLeftBubble:(UIView *)bubble;
-- (void)customizeBubbleText:(UITextView *)BubbleText;
 - (UIFont *)getBubbleTextFont;
 -(void)customizeRightBubbleText:(UITextView *)BubbleText;
 -(void)customizeLeftBubbleText:(UITextView *)BubbleText;
+-(void) customizeBubbleArrowForRightChatBubble:(UIView *)arrowView;
+-(void) customizeBubbleArrowForLeftChatBubble:(UIView *)arrowView;
 
 + (BOOL)isTall;
 + (BOOL)isIPad;

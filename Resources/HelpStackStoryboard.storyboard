@@ -376,10 +376,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="91"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ynb-qZ-Df2">
+                                                    <rect key="frame" x="290" y="70" width="10" height="10"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="10" id="Eu1-Nc-yGB"/>
+                                                        <constraint firstAttribute="width" constant="10" id="ewX-gp-1CM"/>
+                                                    </constraints>
+                                                </view>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CYp-VD-2ss" customClass="HSChatBubbleRight">
                                                     <rect key="frame" x="40" y="0.0" width="250" height="91"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="250" id="7XS-EU-BFd"/>
                                                     </constraints>
@@ -389,6 +398,8 @@
                                                 <constraint firstItem="CYp-VD-2ss" firstAttribute="top" secondItem="yws-Qm-5pJ" secondAttribute="top" id="7VB-x1-Wbi"/>
                                                 <constraint firstAttribute="trailing" secondItem="CYp-VD-2ss" secondAttribute="trailing" constant="12" id="Q4h-Mb-lyx"/>
                                                 <constraint firstAttribute="bottom" secondItem="CYp-VD-2ss" secondAttribute="bottom" id="S5B-v3-W1u"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ynb-qZ-Df2" secondAttribute="trailing" constant="2" id="e5r-at-ucZ"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ynb-qZ-Df2" secondAttribute="bottom" constant="11" id="k0S-2C-u8E"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
