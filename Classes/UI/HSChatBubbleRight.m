@@ -8,6 +8,12 @@
 
 #import "HSChatBubbleRight.h"
 
+@interface HSChatBubbleRight ()
+
+@property (nonatomic, strong) UITextView *messageTextView;
+
+@end
+
 @implementation HSChatBubbleRight
 
 - (id)initWithFrame:(CGRect)frame
@@ -25,6 +31,20 @@
     }
     
     return self;
+}
+
+-(UITextView *)getChatTextView {
+    
+    if(!self.messageTextView) {
+        self.messageTextView = [[UITextView alloc] init];
+    }
+    self.messageTextView.frame = CGRectMake(0, -5, self.frame.size.width, self.frame.size.height);
+    self.messageTextView.userInteractionEnabled = NO;
+    [self addSubview:self.messageTextView];
+    [[[HSHelpStack instance] appearance] customizeRightBubble:self];
+    [[[HSHelpStack instance] appearance] customizeRightBubbleText:self.messageTextView];
+    self.layer.cornerRadius = 5.0;
+    return self.messageTextView;
 }
 
 @end

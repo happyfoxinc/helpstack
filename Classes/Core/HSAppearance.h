@@ -21,6 +21,7 @@
 - (void)customizeHeaderTitle:(UILabel *)title;
 - (void)customizeCell:(UITableViewCell *)cell;
 - (void)customizeTextLabel:(UILabel *)title;
+- (void)customizeSmallTextLabel:(UILabel *)title;
 - (void)customizeTextView:(UITextView *)textView;
 - (void)customizeButton:(UIButton *)button;
 - (void)customizeRightBubble:(UIView *)bubble;

@@ -75,6 +75,16 @@
 @property (nonatomic, strong) UIFont *labelFont;
 @property (nonatomic, strong) UIColor *labelColor;
 
+/** Chat Bubble Properties */
+@property (nonatomic, strong) UIColor *leftChatBubble_BackgroundColor;
+@property (nonatomic, strong) UIColor *leftChatBubble_textColor;
+@property (nonatomic, strong) UIFont *leftChatBubble_textFont;
+@property (nonatomic, strong) UIColor *rightChatBubble_BackgroundColor;
+@property (nonatomic, strong) UIColor *rightChatBubble_textColor;
+@property (nonatomic, strong) UIFont *rightChatBubble_textFont;
+@property (nonatomic, strong) UIColor *messageInfoTextColor;
+@property (nonatomic, strong) UIFont *messageInfoTextFont;
+
 @end
 
 @implementation HSAppearance
@@ -105,6 +115,7 @@
     [self getTableHeaderProperties];
     [self getLabelProperties];
     [self getBackgroundColor];
+    [self getChatBubbleProperties];
 }
 
 - (void)getNavigationBarProperties {
@@ -242,6 +253,94 @@
     }
 }
 
+-(void)getChatBubbleProperties {
+    
+    self.rightChatBubble_BackgroundColor = self.headerBgColor;
+    self.rightChatBubble_textColor = self.labelColor;
+    self.rightChatBubble_textFont = self.labelFont;
+    
+    self.leftChatBubble_BackgroundColor = self.cellBgColor;
+    self.leftChatBubble_textColor = self.labelColor;
+    self.leftChatBubble_textFont = self.labelFont;
+    
+    self.messageInfoTextColor = self.labelColor;
+    self.messageInfoTextFont = self.labelFont;
+    
+    NSDictionary *rightChatBubbleProperties = [self.customThemeProperties objectForKey:@"RightChatBubbleAttributes"];
+    NSDictionary *leftChatBubbleProperties = [self.customThemeProperties objectForKey:@"LeftChatBubbleAttributes"];
+    
+    if(rightChatBubbleProperties) {
+        NSString *bgColorString = [rightChatBubbleProperties objectForKey:@"BackgroundColor"];
+        if(bgColorString){
+            UIColor *bgColor = [UIColor colorFromRGBString:bgColorString];
+            if(bgColor){
+                self.rightChatBubble_BackgroundColor = bgColor;
+            }
+        }
+        
+        NSString *textColorString = [rightChatBubbleProperties objectForKey:@"TextColor"];
+        if(textColorString){
+            UIColor *textColor = [UIColor colorFromRGBString:textColorString];
+            if(textColor){
+                self.rightChatBubble_textColor = textColor;
+            }
+        }
+        
+        NSString *textFontString = [rightChatBubbleProperties objectForKey:@"TextFont"];
+        NSString *textFontSize = [rightChatBubbleProperties objectForKey:@"TextSize"];
+        if(textFontString && textFontSize && textFontString.length > 0 && textFontSize.length > 0){
+            UIFont *customFont = [UIFont fontWithName:textFontString size:[textFontSize floatValue]];
+            if(customFont != nil){
+                self.rightChatBubble_textFont = customFont;
+            }
+        }
+    }
+    
+    if(leftChatBubbleProperties) {
+        NSString *bgColorString = [leftChatBubbleProperties objectForKey:@"BackgroundColor"];
+        if(bgColorString){
+            UIColor *bgColor = [UIColor colorFromRGBString:bgColorString];
+            if(bgColor){
+                self.leftChatBubble_BackgroundColor = bgColor;
+            }
+        }
+        
+        NSString *textColorString = [leftChatBubbleProperties objectForKey:@"TextColor"];
+        if(textColorString){
+            UIColor *textColor = [UIColor colorFromRGBString:textColorString];
+            if(textColor){
+                self.leftChatBubble_textColor = textColor;
+            }
+        }
+        
+        NSString *textFontString = [leftChatBubbleProperties objectForKey:@"TextFont"];
+        NSString *textFontSize = [rightChatBubbleProperties objectForKey:@"TextSize"];
+        if(textFontString && textFontSize && textFontString.length > 0 && textFontSize.length > 0){
+            UIFont *customFont = [UIFont fontWithName:textFontString size:[textFontSize floatValue]];
+            if(customFont != nil){
+                self.leftChatBubble_textFont = customFont;
+            }
+        }
+    }
+    
+    NSString *textFontString = [rightChatBubbleProperties objectForKey:@"MessageInfoLabelFont"];
+    NSString *textFontSize = [rightChatBubbleProperties objectForKey:@"MessageInfoLabelSize"];
+    if(textFontString && textFontSize && textFontString.length > 0 && textFontSize.length > 0){
+        UIFont *customFont = [UIFont fontWithName:textFontString size:[textFontSize floatValue]];
+        if(customFont != nil){
+            self.messageInfoTextFont = customFont;
+        }
+    }
+    
+    NSString *textColorString = [leftChatBubbleProperties objectForKey:@"MessageInfoLabelColor"];
+    if(textColorString){
+        UIColor *textColor = [UIColor colorFromRGBString:textColorString];
+        if(textColor){
+            self.messageInfoTextColor = textColor;
+        }
+    }
+}
+
 /* Background Color - this goes as the background color for all the HelpStack screens */
 - (UIColor *)getBackgroundColor {
     
@@ -353,6 +452,14 @@
     title.backgroundColor = self.labelBgColor;
 }
 
+#pragma mark - Small Label Customization;
+- (void)customizeSmallTextLabel:(UILabel *)title {
+    
+    title.font = self.messageInfoTextFont;
+    title.backgroundColor = [UIColor clearColor];
+    title.textColor = self.messageInfoTextColor;
+}
+
 #pragma mark - Text View customization
 
 - (void)customizeTextView:(UITextView *)textView {
@@ -450,14 +557,20 @@
     
     bubble.layer.borderColor = DEFAULT_CHATBUBBLE_BORDERCOLOR.CGColor;
     bubble.layer.borderWidth = 0.3;
-    bubble.backgroundColor = self.headerBgColor;
+    
+    //bubble.backgroundColor = self.headerBgColor;
+    
+    bubble.backgroundColor = self.rightChatBubble_BackgroundColor;
 }
 
 - (void)customizeLeftBubble:(UIView *)bubble {
     
     bubble.layer.borderColor = DEFAULT_CHATBUBBLE_BORDERCOLOR.CGColor;
     bubble.layer.borderWidth = 0.3;
-    bubble.backgroundColor = self.cellBgColor;
+ 
+    //bubble.backgroundColor = self.cellBgColor;
+    
+    bubble.backgroundColor = self.leftChatBubble_BackgroundColor;
 }
 
 /* Chat texts appears same as the Cell view Texts - Takes up the label properties */
@@ -471,15 +584,15 @@
 -(void)customizeRightBubbleText:(UITextView *)BubbleText{
     
     BubbleText.backgroundColor = [UIColor clearColor];
-    BubbleText.textColor = self.headerTitleColor;
-    BubbleText.font = self.labelFont;
+    BubbleText.textColor = self.rightChatBubble_textColor;
+    BubbleText.font = self.rightChatBubble_textFont;
 }
 
 -(void)customizeLeftBubbleText:(UITextView *)BubbleText{
     
     BubbleText.backgroundColor = [UIColor clearColor];
-    BubbleText.textColor = self.labelColor;
-    BubbleText.font = self.labelFont;
+    BubbleText.textColor = self.leftChatBubble_textColor;
+    BubbleText.font = self.leftChatBubble_textFont;
 }
 
 -(UIFont *)getBubbleTextFont{

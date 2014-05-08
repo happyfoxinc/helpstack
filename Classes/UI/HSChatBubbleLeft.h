@@ -11,7 +11,6 @@
 
 @interface HSChatBubbleLeft : UIView
 
-
-@property (nonatomic, strong) UITextView *messageTextView;
+-(UITextView *)getChatTextView;
 
 @end

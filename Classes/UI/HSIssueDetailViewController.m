@@ -14,6 +14,7 @@
 #import "HSChatBubbleLeft.h"
 #import "HSChatBubbleRight.h"
 #import "HSLabel.h"
+#import "HSSmallLabel.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @interface HSIssueDetailViewController ()
@@ -187,7 +188,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self.chatTableView reloadData];
+   // [self.chatTableView reloadData];
     CGRect msgTextFrame = self.messageText.frame;
     msgTextFrame.size.width = self.messageTextSuperView.frame.size.width;
     msgTextFrame.size.height = self.messageTextSuperView.frame.size.height;
@@ -572,24 +573,25 @@
 -(UITableViewCell *)getInfoCellForTable:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath{
     
     HSUpdate* updateToShow = [self.ticketSource updateAtPosition:indexPath.section];
-    static NSString *CellIdentifier = @"InfoCell";
+    static NSString *CellIdentifier; // = @"InfoCell";
+    
+    if(updateToShow.updateType == HATypeStaffReply) {
+        CellIdentifier = @"InfoCell_Left";
+    }else {
+        CellIdentifier = @"InfoCell_Right";
+    }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor clearColor];
     
-    NSArray *subviews = [cell.contentView subviews];
+    UIView *cellView = [cell viewWithTag:3];
+    NSArray *subviews = [cellView subviews];
     for(UIView *view in subviews){
         [view removeFromSuperview];
     }
     
-    UIView *cellView = [[UIView alloc] init];
-    if(updateToShow.updateType == HATypeStaffReply){
-        cellView.frame = CGRectMake(10.0, 0, self.bubbleWidth, 20.0);
-    }else{
-        cellView.frame = CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 0, self.bubbleWidth, 20.0);
-    }
     cellView.backgroundColor = [UIColor clearColor];
-    HSLabel *timestamp = [[HSLabel alloc] initWithFrame:CGRectMake(0, -2.0, 120.0, 20.0)];
+    HSSmallLabel *timestamp = [[HSSmallLabel alloc] initWithFrame:CGRectMake(0, -2.0, 120.0, 20.0)];
     timestamp.font = [UIFont fontWithName:timestamp.font.fontName size:10.0];
     timestamp.text =   [updateToShow updatedAtString];
     [cellView addSubview:timestamp];
@@ -608,27 +610,30 @@
 -(UITableViewCell *)getMessageCellForTable:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath{
     
     HSUpdate* updateToShow = [self.ticketSource updateAtPosition:indexPath.section];
-    static NSString *CellIdentifier = @"MessageCell";
+    static NSString *CellIdentifier; // = @"MessageCell";
+    
+    if(updateToShow.updateType == HATypeStaffReply) {
+        CellIdentifier = @"MessageCell_Left";
+    }else {
+        CellIdentifier = @"MessageCell_Right";
+    }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     UIView *messageView;
     UITextView *messageTextView;
-    NSArray *subviews = [cell.contentView subviews];
-    for(UIView *view in subviews){
-        [view removeFromSuperview];
-    }
+    
+    messageView = [cell viewWithTag:3];
+    CGRect bubbleFrame = messageView.frame;
+    bubbleFrame.size.height = cell.frame.size.height;
+    messageView.frame = bubbleFrame;
     
     if(updateToShow.updateType == HATypeStaffReply){
-        messageView = [[HSChatBubbleLeft alloc] initWithFrame:CGRectMake(10, 0.0, self.bubbleWidth, cell.frame.size.height)];
-        messageTextView = ((HSChatBubbleLeft *)messageView).messageTextView;
-        
+        messageTextView = [((HSChatBubbleLeft *)messageView) getChatTextView];
     }else{
-        messageView = [[HSChatBubbleRight alloc] initWithFrame:CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 0, self.bubbleWidth, cell.frame.size.height)];
-        messageTextView = ((HSChatBubbleRight *)messageView).messageTextView;
+        messageTextView = [((HSChatBubbleRight *)messageView) getChatTextView];
     }
     
-    [cell.contentView addSubview:messageView];
     cell.contentView.backgroundColor = [UIColor clearColor];
     
     NSString *messageContent = [updateToShow content];
@@ -647,34 +652,43 @@
 -(UITableViewCell *)getSenderInfoCellForTable:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath{
     
     HSUpdate* updateToShow = [self.ticketSource updateAtPosition:indexPath.section];
-    static NSString *CellIdentifier = @"InfoCell";
+    
+    static NSString *CellIdentifier; // = @"MessageDetails_Right";
+    
+    if(updateToShow.updateType == HATypeStaffReply) {
+        CellIdentifier = @"MessageDetails_Left";
+    }else {
+        CellIdentifier = @"MessageDetails_Right";
+    }
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor clearColor];
     
-    NSArray *subviews = [cell.contentView subviews];
+    UIView *cellView = [cell viewWithTag:3];
+    NSArray *subviews = [cellView subviews];
     for(UIView *view in subviews){
         [view removeFromSuperview];
     }
     
-    HSLabel *nameLabel = [[HSLabel alloc] init];
+    HSSmallLabel *nameLabel = [[HSSmallLabel alloc] init];
     nameLabel.tag = 1;
     
     NSString *nameString = @"";
+    nameLabel.frame = CGRectMake(0, 12.0, 120.0, 20.0);
     if(updateToShow.updateType == HATypeStaffReply){
-        nameLabel.frame = CGRectMake(10.0, 12.0, 120.0, 20.0);
         if(updateToShow.from){
             nameString = updateToShow.from;
         }else{
             nameString = @"Staff";
         }
     }else{
-        nameLabel.frame = CGRectMake(cell.frame.size.width - self.bubbleWidth - 10, 12.0, 120.0, 20.0);
         nameString = @"Me";
     }
-    [cell.contentView addSubview:nameLabel];
+    [cellView addSubview:nameLabel];
     //Overriding timestamp font and size
     nameLabel.font = [UIFont fontWithName:nameLabel.font.fontName size:10.0];
     nameLabel.text = nameString;
+    
     return cell;
 }
 
