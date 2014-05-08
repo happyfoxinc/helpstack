@@ -10,7 +10,7 @@
 #import "HSHelpStack.h"
 #import "HSActivityIndicatorView.h"
 
-#define HTML_WRAPPER_WITH_TITLE @"<!DOCTYPE html><html><head><link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'><style>body{padding: 0 8px} .heading{ font-family: 'Helvetica Neue'; font-size: 20px; color: #000000; padding: 8px 0; line-height:30px;} .content{ font-family: 'Open Sans', sans-serif;  font-size: 16px; color: #313131; line-height:30px;} p{ line-height: 1.5; text-align: left !important; }</style></head><body><h2 class='heading'>%@</h3><div class='content'>%@</div></body></html>"
+#define HTML_WRAPPER_WITH_TITLE @"<!DOCTYPE html><html><head><link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'><style>body{padding: 0 8px} .heading{ font-family: 'Helvetica Neue'; font-size: 20px; color: #000000; padding: 8px 0; line-height:30px;} .content{ font-family: 'Open Sans', sans-serif;  font-size: 16px; color: #313131; line-height:30px;} p{ line-height: 30px; text-align: left !important; margin-bottom:20px;}</style></head><body><h2 class='heading'>%@</h3><div class='content'>%@</div></body></html>"
 
 @interface HSArticleDetailViewController ()<UIWebViewDelegate>
 
@@ -35,10 +35,13 @@
     NSString* content;
     if(self.article.htmlContent) {
         content = self.article.htmlContent;
+        content = [self stripUnwantedHtmlTags:content];
     }
     else if(self.article.textContent) {
         content = self.article.textContent;
     }
+    
+    
     
     // patch the content to add title and font
     NSString* wrapperContent = [NSString stringWithFormat:HTML_WRAPPER_WITH_TITLE,  self.article.title, content];
@@ -84,6 +87,12 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.loadingView stopAnimating];
     self.loadingView.hidden = YES;
+}
+
+- (NSString *)stripUnwantedHtmlTags:(NSString *)htmlString
+{
+    // Removing a empty P tags so view looks perfect
+    return [htmlString stringByReplacingOccurrencesOfString:@"<p>&nbsp;</p>" withString:@""];
 }
 
 @end

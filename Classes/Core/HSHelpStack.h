@@ -31,7 +31,7 @@
  
     Note: There should be a gear set, otherwise gear initialization will fail.
  */
-- (void)showHelp:(UIViewController*)controller;
+- (void)showHelp:(UIViewController*)controller completion:(void (^)(void))completion;
 - (void)setThemeFrompList:(NSString*)pListPath;
 
 @end
