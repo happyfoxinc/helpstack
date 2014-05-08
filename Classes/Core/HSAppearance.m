@@ -570,31 +570,54 @@
     //bubble.backgroundColor = self.headerBgColor;
     
     bubble.backgroundColor = self.rightChatBubble_BackgroundColor;
-    bubble.layer.cornerRadius = 3.0;
-    
-   
-
 }
 
 -(void) customizeBubbleArrowForRightChatBubble:(UIView *)arrowView {
+    
+    arrowView.backgroundColor = [UIColor clearColor];
     
     NSArray *sublayers = [[arrowView layer] sublayers];
     [[sublayers objectAtIndex:0] removeFromSuperlayer];
     
     CGMutablePathRef path = CGPathCreateMutable();
-    CGPathMoveToPoint(path, NULL, arrowView.frame.size.width - 5.0, 0.0f);
-    
+    CGPathMoveToPoint(path, NULL, 0.0f, 0.0f);
+    CGPathAddLineToPoint(path, NULL, arrowView.frame.size.width/2, arrowView.frame.size.height/2);
+    CGPathAddLineToPoint(path, NULL, 0.0f , arrowView.frame.size.height);
+    CGPathMoveToPoint(path, NULL, 0.0f, 0.0f);
     
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     [shapeLayer setPath:path];
-    [shapeLayer setFillColor:[[self getBackgroundColor] CGColor]];
+    [shapeLayer setFillColor:[self.rightChatBubble_BackgroundColor CGColor]];
     [shapeLayer setStrokeColor:[[UIColor clearColor] CGColor]];
     [shapeLayer setBounds:arrowView.bounds];
     
     [shapeLayer setAnchorPoint:CGPointMake(0.0f, 0.0f)];
     [shapeLayer setPosition:CGPointMake(0.0f, 0.0f)];
     [[arrowView layer] insertSublayer:shapeLayer atIndex:0];
+}
+
+-(void) customizeBubbleArrowForLeftChatBubble:(UIView *)arrowView {
     
+    arrowView.backgroundColor = [UIColor clearColor];
+    
+    NSArray *sublayers = [[arrowView layer] sublayers];
+    [[sublayers objectAtIndex:0] removeFromSuperlayer];
+    
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathMoveToPoint(path, NULL, arrowView.frame.size.width, arrowView.frame.size.height);
+    CGPathAddLineToPoint(path, NULL, 0.0f , arrowView.frame.size.height/2);
+    CGPathAddLineToPoint(path, NULL, arrowView.frame.size.width , arrowView.frame.size.height);
+    CGPathMoveToPoint(path, NULL, arrowView.frame.size.width, arrowView.frame.size.height);
+    
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    [shapeLayer setPath:path];
+    [shapeLayer setFillColor:[self.rightChatBubble_BackgroundColor CGColor]];
+    [shapeLayer setStrokeColor:[[UIColor clearColor] CGColor]];
+    [shapeLayer setBounds:arrowView.bounds];
+    
+    [shapeLayer setAnchorPoint:CGPointMake(0.0f, 0.0f)];
+    [shapeLayer setPosition:CGPointMake(0.0f, 0.0f)];
+    [[arrowView layer] insertSublayer:shapeLayer atIndex:0];
 }
 
 - (void)customizeLeftBubble:(UIView *)bubble {

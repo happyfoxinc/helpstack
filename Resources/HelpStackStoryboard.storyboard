@@ -376,10 +376,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="91"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ynb-qZ-Df2">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ynb-qZ-Df2" customClass="HSBubbleRightArrow">
                                                     <rect key="frame" x="290" y="70" width="10" height="10"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="10" id="Eu1-Nc-yGB"/>
                                                         <constraint firstAttribute="width" constant="10" id="ewX-gp-1CM"/>
