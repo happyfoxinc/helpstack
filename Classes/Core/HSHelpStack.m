@@ -48,6 +48,11 @@
 /**
     start HelpStackController for given gear.
  */
+
+- (void)showHelp:(UIViewController*)parentController {
+    [self showHelp:parentController completion:nil];
+}
+
 - (void)showHelp:(UIViewController*)parentController completion:(void (^)(void))completion {
     
     UIViewController* mainController;
