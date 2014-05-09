@@ -604,14 +604,14 @@
     [[sublayers objectAtIndex:0] removeFromSuperlayer];
     
     CGMutablePathRef path = CGPathCreateMutable();
-    CGPathMoveToPoint(path, NULL, arrowView.frame.size.width, arrowView.frame.size.height);
-    CGPathAddLineToPoint(path, NULL, 0.0f , arrowView.frame.size.height/2);
+    CGPathMoveToPoint(path, NULL, arrowView.frame.size.width, 0.0f);
+    CGPathAddLineToPoint(path, NULL, arrowView.frame.size.width/2 , arrowView.frame.size.height/2);
     CGPathAddLineToPoint(path, NULL, arrowView.frame.size.width , arrowView.frame.size.height);
-    CGPathMoveToPoint(path, NULL, arrowView.frame.size.width, arrowView.frame.size.height);
+    CGPathMoveToPoint(path, NULL, arrowView.frame.size.width, 0.0f);
     
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     [shapeLayer setPath:path];
-    [shapeLayer setFillColor:[self.rightChatBubble_BackgroundColor CGColor]];
+    [shapeLayer setFillColor:[self.leftChatBubble_BackgroundColor CGColor]];
     [shapeLayer setStrokeColor:[[UIColor clearColor] CGColor]];
     [shapeLayer setBounds:arrowView.bounds];
     
@@ -623,7 +623,7 @@
 - (void)customizeLeftBubble:(UIView *)bubble {
     
     bubble.layer.borderColor = DEFAULT_CHATBUBBLE_BORDERCOLOR.CGColor;
-    bubble.layer.borderWidth = 0.1;
+    bubble.layer.borderWidth = 0.0;
  
     //bubble.backgroundColor = self.cellBgColor;
     

@@ -7,6 +7,7 @@
 //
 
 #import "HSBubbleLeftArrow.h"
+#import "HSHelpStack.h"
 
 @implementation HSBubbleLeftArrow
 
@@ -19,13 +20,13 @@
     return self;
 }
 
-/*
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+    [[[HSHelpStack instance] appearance] customizeBubbleArrowForLeftChatBubble:self];
 }
-*/
+
 
 @end

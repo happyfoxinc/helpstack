@@ -9,7 +9,9 @@
 #import "HSTicketDetailViewControlleriPad.h"
 
 @interface HSTicketDetailViewControlleriPad ()
-
+{
+    NSString *msgEntered;
+}
 @end
 
 @implementation HSTicketDetailViewControlleriPad
@@ -29,6 +31,7 @@ float keyboardH;
 {
     [super viewDidLoad];
     super.bubbleWidth = 350.0;
+    msgEntered = nil;
 	// Do any additional setup after loading the view.
 }
 
@@ -52,9 +55,33 @@ float keyboardH;
     
 }
 
+- (void)growingTextView:(HSGrowingTextView *)growingTextView willChangeHeight:(float)height
+{
+    float diff = (growingTextView.frame.size.height - height);
+	CGRect msgViewFrame = self.bottomMessageView.frame;
+    msgViewFrame.size.height -= diff;
+    msgViewFrame.origin.y += diff;
+    
+    self.messageText.frame = growingTextView.frame;
+    
+    UIEdgeInsets contentInsets = self.chatTableView.contentInset;
+    if(contentInsets.bottom == 0 && diff > 0) {   //This change for ipad
+        self.bottomMessageView.frame = msgViewFrame;
+        return;
+    }
+    contentInsets.bottom-=diff;
+    self.chatTableView.contentInset = contentInsets;
+    self.chatTableView.scrollIndicatorInsets = contentInsets;
+    
+    [self scrollDownToLastMessage];
+    
+	self.bottomMessageView.frame = msgViewFrame;
+}
+
 #pragma mark - Handle keyboard delegate
 
 - (void) keyboardWillShow:(NSNotification *)note{
+    
     CGRect formsheetFrame = self.navigationController.view.bounds;
     CGRect viewFrame = [UIScreen mainScreen].bounds;
     CGPoint centreP = CGPointMake(viewFrame.size.width/2, viewFrame.size.height/2);
@@ -89,8 +116,8 @@ float keyboardH;
         containerFrame.origin.y = self.view.bounds.size.height - (keyboardH + containerFrame.size.height) - 10.0;
     }
     
-    
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardH, 0.0);
+    UIEdgeInsets contentInsets = self.chatTableView.contentInset; //UIEdgeInsetsMake(0.0, 0.0, keyboardH, 0.0);
+    contentInsets.bottom+=keyboardH;
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
     
@@ -109,16 +136,44 @@ float keyboardH;
 }
 
 - (void) keyboardWillHide:(NSNotification *)note{
+    
+    CGRect formsheetFrame = self.navigationController.view.bounds;
+    CGRect viewFrame = [UIScreen mainScreen].bounds;
+    CGPoint centreP = CGPointMake(viewFrame.size.width/2, viewFrame.size.height/2);
+    
+    float bottomspace = 0;
+    UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    if (UIInterfaceOrientationIsLandscape(currentOrientation)){
+        float topspace = centreP.x - (formsheetFrame.size.width/2);
+        bottomspace = viewFrame.size.width - topspace - formsheetFrame.size.width;
+        
+    }else{
+        float topspace = centreP.y - (formsheetFrame.size.height/2);
+        bottomspace = viewFrame.size.height - topspace - formsheetFrame.size.height;
+    }
+    // get keyboard size and loctaion
+	CGRect keyboardBounds;
+    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
     NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-	
+    
+    // Need to translate the bounds to account for rotation.
+    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+    
+    keyboardH = keyboardBounds.size.height - bottomspace;
+    
 	// get a rect for the textView frame
 	CGRect containerFrame = self.bottomMessageView.frame;
     containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
-    self.chatTableView.contentInset = contentInsets;
-    self.chatTableView.scrollIndicatorInsets = contentInsets;
+    UIEdgeInsets contentInsets = self.chatTableView.contentInset;
+    
+    if(contentInsets.bottom > 0) {
+        contentInsets.bottom-=keyboardH ;
+        self.chatTableView.contentInset = contentInsets;
+        self.chatTableView.scrollIndicatorInsets = contentInsets;
+    }
 	
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
@@ -131,19 +186,32 @@ float keyboardH;
 	
 	// commit animations
 	[UIView commitAnimations];
+    
+    NSString *msgAdded = self.messageText.text;
+    self.messageText.text = msgAdded;
+    
+    [self.messageText setNeedsDisplay];
+    [self.messageText.internalTextView setNeedsDisplay];
+    
     [super scrollDownToLastMessage];
 }
 
 #pragma mark - Handle orientation
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
-    if([self.messageText isFirstResponder]){
-        [self.messageText resignFirstResponder];
-    }
+   
+    msgEntered = self.messageText.text;
+    self.messageText.text = @"";
+    self.messageText.placeholder = @"";
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-   // [self.messageText becomeFirstResponder];
+
+    if(msgEntered) {
+        self.messageText.text = msgEntered;
+        msgEntered = nil;
+    }
+    self.messageText.placeholder = @"";
 }
 
 - (void)didReceiveMemoryWarning

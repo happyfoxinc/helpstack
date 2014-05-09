@@ -388,7 +388,7 @@
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CYp-VD-2ss" customClass="HSChatBubbleRight">
                                                     <rect key="frame" x="40" y="0.0" width="250" height="91"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="250" id="7XS-EU-BFd"/>
                                                     </constraints>
@@ -413,15 +413,26 @@
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KkQ-1b-bgN" customClass="HSChatBubbleLeft">
                                                     <rect key="frame" x="10" y="0.0" width="250" height="91"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="250" id="g4I-wt-DwH"/>
                                                     </constraints>
                                                 </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zl9-ot-kYE" customClass="HSBubbleLeftArrow">
+                                                    <rect key="frame" x="0.0" y="70" width="10" height="10"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="10" id="9Va-rH-RL2"/>
+                                                        <constraint firstAttribute="height" constant="10" id="G0W-LL-aEC"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="Zl9-ot-kYE" secondAttribute="bottom" constant="11" id="2Pq-RH-TRc"/>
                                                 <constraint firstItem="KkQ-1b-bgN" firstAttribute="top" secondItem="ajS-ZP-HCh" secondAttribute="top" id="P30-4I-hy8"/>
                                                 <constraint firstAttribute="bottom" secondItem="KkQ-1b-bgN" secondAttribute="bottom" id="g1l-wL-LS6"/>
+                                                <constraint firstItem="Zl9-ot-kYE" firstAttribute="leading" secondItem="ajS-ZP-HCh" secondAttribute="leading" id="s62-V6-oRs"/>
                                                 <constraint firstItem="KkQ-1b-bgN" firstAttribute="leading" secondItem="ajS-ZP-HCh" secondAttribute="leading" constant="10" id="u8W-i4-uOa"/>
                                             </constraints>
                                         </tableViewCellContentView>

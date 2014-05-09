@@ -363,7 +363,9 @@
     containerFrame.origin.y = self.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height);
     
     self.keyboardHeight = keyboardBounds.size.height;
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.keyboardHeight, 0.0);
+    
+    UIEdgeInsets contentInsets = self.chatTableView.contentInset;
+    contentInsets.bottom+=self.keyboardHeight;
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
     
@@ -388,13 +390,28 @@
     NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
 	
+    CGRect keyboardBounds;
+    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+    
+    // Need to translate the bounds to account for rotation.
+    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+    
 	// get a rect for the textView frame
 	CGRect containerFrame = self.bottomMessageView.frame;
     containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
+    self.keyboardHeight = keyboardBounds.size.height;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
-    self.chatTableView.contentInset = contentInsets;
-    self.chatTableView.scrollIndicatorInsets = contentInsets;
+    UIEdgeInsets contentInsets = self.chatTableView.contentInset;
+    
+    if(contentInsets.bottom > 0) {
+        contentInsets.bottom-=self.keyboardHeight ;
+        self.chatTableView.contentInset = contentInsets;
+        self.chatTableView.scrollIndicatorInsets = contentInsets;
+    }
+    
+//    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+//    self.chatTableView.contentInset = contentInsets;
+//    self.chatTableView.scrollIndicatorInsets = contentInsets;
 	
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
@@ -576,9 +593,9 @@
     static NSString *CellIdentifier; // = @"InfoCell";
     
     if(updateToShow.updateType == HATypeStaffReply) {
-        CellIdentifier = @"InfoCell_Left";
+        CellIdentifier = @"MessageDetails_Left";
     }else {
-        CellIdentifier = @"InfoCell_Right";
+        CellIdentifier = @"MessageDetails_Right";
     }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -591,8 +608,9 @@
     }
     
     cellView.backgroundColor = [UIColor clearColor];
-    HSSmallLabel *timestamp = [[HSSmallLabel alloc] initWithFrame:CGRectMake(0, -2.0, 120.0, 20.0)];
+    HSSmallLabel *timestamp = [[HSSmallLabel alloc] initWithFrame:CGRectMake(cellView.frame.size.width - 120.0, -3.0, 120.0, 20.0)];
     timestamp.font = [UIFont fontWithName:timestamp.font.fontName size:10.0];
+    timestamp.textAlignment = NSTextAlignmentRight;
     timestamp.text =   [updateToShow updatedAtString];
     [cellView addSubview:timestamp];
     
@@ -656,9 +674,9 @@
     static NSString *CellIdentifier; // = @"MessageDetails_Right";
     
     if(updateToShow.updateType == HATypeStaffReply) {
-        CellIdentifier = @"MessageDetails_Left";
+        CellIdentifier = @"InfoCell_Left";
     }else {
-        CellIdentifier = @"MessageDetails_Right";
+        CellIdentifier = @"InfoCell_Right";
     }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -674,7 +692,7 @@
     nameLabel.tag = 1;
     
     NSString *nameString = @"";
-    nameLabel.frame = CGRectMake(0, 12.0, 120.0, 20.0);
+    nameLabel.frame = CGRectMake(0, 8.0, 120.0, 20.0);
     if(updateToShow.updateType == HATypeStaffReply){
         if(updateToShow.from){
             nameString = updateToShow.from;
