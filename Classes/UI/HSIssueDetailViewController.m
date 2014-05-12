@@ -608,7 +608,7 @@
     }
     
     cellView.backgroundColor = [UIColor clearColor];
-    HSSmallLabel *timestamp = [[HSSmallLabel alloc] initWithFrame:CGRectMake(cellView.frame.size.width - 120.0, -3.0, 120.0, 20.0)];
+    HSSmallLabel *timestamp = [[HSSmallLabel alloc] initWithFrame:CGRectMake(cellView.frame.size.width - 120.0, -6.0, 120.0, 20.0)];
     timestamp.font = [UIFont fontWithName:timestamp.font.fontName size:10.0];
     timestamp.textAlignment = NSTextAlignmentRight;
     timestamp.text =   [updateToShow updatedAtString];
@@ -692,7 +692,7 @@
     nameLabel.tag = 1;
     
     NSString *nameString = @"";
-    nameLabel.frame = CGRectMake(0, 8.0, 120.0, 20.0);
+    nameLabel.frame = CGRectMake(0, 4.0, 120.0, 20.0);
     if(updateToShow.updateType == HATypeStaffReply){
         if(updateToShow.from){
             nameString = updateToShow.from;
