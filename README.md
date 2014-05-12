@@ -188,15 +188,26 @@ You can download the **HSDefaultTheme.pList** file, include it in your project a
 	
 * Chat screen customization
 
-HelpStack comes with an intuitive Chat/Conversation screen. It saves you the pain of customizing each property of the chat screen, as it takes up the properties specified in your TableView and LabelAttributes to present a Chat screen with a uniform skin as your other screens.
+HelpStack comes with an intuitive Chat/Conversation screen and it allows you to completely customize it. If these properties are left unspecified, it takes up the properties of the default help stack theme.
 
    &nbsp;<iframe src="https://www.flickr.com/photos/114457732@N02/11962401933/player/fd34cfc781" height="500" width="433"  frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
    
-   The **Right Chat Bubble** takes the header background properties. The text takes up the heading color properties.
-   
-   The **Left Chat Bubble** takes the cell background properties. The text takes up the cell label color properties.
-   
-   The font of **chat text**, **Timestamp** and **Message sender** texts are customizable with the label attributes. They are of a predefined fixed size.
+  * ChatBubbleAttributes:
+  
+  	**TextSize** Size of the chat bubble text, this applies to both the left and the right chat bubbles
+  	
+  	**TextFont** Font of the chat bubble text, this applies to both the left and the right chat bubbles
+  	
+  	**MessageInfoLabelFont**, **MessageInfoLabelSize**, **MessageInfoLabelColor** font, size and color of the message information displayed above and below the chat bubbles such as timestamp and sender name
+  	
+  	* LeftChatBubbleAttributes and RightChatBubbleAttributes
+  		
+  		**BackgroundColor** Background color of the respective chat bubble
+  		
+  		**TextColor** Message text color of the respective chat bubble
+  	
+  	
+  
 
 
 
