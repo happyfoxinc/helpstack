@@ -113,7 +113,10 @@
         if([updateDict objectForKey:@"message"] != [NSNull null]){
             HSUpdate *tick_update = [[HSUpdate alloc] init];
             NSDictionary *by = [updateDict objectForKey:@"by"];
-            tick_update.from = [by objectForKey:@"name"];
+            if ([by objectForKey:@"name"] != [NSNull null]) {
+                tick_update.from = [by objectForKey:@"name"];
+            }
+            
             NSDictionary *message = [updateDict objectForKey:@"message"];
             tick_update.content = [message objectForKey:@"text"];
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];

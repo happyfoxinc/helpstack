@@ -23,7 +23,10 @@
                 self.content = [eventObject objectForKey:@"body"];
                 NSInteger author_id = [[eventObject objectForKey:@"author_id"] integerValue];
                 NSDictionary* author = [self searchForUser:author_id array:usersDictionary];
-                self.from = [author objectForKey:@"name"];
+                
+                if ([author objectForKey:@"name"] != [NSNull null]) {
+                    self.from = [author objectForKey:@"name"];
+                }
                 
                 self.publicNote = [[eventObject objectForKey:@"public"] boolValue];
                 

@@ -152,8 +152,12 @@
             for (NSDictionary* reply in entries) {
                 HSUpdate* update = [[HSUpdate alloc] init];
 
-                update.from = [reply objectForKey:@"from"];
+                if ([reply objectForKey:@"from"] != [NSNull null] )  {
+                    update.from = [reply objectForKey:@"from"];
+                };
+                
                 update.content = [reply objectForKey:@"body"];
+                
 
                 if ([[reply objectForKey:@"direction"] isEqualToString:@"out"]) {
                     update.updateType = HATypeStaffReply;
