@@ -33,6 +33,7 @@
                 // updated time
                 NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
                 [dateFormat setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss'Z'"];
+                [dateFormat setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
                 NSDate *date = [dateFormat dateFromString:[audit objectForKey:@"created_at"]];
                 self.updatedAt = date;
                 

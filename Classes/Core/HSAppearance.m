@@ -14,7 +14,7 @@
 #pragma mark - Default UI properties
 
 /* BackgroundColor */
-#define DEFAULT_BACKGROUNDCOLOR [UIColor colorWithRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:1.0]
+#define DEFAULT_BACKGROUNDCOLOR [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0]
 #define DEFAULT_CHATBUBBLE_BORDERCOLOR [UIColor grayColor]
 #define DEFAULT_RIGHTCHATBUBBLE_COLOR [UIColor colorWithRed:129.0/255.0 green:197.0/255.0 blue:123.0/255.0 alpha:1.0]
 #define DEFAULT_LEFTCHATBUBBLE_COLOR [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0]
@@ -54,7 +54,7 @@
 #define DEFAULT_TEXTFIELD_FONT [UIFont systemFontOfSize:15.0]
 
 /* Chat bubble Attributes */
-#define DEFAULT_LEFTCHATBUBBLE_BACKGROUNDCOLOR [UIColor colorWithRed:230.0/255.0 green:229.0/255.0 blue:236.0/255.0 alpha:1.0]
+#define DEFAULT_LEFTCHATBUBBLE_BACKGROUNDCOLOR [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0]
 #define DEFAULT_LEFTCHATBUBBLE_TEXTCOLOR [UIColor colorWithRed:63.0/255.0 green:62.0/255.0 blue:67.0/255.0 alpha:1.0]
 #define DEFAULT_LEFTCHATBUBBLE_TEXTFONT [UIFont systemFontOfSize:14.0]
 
@@ -284,6 +284,16 @@
         return;
     }
     
+    NSString *textFontString = [chatBubbleProperties objectForKey:@"TextFont"];
+    NSString *textFontSize = [chatBubbleProperties objectForKey:@"TextSize"];
+    if(textFontString && textFontSize && textFontString.length > 0 && textFontSize.length > 0){
+        UIFont *customFont = [UIFont fontWithName:textFontString size:[textFontSize floatValue]];
+        if(customFont != nil){
+            self.rightChatBubble_textFont = customFont;
+            self.leftChatBubble_textFont = customFont;
+        }
+    }
+    
     NSDictionary *rightChatBubbleProperties = [chatBubbleProperties objectForKey:@"RightChatBubbleAttributes"];
     NSDictionary *leftChatBubbleProperties = [chatBubbleProperties objectForKey:@"LeftChatBubbleAttributes"];
     
@@ -301,15 +311,6 @@
             UIColor *textColor = [UIColor colorFromRGBString:textColorString];
             if(textColor){
                 self.rightChatBubble_textColor = textColor;
-            }
-        }
-        
-        NSString *textFontString = [rightChatBubbleProperties objectForKey:@"TextFont"];
-        NSString *textFontSize = [rightChatBubbleProperties objectForKey:@"TextSize"];
-        if(textFontString && textFontSize && textFontString.length > 0 && textFontSize.length > 0){
-            UIFont *customFont = [UIFont fontWithName:textFontString size:[textFontSize floatValue]];
-            if(customFont != nil){
-                self.rightChatBubble_textFont = customFont;
             }
         }
     }
@@ -331,20 +332,12 @@
             }
         }
         
-        NSString *textFontString = [leftChatBubbleProperties objectForKey:@"TextFont"];
-        NSString *textFontSize = [rightChatBubbleProperties objectForKey:@"TextSize"];
-        if(textFontString && textFontSize && textFontString.length > 0 && textFontSize.length > 0){
-            UIFont *customFont = [UIFont fontWithName:textFontString size:[textFontSize floatValue]];
-            if(customFont != nil){
-                self.leftChatBubble_textFont = customFont;
-            }
-        }
     }
     
-    NSString *textFontString = [chatBubbleProperties objectForKey:@"MessageInfoLabelFont"];
-    NSString *textFontSize = [chatBubbleProperties objectForKey:@"MessageInfoLabelSize"];
-    if(textFontString && textFontSize && textFontString.length > 0 && textFontSize.length > 0){
-        UIFont *customFont = [UIFont fontWithName:textFontString size:[textFontSize floatValue]];
+    NSString *smalltextFontString = [chatBubbleProperties objectForKey:@"MessageInfoLabelFont"];
+    NSString *smalltextFontSize = [chatBubbleProperties objectForKey:@"MessageInfoLabelSize"];
+    if(smalltextFontString && smalltextFontSize && smalltextFontString.length > 0 && smalltextFontSize.length > 0){
+        UIFont *customFont = [UIFont fontWithName:smalltextFontString size:[smalltextFontSize floatValue]];
         if(customFont != nil){
             self.messageInfoTextFont = customFont;
         }
@@ -593,7 +586,7 @@
     
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathMoveToPoint(path, NULL, 0.0f, 0.0f);
-    CGPathAddLineToPoint(path, NULL, arrowView.frame.size.width/2, arrowView.frame.size.height/2);
+    CGPathAddLineToPoint(path, NULL, arrowView.frame.size.width, arrowView.frame.size.height/2);
     CGPathAddLineToPoint(path, NULL, 0.0f , arrowView.frame.size.height);
     CGPathMoveToPoint(path, NULL, 0.0f, 0.0f);
     
@@ -617,7 +610,7 @@
     
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathMoveToPoint(path, NULL, arrowView.frame.size.width, 0.0f);
-    CGPathAddLineToPoint(path, NULL, arrowView.frame.size.width/2 , arrowView.frame.size.height/2);
+    CGPathAddLineToPoint(path, NULL, 0 , arrowView.frame.size.height/2);
     CGPathAddLineToPoint(path, NULL, arrowView.frame.size.width , arrowView.frame.size.height);
     CGPathMoveToPoint(path, NULL, arrowView.frame.size.width, 0.0f);
     
@@ -659,7 +652,7 @@
 
 -(UIFont *)getBubbleTextFont{
     
-    return self.labelFont;
+    return self.rightChatBubble_textFont;
 }
 
 //is this an iPhone5

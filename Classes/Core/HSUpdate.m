@@ -11,10 +11,12 @@
 @implementation HSUpdate
 
 - (NSString *)updatedAtString {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd-MM-yy HH:mm"];
-    NSString *dateString = [formatter stringFromDate:self.updatedAt];
-    return dateString;
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"dd-MM-yy HH:mm"];
+//    NSString *dateString = [formatter stringFromDate:self.updatedAt];
+//    return dateString;
+
+   return [self stringFortimeSinceDateFull:self.updatedAt];
 }
 
 - (NSString *)description

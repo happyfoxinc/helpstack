@@ -369,7 +369,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y9i-O2-oeG">
-                                                    <rect key="frame" x="24" y="4" width="250" height="21"/>
+                                                    <rect key="frame" x="24" y="6" width="250" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z3o-q6-17D" userLabel="Label" customClass="HSLabel">
@@ -387,7 +387,7 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="y9i-O2-oeG" secondAttribute="bottom" constant="3" id="9BD-28-GtK"/>
+                                                <constraint firstAttribute="bottom" secondItem="y9i-O2-oeG" secondAttribute="bottom" constant="1" id="9BD-28-GtK"/>
                                                 <constraint firstItem="y9i-O2-oeG" firstAttribute="leading" secondItem="0Hf-lk-KSv" secondAttribute="leading" constant="24" id="mWd-9e-6KB"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -401,20 +401,20 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vux-IU-BeY" customClass="HSBubbleRightArrow">
-                                                    <rect key="frame" x="516" y="70" width="10" height="10"/>
+                                                    <rect key="frame" x="516" y="70" width="8" height="10"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="10" id="hIQ-xN-C8e"/>
+                                                        <constraint firstAttribute="width" constant="8" id="hIQ-xN-C8e"/>
                                                         <constraint firstAttribute="height" constant="10" id="y1k-F7-PU0"/>
                                                     </constraints>
                                                 </view>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fsk-1T-Nbq" customClass="HSChatBubbleRight">
-                                                    <rect key="frame" x="266" y="0.0" width="250" height="91"/>
+                                                    <rect key="frame" x="246" y="0.0" width="270" height="91"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="250" id="j7S-Og-Ufb"/>
+                                                        <constraint firstAttribute="width" constant="270" id="j7S-Og-Ufb"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -422,7 +422,7 @@
                                                 <constraint firstItem="Fsk-1T-Nbq" firstAttribute="top" secondItem="paP-DN-uoZ" secondAttribute="top" id="JCm-ce-ofh"/>
                                                 <constraint firstItem="vux-IU-BeY" firstAttribute="leading" secondItem="Fsk-1T-Nbq" secondAttribute="trailing" id="MZu-98-Q4Y"/>
                                                 <constraint firstAttribute="bottom" secondItem="Fsk-1T-Nbq" secondAttribute="bottom" id="Z6W-nU-bdW"/>
-                                                <constraint firstAttribute="trailing" secondItem="vux-IU-BeY" secondAttribute="trailing" constant="14" id="lmM-d6-yks"/>
+                                                <constraint firstAttribute="trailing" secondItem="vux-IU-BeY" secondAttribute="trailing" constant="16" id="lmM-d6-yks"/>
                                                 <constraint firstAttribute="bottom" secondItem="vux-IU-BeY" secondAttribute="bottom" constant="11" id="o7n-Ud-qOg"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -435,19 +435,19 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ofv-cB-gdR" customClass="HSChatBubbleLeft">
-                                                    <rect key="frame" x="24" y="0.0" width="250" height="91"/>
+                                                    <rect key="frame" x="24" y="0.0" width="270" height="91"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="250" id="KQ7-Wu-tKn"/>
+                                                        <constraint firstAttribute="width" constant="270" id="KQ7-Wu-tKn"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j9x-gX-77i" customClass="HSBubbleLeftArrow">
-                                                    <rect key="frame" x="14" y="70" width="10" height="10"/>
+                                                    <rect key="frame" x="16" y="70" width="8" height="10"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="10" id="6TI-tf-PhL"/>
+                                                        <constraint firstAttribute="width" constant="8" id="6TI-tf-PhL"/>
                                                         <constraint firstAttribute="height" constant="10" id="Rq5-4s-2xs"/>
                                                     </constraints>
                                                 </view>
@@ -457,7 +457,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="j9x-gX-77i" secondAttribute="bottom" constant="11" id="cg9-jh-HGG"/>
                                                 <constraint firstItem="Ofv-cB-gdR" firstAttribute="leading" secondItem="j9x-gX-77i" secondAttribute="trailing" id="dGv-Jm-lNq"/>
                                                 <constraint firstAttribute="bottom" secondItem="Ofv-cB-gdR" secondAttribute="bottom" id="mb8-Pd-Un6"/>
-                                                <constraint firstItem="j9x-gX-77i" firstAttribute="leading" secondItem="IJb-HU-KL2" secondAttribute="leading" constant="14" id="xCS-FD-JAv"/>
+                                                <constraint firstItem="j9x-gX-77i" firstAttribute="leading" secondItem="IJb-HU-KL2" secondAttribute="leading" constant="16" id="xCS-FD-JAv"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -469,7 +469,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8FB-Pq-o4A">
-                                                    <rect key="frame" x="24" y="0.0" width="250" height="28"/>
+                                                    <rect key="frame" x="24" y="3" width="268" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="15 Days ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dE-FD-bqc" customClass="HSLabel">
@@ -489,13 +489,13 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="250" id="8Zg-Qh-3KB"/>
+                                                        <constraint firstAttribute="width" constant="268" id="8Zg-Qh-3KB"/>
                                                         <constraint firstAttribute="height" constant="28" id="AtO-wE-KsO"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="8FB-Pq-o4A" firstAttribute="top" secondItem="h6O-as-Wbz" secondAttribute="top" id="2LG-aB-X8E"/>
+                                                <constraint firstItem="8FB-Pq-o4A" firstAttribute="top" secondItem="h6O-as-Wbz" secondAttribute="top" constant="3" id="2LG-aB-X8E"/>
                                                 <constraint firstItem="8FB-Pq-o4A" firstAttribute="leading" secondItem="h6O-as-Wbz" secondAttribute="leading" constant="24" id="YQY-WT-mMN"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -509,7 +509,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jLA-VR-3a9">
-                                                    <rect key="frame" x="266" y="0.0" width="250" height="28"/>
+                                                    <rect key="frame" x="246" y="0.0" width="268" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="15 Days ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSt-OF-lI8" customClass="HSLabel">
@@ -530,13 +530,13 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="28" id="eiI-fV-p34"/>
-                                                        <constraint firstAttribute="width" constant="250" id="gHo-pW-fHG"/>
+                                                        <constraint firstAttribute="width" constant="268" id="gHo-pW-fHG"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="jLA-VR-3a9" secondAttribute="bottom" id="BnU-Il-Wg3"/>
-                                                <constraint firstAttribute="trailing" secondItem="jLA-VR-3a9" secondAttribute="trailing" constant="24" id="S1X-fm-BLd"/>
+                                                <constraint firstAttribute="trailing" secondItem="jLA-VR-3a9" secondAttribute="trailing" constant="26" id="S1X-fm-BLd"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -549,7 +549,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jyu-Vp-TS7">
-                                                    <rect key="frame" x="266" y="7" width="250" height="21"/>
+                                                    <rect key="frame" x="248" y="7" width="268" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7co-Np-Pb9" userLabel="Label" customClass="HSLabel">
@@ -561,7 +561,7 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="250" id="jMb-Ag-umb"/>
+                                                        <constraint firstAttribute="width" constant="268" id="jMb-Ag-umb"/>
                                                         <constraint firstAttribute="height" constant="21" id="zqt-lb-Qbw"/>
                                                     </constraints>
                                                 </view>
@@ -588,7 +588,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Send">
-                                            <color key="titleColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.47058823529999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -611,7 +611,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="3vN-EC-1iP"/>
                                 </constraints>

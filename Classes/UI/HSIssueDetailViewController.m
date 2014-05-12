@@ -38,7 +38,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
-    self.bubbleWidth = 250.0;
+    self.bubbleWidth = 240.0;
     
     self.chatTableView.backgroundColor = [UIColor clearColor];
     self.loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -615,7 +615,7 @@
     [cellView addSubview:timestamp];
     
     if(updateToShow.attachments != nil && updateToShow.attachments.count > 0){
-        UIButton *attachmentBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.bubbleWidth - 30.0, 0, 30.0, 25.0)];
+        UIButton *attachmentBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30.0, 25.0)];
         UIImage *btnImage = [UIImage imageNamed:@"attach.png"];
         [attachmentBtn setBackgroundImage:btnImage forState:UIControlStateNormal];
         [attachmentBtn addTarget:self action:@selector(openAttachment:) forControlEvents:UIControlEventTouchUpInside];

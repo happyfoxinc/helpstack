@@ -119,16 +119,20 @@
             
             NSDictionary *message = [updateDict objectForKey:@"message"];
             tick_update.content = [message objectForKey:@"text"];
+            
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
             [dateFormat setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+            [dateFormat setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
             NSDate *date = [dateFormat dateFromString:[updateDict objectForKey:@"timestamp"]];
             tick_update.updatedAt = date;
+            
             NSString *type = [by objectForKey:@"type"];
             if([type isEqualToString:@"user"]){
                 tick_update.updateType = HATypeUserReply;
             }else{
                 tick_update.updateType = HATypeStaffReply;
             }
+            
             if([message objectForKey:@"attachments"] != [NSNull null]){
                 NSMutableArray *attachments = [[NSMutableArray alloc] init];
                 for(NSDictionary *attachmentDict in [message objectForKey:@"attachments"]){

@@ -30,7 +30,7 @@ float keyboardH;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    super.bubbleWidth = 350.0;
+    super.bubbleWidth = 270.0;
     msgEntered = nil;
 	// Do any additional setup after loading the view.
 }

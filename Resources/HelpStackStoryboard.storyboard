@@ -377,26 +377,26 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ynb-qZ-Df2" customClass="HSBubbleRightArrow">
-                                                    <rect key="frame" x="302" y="70" width="10" height="10"/>
+                                                    <rect key="frame" x="302" y="70" width="7" height="10"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="10" id="G5X-Hr-YH0"/>
+                                                        <constraint firstAttribute="width" constant="7" id="G5X-Hr-YH0"/>
                                                         <constraint firstAttribute="height" constant="10" id="WF8-0p-WJ8"/>
                                                     </constraints>
                                                 </view>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CYp-VD-2ss" customClass="HSChatBubbleRight">
-                                                    <rect key="frame" x="35" y="0.0" width="268" height="91"/>
+                                                    <rect key="frame" x="63" y="0.0" width="240" height="91"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="268" id="YqA-g5-lci"/>
+                                                        <constraint firstAttribute="width" constant="240" id="YqA-g5-lci"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="Ynb-qZ-Df2" secondAttribute="bottom" constant="11" id="67b-MD-3iY"/>
-                                                <constraint firstAttribute="trailing" secondItem="Ynb-qZ-Df2" secondAttribute="trailing" constant="8" id="Gw8-3D-ZSq"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ynb-qZ-Df2" secondAttribute="trailing" constant="11" id="Gw8-3D-ZSq"/>
                                                 <constraint firstAttribute="bottom" secondItem="CYp-VD-2ss" secondAttribute="bottom" id="LLd-pP-36C"/>
                                                 <constraint firstAttribute="trailing" secondItem="CYp-VD-2ss" secondAttribute="trailing" constant="17" id="qHx-wY-LzM"/>
                                                 <constraint firstItem="CYp-VD-2ss" firstAttribute="top" secondItem="yws-Qm-5pJ" secondAttribute="top" id="vQo-C8-4gM"/>
@@ -411,27 +411,27 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KkQ-1b-bgN" customClass="HSChatBubbleLeft">
-                                                    <rect key="frame" x="17" y="0.0" width="268" height="91"/>
+                                                    <rect key="frame" x="17" y="0.0" width="240" height="91"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="268" id="6I0-cW-0So"/>
+                                                        <constraint firstAttribute="width" constant="240" id="6I0-cW-0So"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zl9-ot-kYE" customClass="HSBubbleLeftArrow">
-                                                    <rect key="frame" x="7" y="70" width="10" height="10"/>
+                                                    <rect key="frame" x="10" y="70" width="7" height="10"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="10" id="9jG-qL-D9q"/>
-                                                        <constraint firstAttribute="width" constant="10" id="ANK-n3-3yW"/>
+                                                        <constraint firstAttribute="width" constant="7" id="ANK-n3-3yW"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="KkQ-1b-bgN" secondAttribute="bottom" id="1Of-eg-yiM"/>
                                                 <constraint firstAttribute="bottom" secondItem="Zl9-ot-kYE" secondAttribute="bottom" constant="11" id="BxU-qQ-Z6I"/>
-                                                <constraint firstItem="Zl9-ot-kYE" firstAttribute="leading" secondItem="ajS-ZP-HCh" secondAttribute="leading" constant="7" id="S3S-gB-xPu"/>
+                                                <constraint firstItem="Zl9-ot-kYE" firstAttribute="leading" secondItem="ajS-ZP-HCh" secondAttribute="leading" constant="10" id="S3S-gB-xPu"/>
                                                 <constraint firstItem="KkQ-1b-bgN" firstAttribute="top" secondItem="ajS-ZP-HCh" secondAttribute="top" id="VYj-oA-L3e"/>
                                                 <constraint firstItem="KkQ-1b-bgN" firstAttribute="leading" secondItem="ajS-ZP-HCh" secondAttribute="leading" constant="17" id="h8n-1M-N1H"/>
                                             </constraints>
@@ -445,7 +445,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xbY-oa-i6g">
-                                                    <rect key="frame" x="35" y="0.0" width="268" height="28"/>
+                                                    <rect key="frame" x="61" y="0.0" width="240" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="15 Days ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Puh-2r-Dcb" customClass="HSLabel">
@@ -466,13 +466,13 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="28" id="B6h-0a-rcL"/>
-                                                        <constraint firstAttribute="width" constant="268" id="mJL-b2-wrr"/>
+                                                        <constraint firstAttribute="width" constant="240" id="mJL-b2-wrr"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="xbY-oa-i6g" secondAttribute="bottom" id="iOP-HB-XJH"/>
-                                                <constraint firstAttribute="trailing" secondItem="xbY-oa-i6g" secondAttribute="trailing" constant="17" id="oT3-Bn-Owd"/>
+                                                <constraint firstAttribute="trailing" secondItem="xbY-oa-i6g" secondAttribute="trailing" constant="19" id="oT3-Bn-Owd"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -485,7 +485,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xN1-yc-9mZ">
-                                                    <rect key="frame" x="17" y="0.0" width="268" height="28"/>
+                                                    <rect key="frame" x="15" y="0.0" width="240" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="15 Days ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGe-uS-AtP" customClass="HSLabel">
@@ -506,13 +506,13 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="28" id="JaW-hf-6g4"/>
-                                                        <constraint firstAttribute="width" constant="268" id="Q1r-Z6-598"/>
+                                                        <constraint firstAttribute="width" constant="240" id="Q1r-Z6-598"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="xN1-yc-9mZ" secondAttribute="bottom" id="Nvd-ud-XA2"/>
-                                                <constraint firstItem="xN1-yc-9mZ" firstAttribute="leading" secondItem="P7k-ln-Wqj" secondAttribute="leading" constant="17" id="pRm-qo-2Cb"/>
+                                                <constraint firstItem="xN1-yc-9mZ" firstAttribute="leading" secondItem="P7k-ln-Wqj" secondAttribute="leading" constant="15" id="pRm-qo-2Cb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -525,7 +525,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XTI-d0-ixS">
-                                                    <rect key="frame" x="35" y="7" width="268" height="21"/>
+                                                    <rect key="frame" x="65" y="7" width="238" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oKK-Zw-xJC" userLabel="Label" customClass="HSLabel">
@@ -538,7 +538,7 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="CCc-i5-jhV"/>
-                                                        <constraint firstAttribute="width" constant="268" id="Cmi-Xr-pmy"/>
+                                                        <constraint firstAttribute="width" constant="238" id="Cmi-Xr-pmy"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -557,7 +557,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYB-LK-fjM">
-                                                    <rect key="frame" x="17" y="4" width="268" height="21"/>
+                                                    <rect key="frame" x="19" y="4" width="238" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v0b-Fd-N59" userLabel="Label" customClass="HSLabel">
@@ -569,14 +569,14 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="268" id="4X0-RB-Iih"/>
+                                                        <constraint firstAttribute="width" constant="238" id="4X0-RB-Iih"/>
                                                         <constraint firstAttribute="height" constant="21" id="gMp-eu-sLa"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="GYB-LK-fjM" secondAttribute="bottom" constant="3" id="JDn-Hq-vaO"/>
-                                                <constraint firstItem="GYB-LK-fjM" firstAttribute="leading" secondItem="EbN-JX-rht" secondAttribute="leading" constant="17" id="ywr-Xp-zJ2"/>
+                                                <constraint firstItem="GYB-LK-fjM" firstAttribute="leading" secondItem="EbN-JX-rht" secondAttribute="leading" constant="19" id="ywr-Xp-zJ2"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -600,7 +600,7 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Send">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -635,7 +635,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.89474354619565222" green="0.89474354619565222" blue="0.89474354619565222" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="1DX-py-x4b" firstAttribute="centerX" secondItem="wxK-OQ-di3" secondAttribute="centerX" id="2Re-6B-i6d"/>
                                     <constraint firstAttribute="bottom" secondItem="Szx-vb-Fom" secondAttribute="bottom" constant="8" id="2r7-YI-MDy"/>
