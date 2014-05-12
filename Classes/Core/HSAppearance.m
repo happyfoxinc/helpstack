@@ -53,6 +53,18 @@
 #define DEFAULT_TEXTFIELD_TEXTCOLOR [UIColor blackColor]
 #define DEFAULT_TEXTFIELD_FONT [UIFont systemFontOfSize:15.0]
 
+/* Chat bubble Attributes */
+#define DEFAULT_LEFTCHATBUBBLE_BACKGROUNDCOLOR [UIColor colorWithRed:230.0/255.0 green:229.0/255.0 blue:236.0/255.0 alpha:1.0]
+#define DEFAULT_LEFTCHATBUBBLE_TEXTCOLOR [UIColor colorWithRed:63.0/255.0 green:62.0/255.0 blue:67.0/255.0 alpha:1.0]
+#define DEFAULT_LEFTCHATBUBBLE_TEXTFONT [UIFont systemFontOfSize:14.0]
+
+#define DEFAULT_RIGHTCHATBUBBLE_BACKGROUNDCOLOR [UIColor colorWithRed:129.0/255.0 green:197.0/255.0 blue:123.0/255.0 alpha:1.0]
+#define DEFAULT_RIGHTCHATBUBBLE_TEXTCOLOR [UIColor whiteColor]
+#define DEFAULT_RIGHTCHATBUBBLE_TEXTFONT [UIFont systemFontOfSize:14.0]
+
+#define DEFAULT_MESSAGEINFO_TEXTCOLOR [UIColor colorWithRed:63.0/255.0 green:62.0/255.0 blue:67.0/255.0 alpha:1.0]
+#define DEFAULT_MESSAGEINFO_TEXTFONT [UIFont systemFontOfSize:10.0]
+
 @interface HSAppearance()
 
 /**NavigationBar Properties */
@@ -255,16 +267,16 @@
 
 -(void)getChatBubbleProperties {
     
-    self.rightChatBubble_BackgroundColor = self.headerBgColor;
-    self.rightChatBubble_textColor = self.labelColor;
-    self.rightChatBubble_textFont = self.labelFont;
+    self.rightChatBubble_BackgroundColor = DEFAULT_RIGHTCHATBUBBLE_BACKGROUNDCOLOR;
+    self.rightChatBubble_textColor = DEFAULT_RIGHTCHATBUBBLE_TEXTCOLOR;
+    self.rightChatBubble_textFont = DEFAULT_RIGHTCHATBUBBLE_TEXTFONT;
     
-    self.leftChatBubble_BackgroundColor = self.cellBgColor;
-    self.leftChatBubble_textColor = self.labelColor;
-    self.leftChatBubble_textFont = self.labelFont;
+    self.leftChatBubble_BackgroundColor = DEFAULT_LEFTCHATBUBBLE_BACKGROUNDCOLOR;
+    self.leftChatBubble_textColor = DEFAULT_LEFTCHATBUBBLE_TEXTCOLOR;
+    self.leftChatBubble_textFont = DEFAULT_LEFTCHATBUBBLE_TEXTFONT;
     
-    self.messageInfoTextColor = self.labelColor;
-    self.messageInfoTextFont = self.labelFont;
+    self.messageInfoTextColor = DEFAULT_MESSAGEINFO_TEXTCOLOR;
+    self.messageInfoTextFont = DEFAULT_MESSAGEINFO_TEXTFONT;
     
     NSDictionary *chatBubbleProperties = [self.customThemeProperties objectForKey:@"ChatBubbleAttributes"];
     

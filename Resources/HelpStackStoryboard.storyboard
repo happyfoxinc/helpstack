@@ -365,7 +365,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="91" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="TW8-Xg-jkl">
-                                <rect key="frame" x="0.0" y="10" width="320" height="442"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -535,7 +535,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="CCc-i5-jhV"/>
                                                         <constraint firstAttribute="width" constant="268" id="Cmi-Xr-pmy"/>
@@ -567,7 +567,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="268" id="4X0-RB-Iih"/>
                                                         <constraint firstAttribute="height" constant="21" id="gMp-eu-sLa"/>
@@ -658,9 +658,9 @@
                         <constraints>
                             <constraint firstItem="vxc-PN-oSd" firstAttribute="leading" secondItem="pZG-d9-Lt0" secondAttribute="leading" id="1Em-RY-mit"/>
                             <constraint firstItem="vxc-PN-oSd" firstAttribute="centerX" secondItem="TW8-Xg-jkl" secondAttribute="centerX" id="66x-JF-Ty2"/>
-                            <constraint firstItem="TW8-Xg-jkl" firstAttribute="top" secondItem="lav-4X-kkH" secondAttribute="bottom" constant="10" id="JQL-H1-vj6"/>
+                            <constraint firstItem="TW8-Xg-jkl" firstAttribute="top" secondItem="lav-4X-kkH" secondAttribute="bottom" id="JQL-H1-vj6"/>
                             <constraint firstItem="TW8-Xg-jkl" firstAttribute="leading" secondItem="pZG-d9-Lt0" secondAttribute="leading" id="Mz7-0B-mFH"/>
-                            <constraint firstItem="vxc-PN-oSd" firstAttribute="top" secondItem="TW8-Xg-jkl" secondAttribute="bottom" constant="8" id="VGJ-cx-5Kd"/>
+                            <constraint firstItem="vxc-PN-oSd" firstAttribute="top" secondItem="TW8-Xg-jkl" secondAttribute="bottom" id="VGJ-cx-5Kd"/>
                             <constraint firstAttribute="bottom" secondItem="vxc-PN-oSd" secondAttribute="bottom" id="XhO-QB-eFz"/>
                             <constraint firstAttribute="trailing" secondItem="TW8-Xg-jkl" secondAttribute="trailing" id="dqh-dJ-nSD"/>
                             <constraint firstItem="vxc-PN-oSd" firstAttribute="leading" secondItem="pZG-d9-Lt0" secondAttribute="leading" id="gBo-3D-qm6"/>
