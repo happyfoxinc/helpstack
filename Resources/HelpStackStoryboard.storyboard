@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="yHS-bc-8ZV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="yHS-bc-8ZV">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -21,7 +21,7 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="FTi-ZI-c85">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EmptyCell" id="FTi-ZI-c85">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FTi-ZI-c85" id="n0q-25-pzY">
@@ -33,7 +33,7 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Help" id="Oc4-ja-qxi">
-                        <barButtonItem key="leftBarButtonItem" title="Close" style="plain" id="e5o-QU-HkM">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="e5o-QU-HkM">
                             <connections>
                                 <action selector="cancelPressed:" destination="1Ta-Nt-A1i" id="NSA-sr-z4j"/>
                             </connections>
@@ -154,17 +154,17 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Subject" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MTN-43-ozu">
-                                            <rect key="frame" x="15" y="0.0" width="245" height="44"/>
+                                            <rect key="frame" x="15" y="0.0" width="251" height="44"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                         </textField>
                                         <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fr7-6W-3qe">
-                                            <rect key="frame" x="282" y="10" width="24" height="24"/>
+                                            <rect key="frame" x="276" y="0.0" width="44" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="24" id="Bnj-gn-bV1"/>
-                                                <constraint firstAttribute="width" constant="24" id="s16-1J-67B"/>
+                                                <constraint firstAttribute="height" constant="44" id="Bnj-gn-bV1"/>
+                                                <constraint firstAttribute="width" constant="44" id="s16-1J-67B"/>
                                             </constraints>
                                             <state key="normal" image="attach.png">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -172,12 +172,11 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="fr7-6W-3qe" firstAttribute="top" secondItem="JNx-QX-667" secondAttribute="top" constant="10" id="F9S-ah-W8q"/>
-                                        <constraint firstItem="fr7-6W-3qe" firstAttribute="leading" secondItem="MTN-43-ozu" secondAttribute="trailing" constant="22" id="HTI-nr-WVI"/>
+                                        <constraint firstItem="fr7-6W-3qe" firstAttribute="top" secondItem="JNx-QX-667" secondAttribute="top" id="F9S-ah-W8q"/>
+                                        <constraint firstItem="fr7-6W-3qe" firstAttribute="leading" secondItem="MTN-43-ozu" secondAttribute="trailing" constant="10" id="HTI-nr-WVI"/>
                                         <constraint firstItem="MTN-43-ozu" firstAttribute="leading" secondItem="JNx-QX-667" secondAttribute="leading" constant="15" id="IbU-tt-yGx"/>
-                                        <constraint firstAttribute="trailing" secondItem="MTN-43-ozu" secondAttribute="trailing" constant="60" id="PzX-bL-XfQ"/>
                                         <constraint firstItem="MTN-43-ozu" firstAttribute="top" secondItem="JNx-QX-667" secondAttribute="top" id="a3j-Wh-Yld"/>
-                                        <constraint firstAttribute="trailing" secondItem="fr7-6W-3qe" secondAttribute="trailing" constant="14" id="bYZ-3F-eXQ"/>
+                                        <constraint firstAttribute="trailing" secondItem="fr7-6W-3qe" secondAttribute="trailing" id="bYZ-3F-eXQ"/>
                                         <constraint firstAttribute="bottom" secondItem="MTN-43-ozu" secondAttribute="bottom" constant="-1" id="zEF-0B-dYP"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -269,7 +268,7 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="mFn-ZJ-6Wi" customClass="HSTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EmptyCell" id="mFn-ZJ-6Wi" customClass="HSTableViewCell">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mFn-ZJ-6Wi" id="wp3-n4-fnd">

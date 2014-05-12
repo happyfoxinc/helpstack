@@ -72,12 +72,14 @@
     return nil;
 }
 
-- (id)initWithAuthorName:(NSString *)authorname message:(NSString *)message {
+- (id)initUserReplyWithAuthorName:(NSString *)authorname message:(NSString *)message attachments:(NSArray *)attachments {
     if(self = [super init]) {
         self.from = authorname;
         self.content = message;
         self.publicNote = true;
         self.updatedAt = [[NSDate alloc] init];
+        self.attachments = attachments;
+        self.updateType = HATypeUserReply;
     }
     return self;
 }

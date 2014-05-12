@@ -219,7 +219,7 @@
         [self.networkManager.requestSerializer setAuthorizationHeaderFieldWithUsername:[user.email stringByAppendingString:@"/token"] password:self.apiToken];
         [self.networkManager PUT:url parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
-            HSZenDeskTicketUpdate* update = [[HSZenDeskTicketUpdate alloc] initWithAuthorName:user.name message:message];
+            HSZenDeskTicketUpdate* update = [[HSZenDeskTicketUpdate alloc] initUserReplyWithAuthorName:user.name message:message attachments:attachments];
             success(update);
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
