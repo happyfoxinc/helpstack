@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="Aps-a9-uhx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="Aps-a9-uhx">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -616,10 +616,20 @@
                                     <constraint firstAttribute="height" constant="44" id="3vN-EC-1iP"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="FDU-0u-pxR" customClass="HSActivityIndicatorView">
+                                <rect key="frame" x="260" y="246" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="Xfj-32-L9s"/>
+                                    <constraint firstAttribute="height" constant="20" id="dB3-9t-VwE"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="pte-Fg-Fyj" firstAttribute="centerX" secondItem="FDU-0u-pxR" secondAttribute="centerX" id="5Da-bh-Q4h"/>
                             <constraint firstAttribute="bottom" secondItem="zH8-Up-Etj" secondAttribute="bottom" id="9RH-LU-ahc"/>
+                            <constraint firstItem="pte-Fg-Fyj" firstAttribute="centerY" secondItem="FDU-0u-pxR" secondAttribute="centerY" id="AaP-sV-0ej"/>
                             <constraint firstItem="zH8-Up-Etj" firstAttribute="leading" secondItem="hGl-XF-VQt" secondAttribute="leading" id="BDa-mv-KOa"/>
                             <constraint firstItem="zH8-Up-Etj" firstAttribute="top" secondItem="pte-Fg-Fyj" secondAttribute="bottom" id="ISB-K9-Ma2"/>
                             <constraint firstItem="pte-Fg-Fyj" firstAttribute="leading" secondItem="hGl-XF-VQt" secondAttribute="leading" id="TlI-hF-sGG"/>
@@ -635,6 +645,7 @@
                         <outlet property="addAttachmentButton" destination="vrB-Qc-krx" id="bES-kJ-Nnc"/>
                         <outlet property="bottomMessageView" destination="zH8-Up-Etj" id="UrU-x7-XnU"/>
                         <outlet property="chatTableView" destination="pte-Fg-Fyj" id="S7X-5m-7dA"/>
+                        <outlet property="loadingIndicator" destination="FDU-0u-pxR" id="AfC-UW-841"/>
                         <outlet property="sendButton" destination="wsU-XX-PRC" id="kQg-iL-c5s"/>
                         <outlet property="sendReplyIndicator" destination="xTG-HO-8gi" id="M7Q-IC-uyy"/>
                         <segue destination="4m7-IO-87g" kind="push" identifier="showAttachments" id="dNb-1h-aFS"/>
