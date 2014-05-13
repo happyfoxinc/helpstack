@@ -78,7 +78,7 @@
         self.content = message;
         self.publicNote = true;
         self.updatedAt = [[NSDate alloc] init];
-        self.attachments = attachments;
+        self.attachments = [[NSArray alloc] initWithArray:attachments];
         self.updateType = HATypeUserReply;
     }
     return self;

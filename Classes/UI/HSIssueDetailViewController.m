@@ -19,7 +19,6 @@
 
 @interface HSIssueDetailViewController ()
 
-@property (nonatomic, strong) NSMutableArray *updates;
 @property (nonatomic, strong) NSMutableArray *attachments;
 @property (nonatomic) NSInteger keyboardHeight;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingIndicator;
