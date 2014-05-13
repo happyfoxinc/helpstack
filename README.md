@@ -144,7 +144,7 @@ You can download the **HSDefaultTheme.pList** file, include it in your project a
 	 
 	 **ButtonTintColor** Navigation bar button tint color. For iOS6, this property would be considered as the navigation bar button background color.
 	 
-![Navigation Bar customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png)
+	![Navigation Bar customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png)
 
 
 * TableView and Background Customization
@@ -187,17 +187,15 @@ You can download the **HSDefaultTheme.pList** file, include it in your project a
 	
 * Chat screen customization
 
-HelpStack comes with an intuitive Chat/Conversation screen and it allows you to completely customize it. If these properties are left unspecified, it takes up the properties of the default help stack theme.
+	HelpStack comes with an intuitive Chat/Conversation screen and it allows you to completely customize it. If these properties are left unspecified, it takes up the properties of the default help stack theme.
 
-![Chat screen customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962401933_e1a4225581_o.png)
-   
-  * ChatBubbleAttributes:
+    * ChatBubbleAttributes:
   
-  	**TextSize** Size of the chat bubble text, this applies to both the left and the right chat bubbles
+  		**TextSize** Size of the chat bubble text, this applies to both the left and the right chat bubbles
   	
-  	**TextFont** Font of the chat bubble text, this applies to both the left and the right chat bubbles
+  		**TextFont** Font of the chat bubble text, this applies to both the left and the right chat bubbles
   	
-  	**MessageInfoLabelFont**, **MessageInfoLabelSize**, **MessageInfoLabelColor** font, size and color of the message information displayed above and below the chat bubbles such as timestamp and sender name
+  		**MessageInfoLabelFont**, **MessageInfoLabelSize**, **MessageInfoLabelColor** font, size and color of the message information displayed above and below the chat bubbles such as timestamp and sender name
   	
   	* LeftChatBubbleAttributes and RightChatBubbleAttributes
   		
@@ -205,7 +203,7 @@ HelpStack comes with an intuitive Chat/Conversation screen and it allows you to 
   		
   		**TextColor** Message text color of the respective chat bubble
   	
-  	
+  	![Chat screen customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962401933_e1a4225581_o.png)
   
 
 
