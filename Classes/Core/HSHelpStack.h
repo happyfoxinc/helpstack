@@ -26,6 +26,8 @@
 
 @property (nonatomic, assign) BOOL requiresNetwork;
 
+@property (nonatomic, assign) BOOL showCredits;
+
 /**
     Whenever you want to display HelpDesk screen, call this. This will open help screen as a modal view controller for iPhone and as a form sheet on ipad.
  

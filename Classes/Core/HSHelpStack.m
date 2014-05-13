@@ -27,6 +27,7 @@
         helpStack = [[self alloc] init];
         helpStack.appearance = [HSAppearance instance];
         helpStack.requiresNetwork = YES;
+        helpStack.showCredits = YES;
     });
     return helpStack;
 }
