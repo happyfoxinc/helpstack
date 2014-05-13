@@ -30,6 +30,7 @@
 @property (nonatomic, assign) float bubbleWidth;
 @property (strong, nonatomic) IBOutlet HSGrowingTextView *messageText;
 @property (weak, nonatomic) IBOutlet UIView *messageTextSuperView;
+@property (unsafe_unretained, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
 - (IBAction)sendReply:(id)sender;
 - (IBAction)addAttachment:(id)sender;

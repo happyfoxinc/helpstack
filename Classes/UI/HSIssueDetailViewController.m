@@ -22,7 +22,6 @@
 @property (nonatomic, strong) NSMutableArray *updates;
 @property (nonatomic, strong) NSMutableArray *attachments;
 @property (nonatomic) NSInteger keyboardHeight;
-@property (nonatomic, strong) UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, strong) NSString *enteredMsg;
 @property (nonatomic) CGRect messageFrame;
 @property UIStatusBarStyle currentStatusBarStyle;
@@ -41,9 +40,7 @@
     self.bubbleWidth = 240.0;
     
     self.chatTableView.backgroundColor = [UIColor clearColor];
-    self.loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.loadingIndicator.center = self.chatTableView.center;
-    [self.chatTableView addSubview:self.loadingIndicator];
+   
     [self.loadingIndicator startAnimating];
     
     self.bottomMessageView.hidden = YES;
@@ -435,11 +432,13 @@
         self.bottomMessageView.hidden = NO;
         [self addMessageView];
         [self.loadingIndicator stopAnimating];
+        self.loadingIndicator.hidden = YES;
         [self.chatTableView reloadData];
         [self scrollDownToLastMessage];
     } failure:^(NSError* e){
         self.bottomMessageView.hidden = NO;
         [self.loadingIndicator stopAnimating];
+        self.loadingIndicator.hidden = YES;
         [self addMessageView];
         UIAlertView* errorAlert = [[UIAlertView alloc] initWithTitle:@"Couldnt get replies" message:@"There was some error loading the replies. Please check if your internet connection is ON." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [errorAlert show];
