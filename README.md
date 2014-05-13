@@ -144,8 +144,7 @@ You can download the **HSDefaultTheme.pList** file, include it in your project a
 	 
 	 **ButtonTintColor** Navigation bar button tint color. For iOS6, this property would be considered as the navigation bar button background color.
 	 
-
-&nbsp;<iframe src="https://www.flickr.com/photos/114457732@N02/11962138646/player/635e107870" height="104" width="500"  frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+![Navigation Bar customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png)
 
 
 * TableView and Background Customization
@@ -184,13 +183,13 @@ You can download the **HSDefaultTheme.pList** file, include it in your project a
 		
 	**LabelColor** Color of the label text
 	
-	&nbsp;<iframe src="https://www.flickr.com/photos/114457732@N02/11961600503/player/ee2a9ea257" height="500" width="417"  frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+	![TableView and background customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11961600503_28d7f2cc96_o.png)
 	
 * Chat screen customization
 
 HelpStack comes with an intuitive Chat/Conversation screen and it allows you to completely customize it. If these properties are left unspecified, it takes up the properties of the default help stack theme.
 
-   &nbsp;<iframe src="https://www.flickr.com/photos/114457732@N02/11962401933/player/fd34cfc781" height="500" width="433"  frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+![Chat screen customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962401933_e1a4225581_o.png)
    
   * ChatBubbleAttributes:
   
