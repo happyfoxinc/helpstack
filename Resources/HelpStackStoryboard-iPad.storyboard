@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="Aps-a9-uhx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="Aps-a9-uhx">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -154,18 +154,18 @@
                                     <rect key="frame" x="0.0" y="0.0" width="540" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Subject" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tUs-9D-zpu" customClass="HSTextField">
-                                            <rect key="frame" x="15" y="0.0" width="478" height="44"/>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Subject" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tUs-9D-zpu">
+                                            <rect key="frame" x="15" y="0.0" width="477" height="44"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                         </textField>
                                         <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jhF-I5-FqK">
-                                            <rect key="frame" x="501" y="8" width="24" height="24"/>
+                                            <rect key="frame" x="500" y="0.0" width="40" height="40"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="24" id="ZHV-DT-KGm"/>
-                                                <constraint firstAttribute="width" constant="24" id="bWR-3P-txr"/>
+                                                <constraint firstAttribute="height" constant="40" id="ZHV-DT-KGm"/>
+                                                <constraint firstAttribute="width" constant="40" id="bWR-3P-txr"/>
                                             </constraints>
                                             <state key="normal" image="attach.png">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -176,9 +176,9 @@
                                         <constraint firstItem="tUs-9D-zpu" firstAttribute="leading" secondItem="Ho0-do-lTo" secondAttribute="leading" constant="15" id="dBR-gE-ssA"/>
                                         <constraint firstItem="jhF-I5-FqK" firstAttribute="leading" secondItem="tUs-9D-zpu" secondAttribute="trailing" constant="8" symbolic="YES" id="jET-jK-jyZ"/>
                                         <constraint firstItem="tUs-9D-zpu" firstAttribute="top" secondItem="Ho0-do-lTo" secondAttribute="top" id="mZ7-57-bhz"/>
-                                        <constraint firstItem="jhF-I5-FqK" firstAttribute="top" secondItem="Ho0-do-lTo" secondAttribute="top" constant="8" id="nb2-5g-lH7"/>
+                                        <constraint firstItem="jhF-I5-FqK" firstAttribute="top" secondItem="Ho0-do-lTo" secondAttribute="top" id="nb2-5g-lH7"/>
                                         <constraint firstAttribute="bottom" secondItem="tUs-9D-zpu" secondAttribute="bottom" constant="-1" id="pwQ-4N-QBd"/>
-                                        <constraint firstAttribute="trailing" secondItem="jhF-I5-FqK" secondAttribute="trailing" constant="15" id="usv-G4-25p"/>
+                                        <constraint firstAttribute="trailing" secondItem="jhF-I5-FqK" secondAttribute="trailing" id="usv-G4-25p"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
