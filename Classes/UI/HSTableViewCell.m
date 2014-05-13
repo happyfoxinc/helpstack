@@ -16,7 +16,7 @@
     
     if (self) {
         // Initialization code
-        [self refreshCellProperties];
+        
     }
     
     return self;
@@ -27,7 +27,7 @@
     
     if (self) {
         // Initialization code
-        [self refreshCellProperties];
+        
     }
     
     return self;
@@ -39,7 +39,8 @@
     // Configure the view for the selected state
 }
 
-- (void)refreshCellProperties {
+-(void)drawRect:(CGRect)rect {
+ 
     [[[HSHelpStack instance] appearance] customizeCell:self];
     [[[HSHelpStack instance] appearance] customizeTextLabel:self.textLabel];
 }

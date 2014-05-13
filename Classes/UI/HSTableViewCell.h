@@ -11,6 +11,5 @@
 
 @interface HSTableViewCell : UITableViewCell
 
-- (void)refreshCellProperties;
 
 @end

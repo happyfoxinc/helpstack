@@ -24,6 +24,7 @@
 #import "HSTableViewHeaderCell.h"
 #import <MessageUI/MessageUI.h>
 #import "HSActivityIndicatorView.h"
+//#import "HSReportIssueCell.h"
 
 /*
  To report issue using email:
@@ -225,17 +226,12 @@ BOOL finishedLoadingTickets = NO;
         static NSString *CellIdentifier = @"HelpCell";
         static NSString *ReportCellIdentifier = @"RepostIssueCell";
         if (indexPath.section == 2 || (indexPath.section == 1 && ([self.ticketSource ticketCount] == 0))) {
-            HSTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReportCellIdentifier];
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReportCellIdentifier];
             if (cell == nil) {
-                cell = [[HSTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ReportCellIdentifier];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ReportCellIdentifier];
             }
-            cell.accessoryType = UITableViewCellAccessoryNone;
             
             cell.textLabel.text = @"Report an issue";
-            cell.textLabel.textAlignment = NSTextAlignmentCenter;
-            cell.backgroundColor = [UIColor whiteColor];
-            cell.textLabel.textColor = [UIColor colorWithRed:233.0/255.0f green:76.0/255.0f blue:67.0/255.0f alpha:1.0];
-            cell.textLabel.font = [UIFont boldSystemFontOfSize:cell.textLabel.font.pointSize];
             cell.selectionStyle = UITableViewCellSelectionStyleGray;
             
             return cell;

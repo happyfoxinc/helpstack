@@ -110,7 +110,7 @@ You can provide your FAQs as a local pList file and provide the pList file name 
 
 ###Customizing Help Stack UI
 
-HelpStack comes with built in screens to interact with the customers. You can customize the skin of HelpStack screens as per your App themes by providing a simple pList file. If not, it takes up the default HelpStack theme.
+HelpStack comes with built in screens to interact with the customers. You can customize the skin of HelpStack screens as per your App themes by providing your configurations as a simple pList file. If not, it takes up the default HelpStack theme.
 
 Certain pList properties must be provided in a pre-defined format as listed below:
 
@@ -126,11 +126,34 @@ Certain pList properties must be provided in a pre-defined format as listed belo
 
 	Images which are included in your project must be specified with their filenames. e.g: **example.png**
 	
-You can download the **HSDefaultTheme.pList** file, include it in your project and edit the same to apply your custom skin settings.
+You can download the **HSDefaultTheme.pList** file, include it in your project and edit the same to apply your custom skin settings. You can customize the following UI Elements and properties :
+
 
 * Navigation Bar
 
-	You can customize the following navigationBar properties
+   (Add the image)
+   
+   
+* Background
+
+	You can specify a **BackgroundColor** or **BackgroundImage** which is included in your resources directory. This will be applied to the background of all the HelpStack screens.
+	
+* TableViewAttributes
+
+	(Add both images) 
+	(Add label attributes plist image also)
+	
+* Chat Screen Customization
+
+	
+	(Chat screen image and plist image)
+
+
+
+
+
+
+* Navigation Bar
 
 	**BackgroundColor** Navigation bar background color
 	
@@ -144,18 +167,15 @@ You can download the **HSDefaultTheme.pList** file, include it in your project a
 	 
 	 **ButtonTintColor** Navigation bar button tint color. For iOS6, this property would be considered as the navigation bar button background color.
 	 
-	![Navigation Bar customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png)
+
+&nbsp;<iframe src="https://www.flickr.com/photos/114457732@N02/11962138646/player/635e107870" height="104" width="500"  frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+
+* Background
+	
+	You can specify a **BackgroundColor** or **BackgroundImage** which is included in your resources directory. This will be applied to the background of all the HelpStack screens.
 
 
-* TableView and Background Customization
-	
-	You can customize the background skin, which applies to all the screens and the table view properties
-	
-	**BackgroundImageName** Specify the name of the image included in your project, which has to be applied as the background 
-	
-	**BackgroundColor** Background color. You can either specify a color or include an image.
-	
-	TableView:
+* TableViewAttirbutes
 	
 	**TableBackgroundColor** Background color of the Table View
 	
@@ -183,19 +203,21 @@ You can download the **HSDefaultTheme.pList** file, include it in your project a
 		
 	**LabelColor** Color of the label text
 	
-	![TableView and background customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11961600503_28d7f2cc96_o.png)
+	&nbsp;<iframe src="https://www.flickr.com/photos/114457732@N02/11961600503/player/ee2a9ea257" height="500" width="417"  frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 	
 * Chat screen customization
 
-	HelpStack comes with an intuitive Chat/Conversation screen and it allows you to completely customize it. If these properties are left unspecified, it takes up the properties of the default help stack theme.
+HelpStack comes with an intuitive Chat/Conversation screen and it allows you to completely customize it. If these properties are left unspecified, it takes up the properties of the default help stack theme.
 
-    * ChatBubbleAttributes:
+   &nbsp;<iframe src="https://www.flickr.com/photos/114457732@N02/11962401933/player/fd34cfc781" height="500" width="433"  frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+   
+  * ChatBubbleAttributes:
   
-  		**TextSize** Size of the chat bubble text, this applies to both the left and the right chat bubbles
+  	**TextSize** Size of the chat bubble text, this applies to both the left and the right chat bubbles
   	
-  		**TextFont** Font of the chat bubble text, this applies to both the left and the right chat bubbles
+  	**TextFont** Font of the chat bubble text, this applies to both the left and the right chat bubbles
   	
-  		**MessageInfoLabelFont**, **MessageInfoLabelSize**, **MessageInfoLabelColor** font, size and color of the message information displayed above and below the chat bubbles such as timestamp and sender name
+  	**MessageInfoLabelFont**, **MessageInfoLabelSize**, **MessageInfoLabelColor** font, size and color of the message information displayed above and below the chat bubbles such as timestamp and sender name
   	
   	* LeftChatBubbleAttributes and RightChatBubbleAttributes
   		
@@ -203,7 +225,7 @@ You can download the **HSDefaultTheme.pList** file, include it in your project a
   		
   		**TextColor** Message text color of the respective chat bubble
   	
-  	![Chat screen customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962401933_e1a4225581_o.png)
+  	
   
 
 
