@@ -2,6 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ChatBubbleAttributes</key>
+	<dict>
+		<key>TextSize</key>
+		<string>14</string>
+		<key>TextFont</key>
+		<string>Avenir</string>
+		<key>MessageInfoLabelFont</key>
+		<string></string>
+		<key>MessageInfoLabelSize</key>
+		<string></string>
+		<key>MessageInfoLabelColor</key>
+		<string>70,70,70,1.0</string>
+		<key>LeftChatBubbleAttributes</key>
+		<dict>
+			<key>BackgroundColor</key>
+			<string>255,255,255,1.0</string>
+			<key>TextColor</key>
+			<string>0,0,0,1.0</string>
+		</dict>
+		<key>RightChatBubbleAttributes</key>
+		<dict>
+			<key>BackgroundColor</key>
+			<string>235,235,235,1.0</string>
+			<key>TextColor</key>
+			<string>103,103,103,1.0</string>
+		</dict>
+	</dict>
 	<key>BackgroundImageName</key>
 	<string>nil</string>
 	<key>BackgroundColor</key>
