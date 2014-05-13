@@ -24,7 +24,7 @@
 #import "HSTableViewHeaderCell.h"
 #import <MessageUI/MessageUI.h>
 #import "HSActivityIndicatorView.h"
-//#import "HSReportIssueCell.h"
+#import "HSReportIssueCell.h"
 
 /*
  To report issue using email:
@@ -226,9 +226,9 @@ BOOL finishedLoadingTickets = NO;
         static NSString *CellIdentifier = @"HelpCell";
         static NSString *ReportCellIdentifier = @"RepostIssueCell";
         if (indexPath.section == 2 || (indexPath.section == 1 && ([self.ticketSource ticketCount] == 0))) {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReportCellIdentifier];
+            HSReportIssueCell *cell = [tableView dequeueReusableCellWithIdentifier:ReportCellIdentifier];
             if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ReportCellIdentifier];
+                cell = [[HSReportIssueCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ReportCellIdentifier];
             }
             
             cell.textLabel.text = @"Report an issue";
