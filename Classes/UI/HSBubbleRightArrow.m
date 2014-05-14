@@ -15,9 +15,19 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [[[HSHelpStack instance] appearance] customizeBubbleArrowForRightChatBubble:self];
     }
     return self;
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super initWithCoder:aDecoder];
+    if(self) {
+        [[[HSHelpStack instance] appearance] customizeBubbleArrowForRightChatBubble:self];
+    }
+    return self;
+    
 }
 
 
@@ -25,7 +35,7 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    [[[HSHelpStack instance] appearance] customizeBubbleArrowForRightChatBubble:self];
+    
 }
 
 

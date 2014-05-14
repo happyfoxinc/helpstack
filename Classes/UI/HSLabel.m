@@ -22,5 +22,15 @@
     return self;
 }
 
+-(id) initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super initWithCoder:aDecoder];
+    if(self) {
+        [[[HSHelpStack instance] appearance] customizeTextLabel:self];
+    }
+    return self;
+    
+}
+
 
 @end

@@ -16,22 +16,43 @@
     
     if (self) {
         // Initialization code
-        
+        [self initialize];
     }
     
     return self;
 }
 
--(id)initWithCoder:(NSCoder *)aDecoder {
+-(id) initWithCoder:(NSCoder *)aDecoder {
+    
     self = [super initWithCoder:aDecoder];
-    
-    if (self) {
-        // Initialization code
-        
+    if(self) {
+        [self initialize];
     }
+    return self;
     
+}
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if(self) {
+        [self initialize];
+    }
     return self;
 }
+
+- (id)init {
+    self = [super init];
+    if(self) {
+        [self initialize];
+    }
+    return self;
+}
+
+- (void)initialize {
+    [[[HSHelpStack instance] appearance] customizeCell:self];
+    [[[HSHelpStack instance] appearance] customizeTextLabel:self.textLabel];
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -40,9 +61,7 @@
 }
 
 -(void)drawRect:(CGRect)rect {
- 
-    [[[HSHelpStack instance] appearance] customizeCell:self];
-    [[[HSHelpStack instance] appearance] customizeTextLabel:self.textLabel];
+
 }
 
 

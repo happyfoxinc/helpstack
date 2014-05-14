@@ -26,6 +26,11 @@
 
 @property (nonatomic, assign) BOOL requiresNetwork;
 
+/*
+    Setting showCredits to false will disable the credit text shown at the bottom
+    of the main HelpStack screen
+ */
+
 @property (nonatomic, assign) BOOL showCredits;
 
 /**
