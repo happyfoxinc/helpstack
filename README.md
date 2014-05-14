@@ -1,5 +1,13 @@
-# Help Stack
-HelpStack provides you with a simple way of adding a great in-App support for your iOS App users. You can integrate any of your favorite HelpDesk solution at ease. It currently comes with three plugged in Help desk solutions - *Desk.com*, *Zendesk* and *HappyFox* along with customizable and simple UI to interact with the user. 
+<p align="center" >
+  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/Helpstack%20by%20Happyfox%20logos.png" alt="HelpStack" title="Logo">
+</p>
+
+
+**HelpStack** provides you with a simple way of adding a great in-App support for your iOS App users. You can integrate any of your favorite HelpDesk solution at ease. It currently comes with three plugged in Help desk solutions - *Desk.com*, *Zendesk* and *HappyFox* along with customizable and simple UI to interact with the user. 
+
+<p align="center" >
+  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/screenshots.png" alt="HelpStackthemes" title="screenshots">
+</p>
 
 ## How to use Help Stack
 Integrating HelpStack into your app is an easy three-step process:
@@ -8,6 +16,8 @@ Integrating HelpStack into your app is an easy three-step process:
 2.	Configure your desired Help desk solution
 3.	Customize the HelpStack UI with a simple plist file
 
+
+
 ### Getting started with Help Stack
 
 Use Cocoa Pods to install HelpStack and its dependencies. HelpStack dependencies include AFNetworking 2.0.
@@ -15,7 +25,6 @@ Use Cocoa Pods to install HelpStack and its dependencies. HelpStack dependencies
 	Pod “HelpStack”
 
 HelpStack requires Xcode 5.0 targeting iOS 7 and above.
-
 
 ### Configuring Help Stack gears
 
@@ -255,12 +264,11 @@ The following attributes can be independantly customized for the right and the l
   	**BackgroundColor** Background Color of the right chat bubble.
   
   	**TextColor** Message Text color that appears within the right chat bubble.
-
-![Chatscreen customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/chatScreen%20copy.png)  
+ 
 
 ## Contact
 
-Follow HelpStack on Twitter (@HelpStackSDK)
+Follow HelpStack on Twitter ([@HelpStackSDK](https://twitter.com/HelpStackSDK/))
 
 
 ## License
