@@ -2,11 +2,11 @@
 Pod::Spec.new do |s|
   s.name         = "HelpStack"
   s.version      = "1.0"
-  s.summary      = "Mobile app customer support and in-app feedback management"
-  s.description  = 'You can create Support and knowledge base page of your app directly integrated with your favorite HelpDesk support'
-  s.homepage     = "https://happyfox.com"
+  s.summary      = "In-app customer support framework"
+  s.description  = 'See helpstack.io for more details'
+  s.homepage     = "http://helpstack.io"
   s.license      = 'MIT'
-  s.author       = { "HappyFox" => "ios@tenmiles.com" }
+  s.author       = { "HappyFox" => "ios@happyfox.com" }
   s.platform     = :ios, '7.0'
   s.source       = { :git => "https://github.com/happyfoxinc/helpstack.git", :tag => "1.0", :submodules => true }
   s.resources    = ['Resources/*.png','Resources/*.storyboard']
