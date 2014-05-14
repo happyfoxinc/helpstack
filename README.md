@@ -5,8 +5,8 @@
 
 **HelpStack** provides you with a simple way of adding a great in-App support for your iOS App users. You can integrate any of your favorite HelpDesk solution at ease. It currently comes with three plugged in Help desk solutions - *Desk.com*, *Zendesk* and *HappyFox* along with customizable and simple UI to interact with the user. 
 
-<p align="center" >
-  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/screenshots.png" alt="HelpStackthemes" title="screenshots">
+<p align="left" >
+  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/Screen%20Shot%202014-05-14%20at%202.46.10%20pm.png" alt="HelpStackthemes" title="screenshots">
 </p>
 
 ## How to use Help Stack
