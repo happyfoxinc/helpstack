@@ -194,8 +194,10 @@ These properties control the look of the NavigationBar across all the helpStack 
 	**TitleColor** Navigation bar title font color
 	 
 	**ButtonTintColor** Navigation bar button tint color.
-	
-![Navigation Bar customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png)
+
+<p align="center" >
+  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png" alt="HelpStacktheme" title="NavigationBar">
+</p>
 
 ##### Customizing the Background
 
@@ -238,7 +240,9 @@ The cell title is a label which can be customized by providing LabelAttributes :
 		
 	**LabelColor** Color of the label text
 	
-![TableView customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/tableView%20copy.png)
+<p align="center" >
+  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/tableView%20copy.png" alt="HelpStackthemeCustomize" title="TableView">
+</p>
 
 ##### Customizing the chat screen
 
@@ -266,7 +270,10 @@ The following attributes can be independantly customized for the right and the l
   
   	**TextColor** Message Text color that appears within the right chat bubble.
  
-![ChatScreen customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/chatScreen%20copy.png)
+
+<p align="center" >
+  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/chatScreen%20copy.png" alt="HelpStacktheme" title="ChatScreen">
+</p>
 
 
 
