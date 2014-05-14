@@ -142,13 +142,15 @@ Once you have integrated your helpStack, use the **'showHelp'** API call to open
 	@implementation MyViewController
 	
 		- (IBAction) onHelpPressed: (id)sender {
-			[[HSHelpStack] instance] showHelp:self];
+			[[HSHelpStack instance] showHelp:self];
 		}
 
 
 ###Customizing Help Stack UI
 
-HelpStack comes with built in screens with a default theme. It also comes with a set of pre configured [themes](./Themes/).
+HelpStack comes with built in screens with a default theme. It also comes with a set of pre configured themes, which you can download from the link below:
+
+####[Download Themes](./Themes/)
 
 You can start with one of these themes as your base. Download any of these pList files, include it in your project and rename it as required. In order to apply the themes for the HelpStack screens, include the following line of code when you configure HelpStack.
 
@@ -173,8 +175,7 @@ Refer to [iosfonts.com](http://iosfonts.com) for the fonts supported by iOS.
 
 	Images which are included in your project must be specified with their filenames. e.g: **example.png**
 	
-You can download the **HSDefaultTheme.pList** file, include it in your project and edit the same to apply your custom skin settings. You can follow the examples given below.
-
+	
 ##### Customizing the Navigation Bar
 	
 	
@@ -265,6 +266,9 @@ The following attributes can be independantly customized for the right and the l
   
   	**TextColor** Message Text color that appears within the right chat bubble.
  
+![ChatScreen customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/chatScreen%20copy.png)
+
+
 
 ## Contact
 
