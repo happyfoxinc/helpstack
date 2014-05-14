@@ -138,7 +138,7 @@
     self.navBarTintColor = DEFAULT_NAVIGATIONBAR_BUTTONTINTCOLOR;
     self.navBarImageName = nil;
     
-    NSDictionary *navBarDict = [self.customThemeProperties objectForKey:@"NavigationBar"];
+    NSDictionary *navBarDict = [self.customThemeProperties objectForKey:@"NavigationBarAttributes"];
     
     //NavigationBar background Color
     NSString *colorString = [navBarDict objectForKey:@"BackgroundColor"];
@@ -182,7 +182,7 @@
     self.cellBgColor = DEFAULT_CELL_BACKGROUNDCOLOR;
 
     //Background Color
-    NSDictionary *tableViewDict = [self.customThemeProperties objectForKey:@"TableView"];
+    NSDictionary *tableViewDict = [self.customThemeProperties objectForKey:@"TableViewAttributes"];
     NSString *bgColorString = [tableViewDict objectForKey:@"CellBackgroundColor"];
     if(bgColorString != nil){
         UIColor *bgColor = [UIColor colorFromRGBString:bgColorString];
@@ -199,7 +199,7 @@
     self.headerTitleFont = DEFAULT_HEADER_TITLEFONT;
 
     //Background Color
-    NSDictionary *tableViewDict = [self.customThemeProperties objectForKey:@"TableView"];
+    NSDictionary *tableViewDict = [self.customThemeProperties objectForKey:@"TableViewAttributes"];
     NSString *bgColorString = [tableViewDict objectForKey:@"HeaderBackgroundColor"];
     if(bgColorString != nil){
         UIColor *bgColor = [UIColor colorFromRGBString:bgColorString];
@@ -412,7 +412,7 @@
     UIColor *separatorColor = DEFAULT_TABLEVIEW_SEPARATORCOLOR;
     if(self.customThemeProperties != nil){
         //Background Color
-        NSDictionary *tableViewDict = [self.customThemeProperties objectForKey:@"TableView"];
+        NSDictionary *tableViewDict = [self.customThemeProperties objectForKey:@"TableViewAttributes"];
         NSString *bgColorString = [tableViewDict objectForKey:@"BackgroundColor"];
         if(bgColorString != nil){
             UIColor *bgColor = [UIColor colorFromRGBString:bgColorString];

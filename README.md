@@ -108,7 +108,18 @@ If you do not use any of the help desk solutions, you can still use HelpStack to
     
 You can provide your FAQs as a local pList file and provide the pList file name in place of *pList file name*.
 
-###Customizing Help Stack UI
+### Showing your HelpStack
+
+Once you have integrated your helpStack, use the **'showHelp'** API call to open up HelpStack to show up the FAQs or to report an Issue.
+
+	@implementation MyViewController
+	
+		- (IBAction) onHelpPressed: (id)sender {
+			[[HSHelpStack] instance] showHelp:self];
+		}
+
+
+###Customizing HelpStack UI
 
 HelpStack comes with built in screens to interact with the customers. You can customize the skin of HelpStack screens as per your App themes by providing your configurations as a simple pList file. If not, it takes up the default HelpStack theme.
 
