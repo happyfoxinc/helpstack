@@ -22,7 +22,7 @@ Integrating HelpStack into your app is an easy three-step process:
 
 Use Cocoa Pods to install HelpStack and its dependencies. HelpStack dependencies include AFNetworking 2.0.
 
-	Pod “HelpStack”
+	pod 'HelpStack'
 
 HelpStack requires Xcode 5.0 targeting iOS 7 and above.
 
