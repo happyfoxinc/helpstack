@@ -250,7 +250,7 @@ The following attributes can be independantly customized for the right and the l
   
   	**TextColor** Message Text color that appears within the left chat bubble.
   
-  * RightChatBubbleAttributes :
+   * RightChatBubbleAttributes :
   
   	**BackgroundColor** Background Color of the right chat bubble.
   
