@@ -154,7 +154,7 @@ HelpStack comes with built in screens with a default theme. It also comes with a
 
 You can start with one of these themes as your base. Download any of these pList files, include it in your project and rename it as required. In order to apply the themes for the HelpStack screens, include the following line of code when you configure HelpStack.
 
-	[[HSHelpStack] instance] setThemeFrompList:@"MyCustomThemeForHelpStack"];
+	[[HSHelpStack instance] setThemeFrompList:@"MyCustomThemeForHelpStack"];
 
 #### How to Customize your theme plist
 
