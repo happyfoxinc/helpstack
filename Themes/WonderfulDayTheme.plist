@@ -62,18 +62,18 @@
 		<key>LabelSize</key>
 		<string>15</string>
 		<key>LabelFont</key>
-		<string>Avenir</string>
+		<string>nil</string>
 		<key>LabelColor</key>
 		<string>0,0,0,1.0</string>
 	</dict>
-	<key>TableView</key>
+	<key>TableViewAttributes</key>
 	<dict>
 		<key>SeparatorColor</key>
 		<string>221,221,221,1.0</string>
 		<key>CellBackgroundColor</key>
 		<string>255,255,255,1.0</string>
 		<key>HeadingFont</key>
-		<string>Avenir-Bold</string>
+		<string>nil</string>
 		<key>HeadingSize</key>
 		<string>12</string>
 		<key>HeadingColor</key>
@@ -81,7 +81,7 @@
 		<key>HeaderBackgroundColor</key>
 		<string>235,235,235,1.0</string>
 	</dict>
-	<key>NavigationBar</key>
+	<key>NavigationBarAttributes</key>
 	<dict>
 		<key>BackgroundImage</key>
 		<string>Navigation.png</string>
