@@ -13,6 +13,7 @@
 #import "HSAttachment.h"
 #import "HSNewIssueAttachmentViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "HSTableFooterCreditsView.h"
 
 @interface HSNewIssueViewController ()<UITextFieldDelegate, UITextViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate> {
     UITextField* subjectField;
@@ -41,10 +42,19 @@
     self.view.backgroundColor = [appearance getBackgroundColor];
 
     self.currentStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
+    
+    [self addCreditsToTable];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [[UIApplication sharedApplication] setStatusBarStyle:self.currentStatusBarStyle];
+}
+
+- (void)addCreditsToTable {
+    if ([[HSHelpStack instance] showCredits]) {
+        HSTableFooterCreditsView* footerView = [[HSTableFooterCreditsView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100)];
+        self.tableView.tableFooterView = footerView;
+    }
 }
 
 -(void)setInputAccessoryView{

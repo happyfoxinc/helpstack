@@ -25,6 +25,7 @@
 #import <MessageUI/MessageUI.h>
 #import "HSActivityIndicatorView.h"
 #import "HSReportIssueCell.h"
+#import "HSTableFooterCreditsView.h"
 
 /*
  To report issue using email:
@@ -139,24 +140,7 @@ BOOL finishedLoadingTickets = NO;
 
 - (void)addCreditsToTable {
     if ([[HSHelpStack instance] showCredits]) {
-        UIView* footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100)];
-        
-        HSLabel* poweredlabel = [[HSLabel alloc] initWithFrame:CGRectMake(0, 5, footerView.frame.size.width, 30)];
-        [poweredlabel setFont:[UIFont systemFontOfSize:12]];
-        [poweredlabel setTextAlignment:NSTextAlignmentCenter];
-        [poweredlabel setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-        [poweredlabel setTextColor:[UIColor colorWithRed:(197.0/255.0) green:(197.0/255.0) blue:(197.0/255.0) alpha:1.0]];
-        
-        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Powered by HelpStack"];
-        [attributedString beginEditing];
-        [attributedString addAttribute:NSFontAttributeName
-                                 value:[UIFont boldSystemFontOfSize:12]
-                                 range:NSMakeRange(11, 9)];
-        [attributedString endEditing];
-        
-        [poweredlabel setAttributedText:attributedString];
-        [footerView addSubview:poweredlabel];
-        
+        HSTableFooterCreditsView* footerView = [[HSTableFooterCreditsView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100)];
         self.tableView.tableFooterView = footerView;
     }
 }
