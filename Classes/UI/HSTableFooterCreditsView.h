@@ -10,4 +10,6 @@
 
 @interface HSTableFooterCreditsView : UIView
 
+-(id)initWithFrame:(CGRect)frame;
+
 @end
