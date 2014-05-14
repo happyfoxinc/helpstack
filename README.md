@@ -257,3 +257,13 @@ The following attributes can be independantly customized for the right and the l
   	**TextColor** Message Text color that appears within the right chat bubble.
 
 ![Chatscreen customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/chatScreen%20copy.png)  
+
+## Contact
+
+Follow HelpStack on Twitter (@HelpStackSDK)
+
+
+## License
+
+HelpStack is available under the MIT license. See the LICENSE file for more info.
+
