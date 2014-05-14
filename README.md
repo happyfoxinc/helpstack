@@ -23,12 +23,17 @@ HelpStack requires Xcode 5.0 targeting iOS 7 and above.
 
 To integrate your existing HappyFox account into HelpStack, you just have to include the following lines of code in your AppDelegate:
 
-	HSHelpStack *helpStack =[[HSHelpStack alloc] init];
-	HSHappyFoxGear *happyfox = [[HSHappyFoxGear alloc] initWithInstanceUrl: @”https:example.happyfox.com” apiKey: @”<Your API-Key> authcode: @”<Your Auth Code>”];
-	happyfox.hfPriorityID = @”<Priority ID>”;
-	happyfox.hfCategoryID = @”<Category ID>”;
-	happyfox.sectionID = @”<Section ID>”;
-	helpStack.gear = happyfox;
+	
+	HSHappyFoxGear *happyFoxGear = [[HSHappyFoxGear alloc] 
+			initWithInstanceUrl  : @"https://example.happyfox.com" 
+			apiKey               : @"<YOUR_API_KEY>" 
+			authoCode            : @"<YOUR_AUTH_CODE>" 
+			priorityID           : @"<PRIORITY_ID>" 
+			categoryID           : @"<CATEGORY_ID>"];
+    happyFoxGear.hfSectionID     = @"<SECTION_ID>";    // Optional
+    
+    HSHelpStack *helpStack = [HSHelpStack instance];
+	helpStack.gear = happyFoxGear;
 
 * Getting the API Key and Auth code
 
@@ -73,11 +78,14 @@ You must note that since the FAQs/KB articles are being fetched from the server,
 
 To set up your existing ZenDesk account with HelpStack, just integrate the below lines of code in your AppDelegate.
 
-	HSZenDeskGear* zendDesk = [[HSZenDeskGear alloc] initWithInstanceUrl:@"https://example.zendesk.com/"];
-	zendDesk.staffEmailAddress = @"saff@example.com";
-	zendDesk.apiToken = @"<API-KEY-HERE>";
-	zendDesk.localArticlePath = @"<PATH-TO-ARTICLES>";
-	helpStack.gear = zendDesk;
+	HSZenDeskGear *zenDeskGear  = [[HSZenDeskGear alloc] 
+			initWithInstanceUrl : @"https://example.zendesk.com" 
+			staffEmailAddress   : @"saff@example.com" 
+			apiToken            : @"<API-KEY-HERE>" 
+			localArticlePath    : @"<PATH-TO-ARTICLES>"];
+	
+	HSHelpStack *helpStack = [HSHelpStack instance];
+	helpStack.gear = zenDeskGear;
 
 where, **staff email address** is the email address of staff on behalf of whom ticket will be created.
 
@@ -94,7 +102,13 @@ where, **staff email address** is the email address of staff on behalf of whom t
 
 To set up your Desk account with HelpStack, you need to integrate the following lines of code in your App delegate.
 
-	HSDeskGear* deskGear = [[HSDeskGear alloc] initWithInstanceBaseUrl:@"https://example.desk.com/" toHelpEmail:@"<Your email address>" staffLoginEmail:@"<Your Login Email>" AndStaffLoginPassword:@"<Your password>"];
+	HSDeskGear* deskGear = [[HSDeskGear alloc] 
+			initWithInstanceBaseUrl : @"https://example.desk.com/" 
+			toHelpEmail             : @"<Your email address>" 
+			staffLoginEmail         : @"<Your Login Email>" 
+			AndStaffLoginPassword   : @"<Your password>"];
+	
+	HSHelpStack *helpStack = [HSHelpStack instance];
     helpStack.gear = deskGear;
     
 If you wish to provide your FAQs locally, you can provide it in the form of a pList file and specify the pList filename in the Desk Gear when you configure the same.
@@ -103,7 +117,11 @@ If you wish to provide your FAQs locally, you can provide it in the form of a pL
 
 If you do not use any of the help desk solutions, you can still use HelpStack to provide efficient customer support by configuring with just your email. You can configure email support in Helpstack by including the below lines of code in your App delegate.
 
-	HAGearEmail* emailGear = [[HAGearEmail alloc] initWithSupportEmailAddress:@"support@example.com" articlePath:@"<pList file name>"];
+	HAGearEmail* emailGear = [[HAGearEmail alloc] 
+			initWithSupportEmailAddress : @"support@example.com" 
+			articlePath                 : @"<pList file name>"];
+			
+	HSHelpStack *helpStack = [HSHelpStack instance];
     helpStack.gear = emailGear;
     
 You can provide your FAQs as a local pList file and provide the pList file name in place of *pList file name*.
@@ -119,75 +137,71 @@ Once you have integrated your helpStack, use the **'showHelp'** API call to open
 		}
 
 
-###Customizing HelpStack UI
+###Customizing Help Stack UI
 
-HelpStack comes with built in screens to interact with the customers. You can customize the skin of HelpStack screens as per your App themes by providing your configurations as a simple pList file. If not, it takes up the default HelpStack theme.
+HelpStack comes with built in screens with a default theme. It also comes with a set of pre configured [themes](./Themes/).
+
+You can start with one of these themes as your base. Download any of these pList files, include it in your project and rename it as required. In order to apply the themes for the HelpStack screens, include the following line of code when you configure HelpStack.
+
+	[[HSHelpStack] instance] setThemeFrompList:@"MyCustomThemeForHelpStack"];
+
+#### How to Customize your theme plist
+
+##### Basics
 
 Certain pList properties must be provided in a pre-defined format as listed below:
 
-* Colors
+* Color
 	
 	Specify colors by providing its R,G,B,alpha value separated by commas. e.g: **255,255,255,1.0** is white.
 	
-* Fonts
+* Font
 	
-	The font name and font size are to be provided as two separate properties in the pList file. Fonts are to be specified by its font family name and font style. e.g: **Helvetica-Bold** 
+	The font name and font size are to be provided as two separate properties in the pList file. Fonts are to be specified by its font family name and font style. e.g: **Helvetica-Bold** The specified font size will be taken as 'pts' by default. 
+Refer to [iosfonts.com](http://iosfonts.com) for the fonts supported by iOS.
 	
-* Images
+* Image
 
 	Images which are included in your project must be specified with their filenames. e.g: **example.png**
 	
-You can download the **HSDefaultTheme.pList** file, include it in your project and edit the same to apply your custom skin settings. You can customize the following UI Elements and properties :
+You can download the **HSDefaultTheme.pList** file, include it in your project and edit the same to apply your custom skin settings. You can follow the examples given below.
 
-
-* Navigation Bar
-
-   (Add the image)
-   
-   
-* Background
-
-	You can specify a **BackgroundColor** or **BackgroundImage** which is included in your resources directory. This will be applied to the background of all the HelpStack screens.
+##### Customizing the Navigation Bar
 	
-* TableViewAttributes
-
-	(Add both images) 
-	(Add label attributes plist image also)
 	
-* Chat Screen Customization
+These properties control the look of the NavigationBar across all the helpStack screens.
 
+* NavigationBarAttributes
 	
-	(Chat screen image and plist image)
-
-
-
-
-
-
-* Navigation Bar
-
 	**BackgroundColor** Navigation bar background color
 	
 	**BackgroundImage** Navigation bar background image, you either give an image or specify a color
 	 
-	 **TitleFont** Navigation bar title Font
+	**TitleFont** Navigation bar title Font
 	 
-	 **TitleSize** Navigation bar title font size
+	**TitleSize** Navigation bar title font size
 	 
-	 **TitleColor** Navigation bar title font color
+	**TitleColor** Navigation bar title font color
 	 
-	 **ButtonTintColor** Navigation bar button tint color. For iOS6, this property would be considered as the navigation bar button background color.
-	 
-
-&nbsp;<iframe src="https://www.flickr.com/photos/114457732@N02/11962138646/player/635e107870" height="104" width="500"  frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-
-* Background
+	**ButtonTintColor** Navigation bar button tint color.
 	
-	You can specify a **BackgroundColor** or **BackgroundImage** which is included in your resources directory. This will be applied to the background of all the HelpStack screens.
+![Navigation Bar customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png)
 
+##### Customizing the Background
 
-* TableViewAttirbutes
+You can specify a background color or an image which is included in your resources directory to be set as the Background of all the helpStack screens.
+
+**BackgroundImageName** Specify the name of the image included in your project, which has to be applied as the background 
 	
+**BackgroundColor** Background color. You can either specify a color or include an image.
+
+
+##### Customizing the TableView
+
+These tableView properties are applied to the main list view which shows up the FAQs and Issues.
+
+* TableViewAttributes 
+
 	**TableBackgroundColor** Background color of the Table View
 	
 	**SepertorColor** TableView separator Color
@@ -195,17 +209,17 @@ You can download the **HSDefaultTheme.pList** file, include it in your project a
 	**CellBackgroundColor** Background color of the cells
 	
 	**HeadingFont** Header Title font
-	
+		
 	**HeadingSize** Header Title size
 	
 	**HeadingColor** Header Title color
 	
 	**HeadingBackgroundColor** Header background color
-	
-	The cell title is a label and it can be customized using the Label properties as below:
-	
-* LabelAttributes:
-	
+
+The cell title is a label which can be customized by providing LabelAttributes :
+
+* LabelAttributes
+
 	**BackgroundColor** Background color of the label. Ideally it would be better to give it as transparent.
 	
 	**LabelSize** Size of the label text
@@ -214,40 +228,32 @@ You can download the **HSDefaultTheme.pList** file, include it in your project a
 		
 	**LabelColor** Color of the label text
 	
-	&nbsp;<iframe src="https://www.flickr.com/photos/114457732@N02/11961600503/player/ee2a9ea257" height="500" width="417"  frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-	
-* Chat screen customization
+![TableView customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/tableView%20copy.png)
 
-HelpStack comes with an intuitive Chat/Conversation screen and it allows you to completely customize it. If these properties are left unspecified, it takes up the properties of the default help stack theme.
+##### Customizing the chat screen
 
-   &nbsp;<iframe src="https://www.flickr.com/photos/114457732@N02/11962401933/player/fd34cfc781" height="500" width="433"  frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-   
-  * ChatBubbleAttributes:
+These chat screen properties allows customization of the Issue conversation view. 
+
+* ChatBubbleAttributes :
+
+	**TextSize** Size of the text that appears within the left and the right chat bubbles.
+
+	**TextFont** Font of the text that appears within the left and the right chat bubbles.
+
+	**MessageInfoLabelFont**, **MesssageInfoLabelSize**, **MessageInfoLabelColor** Font, Size and Color of the message information shown above and below the chat bubbles which includes the sender name and timestamp.
+
+The following attributes can be independantly customized for the right and the left chat bubbles :
+
+   * LeftChatBubbleAttributes :
   
-  	**TextSize** Size of the chat bubble text, this applies to both the left and the right chat bubbles
-  	
-  	**TextFont** Font of the chat bubble text, this applies to both the left and the right chat bubbles
-  	
-  	**MessageInfoLabelFont**, **MessageInfoLabelSize**, **MessageInfoLabelColor** font, size and color of the message information displayed above and below the chat bubbles such as timestamp and sender name
-  	
-  	* LeftChatBubbleAttributes and RightChatBubbleAttributes
-  		
-  		**BackgroundColor** Background color of the respective chat bubble
-  		
-  		**TextColor** Message text color of the respective chat bubble
-  	
-  	
+  	**BackgroundColor** Background Color of the left chat bubble.
   
+  	**TextColor** Message Text color that appears within the left chat bubble.
+  
+  * RightChatBubbleAttributes :
+  
+  	**BackgroundColor** Background Color of the right chat bubble.
+  
+  	**TextColor** Message Text color that appears within the right chat bubble.
 
-
-
-
-	
-	
-
-
-
-
-
-
-
+![Chatscreen customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/chatScreen%20copy.png)  
