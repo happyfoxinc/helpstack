@@ -34,7 +34,7 @@
 
 @property (nonatomic, weak) id<HSNewIssueViewControllerDelegate> delegate;
 @property (nonatomic, strong) HSNewTicket* createNewTicket;
-
++ (NSString*)deviceInformation;
 @end
 
 @protocol HSNewIssueViewControllerDelegate <NSObject>
