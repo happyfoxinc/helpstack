@@ -126,7 +126,7 @@ If you wish to provide your FAQs locally, you can provide it in the form of a pL
 
 If you do not use any of the help desk solutions, you can still use HelpStack to provide efficient customer support by configuring with just your email. You can configure email support in Helpstack by including the below lines of code in your App delegate.
 
-	HAGearEmail* emailGear = [[HAGearEmail alloc] 
+	HSGearEmail* emailGear = [[HSGearEmail alloc] 
 			initWithSupportEmailAddress : @"support@example.com" 
 			articlePath                 : @"<pList file name>"];
 			
