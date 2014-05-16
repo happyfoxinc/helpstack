@@ -79,10 +79,6 @@ To integrate your existing HappyFox account into HelpStack, you just have to inc
 	
 	Use API key and Auth code for authentication.
 
-You must note that since the FAQs/KB articles are being fetched from the server, it requires a network connection, in the absence of which your app may not be able to display the FAQs. With HelpStack, you can either configure your gear to fetch KB articles from server or you may provide them locally with a pList file. You will have to specify the pList file name when you configure the help desk solution as shown below:
-
-	yourGear.localArticlePath = @"<FAQs file name>";
-
 #### 2. ZenDesk gear
 
 To set up your existing ZenDesk account with HelpStack, just integrate the below lines of code in your AppDelegate.
@@ -134,6 +130,17 @@ If you do not use any of the help desk solutions, you can still use HelpStack to
     helpStack.gear = emailGear;
     
 You can provide your FAQs as a local pList file and provide the pList file name in place of *pList file name*.
+
+### Shipping with Local Articles
+
+You must note that since the FAQs/KB articles are being fetched from the server, it requires a network connection, in the absence of which your app may not be able to display the FAQs. With HelpStack, you can either configure your gear to fetch KB articles from server or you may provide them locally with a pList file. You will have to specify the pList file name when you configure the help desk solution as shown below:
+
+	yourGear.localArticlePath = @"<FAQs file name>";
+	
+Download a sample pList from here
+
+####[Download Sample Article](./Article/)
+
 
 ### Showing your HelpStack
 
