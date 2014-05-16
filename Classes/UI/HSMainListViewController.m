@@ -489,6 +489,7 @@ BOOL finishedLoadingTickets = NO;
         
         [mailer setToRecipients:@[[self.ticketSource supportEmailAddress]]];
         [mailer setSubject:@"Help"];
+        [mailer setMessageBody:[HSNewIssueViewController deviceInformation] isHTML:NO];
         
         mailer.modalPresentationStyle = UIModalPresentationCurrentContext;
         

@@ -292,4 +292,3 @@ Follow HelpStack on Twitter ([@HelpStackSDK](https://twitter.com/HelpStackSDK/))
 ## License
 
 HelpStack is available under the MIT license. See the LICENSE file for more info.
-
