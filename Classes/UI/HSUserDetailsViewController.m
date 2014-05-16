@@ -23,6 +23,7 @@
 #import "HSUserDetailsViewController.h"
 #import "HSHelpStack.h"
 #import "HSActivityIndicatorView.h"
+#import "HSUtility.h"
 
 @interface HSUserDetailsViewController ()<UITextFieldDelegate>
 
@@ -113,26 +114,13 @@
         return NO;
     }
 
-    if(self.emailField.text == nil || self.emailField.text.length == 0 || ![self isValidEmail:self.emailField.text]) {
+    if(self.emailField.text == nil || self.emailField.text.length == 0 || ![HSUtility isValidEmail:self.emailField.text]) {
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Missing Email" message:@"Please give your valid email address." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         return NO;
     }
 
     return YES;
-}
-
-- (Boolean) isValidEmail: (NSString*) email {
-    NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:
-                                  @"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-                                                                           options:NSRegularExpressionCaseInsensitive error:&error];
-    
-    NSArray* matchesInString = [regex matchesInString:email options:0 range:NSMakeRange(0, [email length])];
-    if([matchesInString count]==1)
-        return true;
-    else
-        return false;
 }
 
 
