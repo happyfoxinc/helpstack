@@ -1,13 +1,5 @@
-<p align="center" >
-  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/Helpstack%20by%20Happyfox%20logos.png" alt="HelpStack" title="Logo">
-</p>
-
-
-**HelpStack** provides you with a simple way of adding a great in-App support for your iOS App users. You can integrate any of your favorite HelpDesk solution at ease. It currently comes with three plugged in Help desk solutions - *Desk.com*, *Zendesk* and *HappyFox* along with customizable and simple UI to interact with the user. 
-
-<p align="left" >
-  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/Screen%20Shot%202014-05-14%20at%202.46.10%20pm.png" alt="HelpStackthemes" title="screenshots">
-</p>
+# Help Stack
+HelpStack provides you with a simple way of adding a great in-App support for your iOS App users. You can integrate any of your favorite HelpDesk solution at ease. It currently comes with three plugged in Help desk solutions - *Desk.com*, *Zendesk* and *HappyFox* along with customizable and simple UI to interact with the user. 
 
 ## How to use Help Stack
 Integrating HelpStack into your app is an easy three-step process:
@@ -16,15 +8,14 @@ Integrating HelpStack into your app is an easy three-step process:
 2.	Configure your desired Help desk solution
 3.	Customize the HelpStack UI with a simple plist file
 
-
-
 ### Getting started with Help Stack
 
 Use Cocoa Pods to install HelpStack and its dependencies. HelpStack dependencies include AFNetworking 2.0.
 
-	pod 'HelpStack'
+	Pod “HelpStack”
 
 HelpStack requires Xcode 5.0 targeting iOS 7 and above.
+
 
 ### Configuring Help Stack gears
 
@@ -126,7 +117,7 @@ If you wish to provide your FAQs locally, you can provide it in the form of a pL
 
 If you do not use any of the help desk solutions, you can still use HelpStack to provide efficient customer support by configuring with just your email. You can configure email support in Helpstack by including the below lines of code in your App delegate.
 
-	HSGearEmail* emailGear = [[HSGearEmail alloc] 
+	HAGearEmail* emailGear = [[HAGearEmail alloc] 
 			initWithSupportEmailAddress : @"support@example.com" 
 			articlePath                 : @"<pList file name>"];
 			
@@ -142,19 +133,17 @@ Once you have integrated your helpStack, use the **'showHelp'** API call to open
 	@implementation MyViewController
 	
 		- (IBAction) onHelpPressed: (id)sender {
-			[[HSHelpStack instance] showHelp:self];
+			[[HSHelpStack] instance] showHelp:self];
 		}
 
 
 ###Customizing Help Stack UI
 
-HelpStack comes with built in screens with a default theme. It also comes with a set of pre configured themes, which you can download from the link below:
-
-####[Download Themes](./Themes/)
+HelpStack comes with built in screens with a default theme. It also comes with a set of pre configured [themes](./Themes/).
 
 You can start with one of these themes as your base. Download any of these pList files, include it in your project and rename it as required. In order to apply the themes for the HelpStack screens, include the following line of code when you configure HelpStack.
 
-	[[HSHelpStack instance] setThemeFrompList:@"MyCustomThemeForHelpStack"];
+	[[HSHelpStack] instance] setThemeFrompList:@"MyCustomThemeForHelpStack"];
 
 #### How to Customize your theme plist
 
@@ -175,7 +164,8 @@ Refer to [iosfonts.com](http://iosfonts.com) for the fonts supported by iOS.
 
 	Images which are included in your project must be specified with their filenames. e.g: **example.png**
 	
-	
+You can download the **HSDefaultTheme.pList** file, include it in your project and edit the same to apply your custom skin settings. You can follow the examples given below.
+
 ##### Customizing the Navigation Bar
 	
 	
@@ -194,10 +184,8 @@ These properties control the look of the NavigationBar across all the helpStack 
 	**TitleColor** Navigation bar title font color
 	 
 	**ButtonTintColor** Navigation bar button tint color.
-
-<p align="center" >
-  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png" alt="HelpStacktheme" title="NavigationBar">
-</p>
+	
+![Navigation Bar customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png)
 
 ##### Customizing the Background
 
@@ -240,9 +228,7 @@ The cell title is a label which can be customized by providing LabelAttributes :
 		
 	**LabelColor** Color of the label text
 	
-<p align="center" >
-  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/tableView%20copy.png" alt="HelpStackthemeCustomize" title="TableView">
-</p>
+![TableView customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/tableView%20copy.png)
 
 ##### Customizing the chat screen
 
@@ -269,17 +255,12 @@ The following attributes can be independantly customized for the right and the l
   	**BackgroundColor** Background Color of the right chat bubble.
   
   	**TextColor** Message Text color that appears within the right chat bubble.
- 
 
-<p align="center" >
-  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/chatScreen%20copy.png" alt="HelpStacktheme" title="ChatScreen">
-</p>
-
-
+![Chatscreen customization](https://dl.dropboxusercontent.com/u/55774910/HelpStack/chatScreen%20copy.png)  
 
 ## Contact
 
-Follow HelpStack on Twitter ([@HelpStackSDK](https://twitter.com/HelpStackSDK/))
+Follow HelpStack on Twitter (@HelpStackSDK)
 
 
 ## License

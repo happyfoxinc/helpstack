@@ -108,7 +108,7 @@
         submitButton.enabled = NO;
         
         NSMutableString* messageContent = [[NSMutableString alloc] initWithString:messageField.text];
-        [messageContent appendString:[self deviceInformation]];
+        [messageContent appendString:[HSNewIssueViewController deviceInformation]];
 
         self.createNewTicket.subject = subjectField.text;
         self.createNewTicket.content = messageContent;
@@ -121,7 +121,7 @@
     }
 }
 
-- (NSString*)deviceInformation
++ (NSString*)deviceInformation
 {
     NSString* deviceModel = [[UIDevice currentDevice] model];
     NSString* osVersion = [[UIDevice currentDevice] systemVersion];
