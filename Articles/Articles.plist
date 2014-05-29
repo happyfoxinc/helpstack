@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>content</key>
+		<string>Aenean lacinia bibendum nulla sed consectetur. Sed posuere consectetur est at lobortis. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus varius blandit sit amet non magna.
+
+Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur blandit tempus porttitor. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+
+Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</string>
+		<key>title</key>
+		<string>How to configure your mailbox</string>
+	</dict>
+	<dict>
+		<key>content</key>
+		<string>Aenean lacinia bibendum nulla sed consectetur. Sed posuere consectetur est at lobortis. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus varius blandit sit amet non magna.
+
+Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur blandit tempus porttitor. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+
+Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</string>
+		<key>title</key>
+		<string>How to rename your account</string>
+	</dict>
+	<dict>
+		<key>content</key>
+		<string>You can change your password from the settings page. You can access your settings page from the icon on the top left corner.</string>
+		<key>title</key>
+		<string>How to change your password</string>
+	</dict>
+	<dict>
+		<key>content</key>
+		<string>You can enable passcode protection from the settings page of the App. Setting a passcode will help you secure your App. Your passcode must be a String of minimum 6 characters. It must contain atleast one upper case letter and atleast one special character. You will have to answer two passcode recovery questions. These will help you recover your password in case you forget it. </string>
+		<key>title</key>
+		<string>How to set Passcode Protection?</string>
+	</dict>
+</array>
+</plist>
