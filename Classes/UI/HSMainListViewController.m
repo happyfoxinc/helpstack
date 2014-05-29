@@ -40,6 +40,7 @@
 #import "HSActivityIndicatorView.h"
 #import "HSReportIssueCell.h"
 #import "HSTableFooterCreditsView.h"
+#import "HSUtility.h"
 
 /*
  To report issue using email:
@@ -489,6 +490,7 @@ BOOL finishedLoadingTickets = NO;
         
         [mailer setToRecipients:@[[self.ticketSource supportEmailAddress]]];
         [mailer setSubject:@"Help"];
+        [mailer setMessageBody:[HSUtility deviceInformation] isHTML:NO];
         
         mailer.modalPresentationStyle = UIModalPresentationCurrentContext;
         

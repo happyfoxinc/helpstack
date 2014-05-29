@@ -28,6 +28,7 @@
 #import "HSNewIssueAttachmentViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "HSTableFooterCreditsView.h"
+#import "HSUtility.h"
 
 @interface HSNewIssueViewController ()<UITextFieldDelegate, UITextViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate> {
     UITextField* subjectField;
@@ -108,7 +109,7 @@
         submitButton.enabled = NO;
         
         NSMutableString* messageContent = [[NSMutableString alloc] initWithString:messageField.text];
-        [messageContent appendString:[self deviceInformation]];
+        [messageContent appendString:[HSUtility deviceInformation]];
 
         self.createNewTicket.subject = subjectField.text;
         self.createNewTicket.content = messageContent;
@@ -119,18 +120,6 @@
         [self dismissViewControllerAnimated:YES completion:nil];
 
     }
-}
-
-- (NSString*)deviceInformation
-{
-    NSString* deviceModel = [[UIDevice currentDevice] model];
-    NSString* osVersion = [[UIDevice currentDevice] systemVersion];
-    NSString* bundleName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
-    NSString* bundleVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-
-    NSString* deviceInformation = [NSString stringWithFormat:@"\n\n-----\nDevice Information:\n%@\niOS %@\n\nApp information:\n%@\nVersion %@", deviceModel, osVersion, bundleName, bundleVersion];
-
-    return deviceInformation;
 }
 
 - (IBAction)cancelPressed:(id)sender {

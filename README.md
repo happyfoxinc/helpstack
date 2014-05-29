@@ -22,7 +22,7 @@ Integrating HelpStack into your app is an easy three-step process:
 
 Use Cocoa Pods to install HelpStack and its dependencies. HelpStack dependencies include AFNetworking 2.0.
 
-	Pod “HelpStack”
+	pod 'HelpStack'
 
 HelpStack requires Xcode 5.0 targeting iOS 7 and above.
 
@@ -79,10 +79,6 @@ To integrate your existing HappyFox account into HelpStack, you just have to inc
 	
 	Use API key and Auth code for authentication.
 
-You must note that since the FAQs/KB articles are being fetched from the server, it requires a network connection, in the absence of which your app may not be able to display the FAQs. With HelpStack, you can either configure your gear to fetch KB articles from server or you may provide them locally with a pList file. You will have to specify the pList file name when you configure the help desk solution as shown below:
-
-	yourGear.localArticlePath = @"<FAQs file name>";
-
 #### 2. ZenDesk gear
 
 To set up your existing ZenDesk account with HelpStack, just integrate the below lines of code in your AppDelegate.
@@ -126,7 +122,7 @@ If you wish to provide your FAQs locally, you can provide it in the form of a pL
 
 If you do not use any of the help desk solutions, you can still use HelpStack to provide efficient customer support by configuring with just your email. You can configure email support in Helpstack by including the below lines of code in your App delegate.
 
-	HAGearEmail* emailGear = [[HAGearEmail alloc] 
+	HSGearEmail* emailGear = [[HSGearEmail alloc] 
 			initWithSupportEmailAddress : @"support@example.com" 
 			articlePath                 : @"<pList file name>"];
 			
@@ -135,15 +131,25 @@ If you do not use any of the help desk solutions, you can still use HelpStack to
     
 You can provide your FAQs as a local pList file and provide the pList file name in place of *pList file name*.
 
+<<<<<<< HEAD
 * Adding an Articles pList file :
 
+=======
+>>>>>>> bc4fa6212da0fe2a44adb5ed3fe0db52f44b406f
 ### Shipping with Local Articles
 
 You must note that since the FAQs/KB articles are being fetched from the server, it requires a network connection, in the absence of which your app may not be able to display the FAQs. With HelpStack, you can either configure your gear to fetch KB articles from server or you may provide them locally with a pList file. You will have to specify the pList file name when you configure the help desk solution as shown below:
 
 	yourGear.localArticlePath = @"<FAQs file name>";
 	
+<<<<<<< HEAD
 ####[Download Sample FAQ pList](./Article/)
+=======
+Download a sample pList from here
+
+####[Download Sample Article](./Article/)
+
+>>>>>>> bc4fa6212da0fe2a44adb5ed3fe0db52f44b406f
 
 ### Showing your HelpStack
 
@@ -295,4 +301,3 @@ Follow HelpStack on Twitter ([@HelpStackSDK](https://twitter.com/HelpStackSDK/))
 ## License
 
 HelpStack is available under the MIT license. See the LICENSE file for more info.
-
