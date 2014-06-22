@@ -6,7 +6,7 @@
 	<string>245,245,245,1.0</string>
 	<key>BackgroundImageName</key>
 	<string>nil</string>
-	<key>NavigationBar</key>
+	<key>NavigationBarAttributes</key>
 	<dict>
 		<key>BackgroundImage</key>
 		<string>Navigation.png</string>
@@ -21,7 +21,7 @@
 		<key>ButtonTintColor</key>
 		<string>255,255,255,1.0</string>
 	</dict>
-	<key>TableView</key>
+	<key>TableViewAttributes</key>
 	<dict>
 		<key>BackgroundColor</key>
 		<string>0,0,0,0</string>
