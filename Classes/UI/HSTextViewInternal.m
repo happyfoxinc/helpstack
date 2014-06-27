@@ -115,10 +115,17 @@
     [[[HSHelpStack instance] appearance] customizeTextView:self];
     if (displayPlaceHolder && placeholder && placeholderColor) {
         [placeholderColor set];
-        [placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withFont:self.font];
+        CGRect drawRect = CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f);
+        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
+            [placeholder drawInRect:drawRect  withAttributes: @{NSFontAttributeName: self.font}]; //first available iOS7
+        } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            [placeholder drawInRect:drawRect withFont:self.font]; //deprecated iOS7
+#pragma clang diagnostic pop
+        }
     }
 }
-
 
 
 @end
