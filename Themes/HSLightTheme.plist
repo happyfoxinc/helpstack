@@ -6,27 +6,27 @@
 	<string>245,245,245,1.0</string>
 	<key>BackgroundImageName</key>
 	<string>nil</string>
-	<key>NavigationBar</key>
+	<key>NavigationBarAttributes</key>
 	<dict>
 		<key>BackgroundImage</key>
-		<string>Navigation.png</string>
-		<key>BackgroundColor</key>
 		<string>nil</string>
+		<key>BackgroundColor</key>
+		<string>225,225,225,1.0</string>
 		<key>TitleFont</key>
 		<string>Helvetica</string>
 		<key>TitleFontSize</key>
-		<string>17</string>
+		<string>15</string>
 		<key>TitleFontColor</key>
-		<string>255,255,255,1.0</string>
+		<string>0,0,0,1.0</string>
 		<key>ButtonTintColor</key>
-		<string>255,255,255,1.0</string>
+		<string>49,144,213,1.0</string>
 	</dict>
-	<key>TableView</key>
+	<key>TableViewAttributes</key>
 	<dict>
 		<key>BackgroundColor</key>
-		<string>0,0,0,0</string>
+		<string>129,197,123,1.0</string>
 		<key>SeparatorColor</key>
-		<string>C5C5C5,1.0</string>
+		<string>198,198,198,1.0</string>
 		<key>CellBackgroundColor</key>
 		<string>255,255,255,1.0</string>
 		<key>HeadingFont</key>
@@ -34,9 +34,9 @@
 		<key>HeadingSize</key>
 		<string>12</string>
 		<key>HeadingColor</key>
-		<string>0,0,0,1.0</string>
+		<string>255,255,255,1.0</string>
 		<key>HeaderBackgroundColor</key>
-		<string>235,235,235,1.0</string>
+		<string>129,197,123,1.0</string>
 	</dict>
 	<key>LabelAttributes</key>
 	<dict>
