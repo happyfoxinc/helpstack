@@ -142,8 +142,6 @@ You must note that since the FAQs/KB articles are being fetched from the server,
 	
 ####[Download Sample FAQ pList](./Article/)
 
-Download a sample pList from here
-
 ####[Download Sample Article](./Article/)
 
 ### Showing your HelpStack
