@@ -39,6 +39,7 @@
 @property (nonatomic, strong) NSString *enteredMsg;
 @property (nonatomic) CGRect messageFrame;
 @property UIStatusBarStyle currentStatusBarStyle;
+@property (strong) UIPopoverController* imagePickerPopover;
 
 @end
 
@@ -287,8 +288,15 @@
     imagePicker.delegate = self;
     imagePicker.allowsEditing = NO;
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
-    [self presentViewController:imagePicker animated:YES completion:nil];
+    
+    // show image picker in popover on iPad
+    if([HSAppearance isIPad]) {
+        self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+        
+        [self.imagePickerPopover presentPopoverFromRect:[self.addAttachmentButton bounds] inView:self.addAttachmentButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else { // or modally on iPhone
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
@@ -296,7 +304,6 @@
     if(self.attachments == nil){
         self.attachments = [[NSMutableArray alloc] init];
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
         
     HSAttachment *attachment = [[HSAttachment alloc] init];
     attachment.mimeType = @"image/png";
@@ -326,12 +333,20 @@
     [assetslibrary assetForURL:imagePath resultBlock:resultblock failureBlock:^(NSError *error) {
         
     }];
+
+    // dismiss image picker popover
+    if([HSAppearance isIPad]) {
+        [self.imagePickerPopover dismissPopoverAnimated:YES];
+        self.imagePickerPopover = nil;
+    } else {
+        [picker dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
     self.messageText.text = self.enteredMsg;
+
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)openAttachment:(UIButton *)sender{
