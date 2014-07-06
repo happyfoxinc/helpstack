@@ -232,7 +232,7 @@ These tableView properties are applied to the main list view which shows up the 
 
 	**TableBackgroundColor** Background color of the Table View
 	
-	**SepertorColor** TableView separator Color
+	**SeparatorColor** TableView separator Color
 	
 	**CellBackgroundColor** Background color of the cells
 	
