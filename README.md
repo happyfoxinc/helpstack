@@ -132,16 +132,12 @@ If you do not use any of the help desk solutions, you can still use HelpStack to
 You can provide your FAQs as a local pList file and provide the pList file name in place of *pList file name*.
 
 
-* Adding an Articles pList file :
-
 ### Shipping with Local Articles
 
 You must note that since the FAQs/KB articles are being fetched from the server, it requires a network connection, in the absence of which your app may not be able to display the FAQs. With HelpStack, you can either configure your gear to fetch KB articles from server or you may provide them locally with a pList file. You will have to specify the pList file name when you configure the help desk solution as shown below:
 
 	yourGear.localArticlePath = @"<FAQs file name>";
 	
-####[Download Sample FAQ pList](./Article/)
-
 ####[Download Sample Article](./Article/)
 
 ### Showing your HelpStack
