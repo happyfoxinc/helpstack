@@ -23,6 +23,7 @@
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import <AFNetworkActivityIndicatorManager.h>
 
+#import "HSZenDeskKBItem.h"
 #import "HSZenDeskGear.h"
 #import "HSZenDeskTicket.h"
 #import "HSZenDeskTicketUpdate.h"
@@ -247,6 +248,71 @@
         
     }];
     
+}
+
+#pragma mark - Get KB Sections, Articles
+- (void)fetchKBForSection:(HSKBItem *)section success:(void (^)(NSMutableArray *))success failure:(void (^)(NSError *))failure
+{
+    if (!section) {
+        // Get All Support Sections
+        [self.networkManager GET:@"/api/v2/help_center/sections.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSDictionary *response = (NSDictionary *)responseObject;
+            NSNumber *numOfTopics = [response objectForKey:@"count"];
+            
+            if ([numOfTopics integerValue] > 0) {
+                NSDictionary *sections = [response objectForKey:@"sections"];
+                NSMutableArray *sectionsToShow = [[NSMutableArray alloc] init];
+                
+                for (NSDictionary *section in sections) {
+                    HSZenDeskKBItem *kbItem = [[HSZenDeskKBItem alloc] init];
+                    [kbItem setItemType:HSKBItemTypeSection];
+                    [kbItem setID:[section objectForKey:@"id"]];
+                    [kbItem setTitle:[section objectForKey:@"name"]];
+                    
+                    [sectionsToShow addObject:kbItem];
+                }
+                
+                success(sectionsToShow);
+            } else {
+                success(nil);
+            }
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            failure(error);
+        }];
+    } else {
+        // Get Articles for a Specific Section
+        HSZenDeskKBItem *selectedSection = (HSZenDeskKBItem *)section;
+        NSString *sectionID = selectedSection.ID;
+        
+        [self.networkManager GET:[NSString stringWithFormat:@"/api/v2/help_center/sections/%@/articles.json", sectionID] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *response = (NSDictionary *)responseObject;
+            NSNumber *numEntries = [response objectForKey:@"count"];
+            
+            if ([numEntries integerValue] > 0) {
+                NSArray *articles = [responseObject objectForKey:@"articles"];
+                NSMutableArray *articlesToShow = [[NSMutableArray alloc] init];
+                
+                for (NSDictionary *article in articles) {
+                    HSZenDeskKBItem *kbItem = [[HSZenDeskKBItem alloc] init];
+                    [kbItem setItemType:HSKBItemTypeArticle];
+                    [kbItem setTitle:[article objectForKey:@"name"]];
+                    [kbItem setHtmlContent:[article objectForKey:@"body"]];
+                    
+                    [articlesToShow addObject:kbItem];
+                }
+                
+                success(articlesToShow);
+                
+            } else {
+                success(nil);
+            }
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            failure(error);
+        }];
+    }
 }
 
 
