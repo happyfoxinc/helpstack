@@ -155,8 +155,10 @@
         [allReplies addObject:originalMessage];
 
         NSString* repliesURL = [NSString stringWithFormat:@"%@/replies", deskCase.apiHref];
-
-        [self.networkManager GET:repliesURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary* params = @{@"sort_field": @"updated_at", @"sort_direction": @"asc"};
+        
+        [self.networkManager GET:repliesURL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
             //got the replies
 
