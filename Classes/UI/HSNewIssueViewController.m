@@ -305,13 +305,30 @@
     }
 }
 
-- (void)refreshAttachmentsImage {
-    if (self.attachments != nil && self.attachments.count > 0) {
+- (void)refreshAttachmentsImage
+{
+    if (self.attachments != nil && self.attachments.count > 0)
+    {
         HSAttachment *attachment = [self.attachments objectAtIndex:0];
         [attachmentImageBtn setImage:attachment.attachmentImage forState:UIControlStateNormal];
-    } else {
+        
+        
+    }
+    else
+    {
+        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            UIImage *attachImage = [UIImage imageNamed:@"attach.png"];
+            [attachmentImageBtn setImage:attachImage forState:UIControlStateNormal];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+        });
+        
         UIImage *attachImage = [UIImage imageNamed:@"attach.png"];
         [attachmentImageBtn setImage:attachImage forState:UIControlStateNormal];
+        
     }
 }
 

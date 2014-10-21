@@ -23,7 +23,7 @@
 #import "HSNewTicket.h"
 #import "HSTicketSource.h"
 #import "HSTableViewController.h"
-
+#import "MBProgressHUD.h"
 /**
     HSNewIssueViewController is reponsible for showing the reportIssue screen
  */
