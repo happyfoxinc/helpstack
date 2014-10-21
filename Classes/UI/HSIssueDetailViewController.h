@@ -26,6 +26,7 @@
 #import "HSTicketSource.h"
 #import "HSViewController.h"
 #import "HSButton.h"
+#import <DBChooser/DBChooser.h>
 /**
     HSIssueDetailViewController class is responsible for showing up the issue details where the user can also update or reply back
  */
