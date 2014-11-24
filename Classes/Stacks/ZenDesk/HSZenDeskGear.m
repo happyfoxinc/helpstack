@@ -23,7 +23,6 @@
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import <AFNetworkActivityIndicatorManager.h>
 
-#import "HSZenDeskKBItem.h"
 #import "HSZenDeskGear.h"
 #import "HSZenDeskTicket.h"
 #import "HSZenDeskTicketUpdate.h"
@@ -47,13 +46,12 @@
 @implementation HSZenDeskGear
 
 - (id)initWithInstanceUrl:(NSString*)instanceUrl staffEmailAddress:(NSString *)staffEmailAddress
-                 apiToken:(NSString *)apiToken localArticlePath:(NSString *)localArticlePath {
+                 apiToken:(NSString *)apiToken{
     if (self = [super init]) {
         
         self.instanceUrl = instanceUrl;
         self.staffEmailAddress = staffEmailAddress;
         self.apiToken = apiToken;
-        self.localArticlePath = localArticlePath;
         
         self.networkManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:instanceUrl]];
         
@@ -265,9 +263,9 @@
                 NSMutableArray *sectionsToShow = [[NSMutableArray alloc] init];
                 
                 for (NSDictionary *section in sections) {
-                    HSZenDeskKBItem *kbItem = [[HSZenDeskKBItem alloc] init];
+                    HSKBItem *kbItem = [[HSKBItem alloc] init];
                     [kbItem setItemType:HSKBItemTypeSection];
-                    [kbItem setID:[section objectForKey:@"id"]];
+                    [kbItem setKb_id:[section objectForKey:@"id"]];
                     [kbItem setTitle:[section objectForKey:@"name"]];
                     
                     [sectionsToShow addObject:kbItem];
@@ -283,8 +281,8 @@
         }];
     } else {
         // Get Articles for a Specific Section
-        HSZenDeskKBItem *selectedSection = (HSZenDeskKBItem *)section;
-        NSString *sectionID = selectedSection.ID;
+        HSKBItem *selectedSection = (HSKBItem *)section;
+        NSString *sectionID = selectedSection.kb_id;
         
         [self.networkManager GET:[NSString stringWithFormat:@"/api/v2/help_center/sections/%@/articles.json", sectionID] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *response = (NSDictionary *)responseObject;
@@ -295,7 +293,7 @@
                 NSMutableArray *articlesToShow = [[NSMutableArray alloc] init];
                 
                 for (NSDictionary *article in articles) {
-                    HSZenDeskKBItem *kbItem = [[HSZenDeskKBItem alloc] init];
+                    HSKBItem *kbItem = [[HSKBItem alloc] init];
                     [kbItem setItemType:HSKBItemTypeArticle];
                     [kbItem setTitle:[article objectForKey:@"name"]];
                     [kbItem setHtmlContent:[article objectForKey:@"body"]];
