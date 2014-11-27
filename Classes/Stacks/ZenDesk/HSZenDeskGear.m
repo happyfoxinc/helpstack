@@ -46,13 +46,12 @@
 @implementation HSZenDeskGear
 
 - (id)initWithInstanceUrl:(NSString*)instanceUrl staffEmailAddress:(NSString *)staffEmailAddress
-                 apiToken:(NSString *)apiToken localArticlePath:(NSString *)localArticlePath {
+                 apiToken:(NSString *)apiToken{
     if (self = [super init]) {
         
         self.instanceUrl = instanceUrl;
         self.staffEmailAddress = staffEmailAddress;
         self.apiToken = apiToken;
-        self.localArticlePath = localArticlePath;
         
         self.networkManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:instanceUrl]];
         
@@ -63,6 +62,79 @@
     }
     return self;
 }
+
+- (void)showArticlesInSection:(NSString *)sectionID failure:(void (^)(NSError *))failure success:(void (^)(NSMutableArray *))success
+{
+    [self.networkManager GET:[NSString stringWithFormat:@"/api/v2/help_center/sections/%@/articles.json", sectionID] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *response = (NSDictionary *)responseObject;
+        NSNumber *numEntries = [response objectForKey:@"count"];
+        
+        if ([numEntries integerValue] > 0) {
+            NSArray *articles = [responseObject objectForKey:@"articles"];
+            NSMutableArray *articlesToShow = [[NSMutableArray alloc] init];
+            
+            for (NSDictionary *article in articles) {
+                HSKBItem *kbItem = [[HSKBItem alloc] init];
+                [kbItem setItemType:HSKBItemTypeArticle];
+                [kbItem setTitle:[article objectForKey:@"name"]];
+                [kbItem setHtmlContent:[article objectForKey:@"body"]];
+                
+                [articlesToShow addObject:kbItem];
+            }
+            
+            success(articlesToShow);
+            
+        } else {
+            success(nil);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+
+#pragma mark - Get KB Sections, Articles
+- (void)fetchKBForSection:(HSKBItem *)section success:(void (^)(NSMutableArray *))success failure:(void (^)(NSError *))failure
+{
+    
+    if (!section) {
+        
+        if(!self.sectionID) {
+            NSString *url = @"/api/v2/help_center/sections.json";
+            [self.networkManager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                
+                NSDictionary *response = (NSDictionary *)responseObject;
+                NSNumber *numOfTopics = [response objectForKey:@"count"];
+                
+                if ([numOfTopics integerValue] > 0) {
+                    NSDictionary *sections = [response objectForKey:@"sections"];
+                    NSMutableArray *sectionsToShow = [[NSMutableArray alloc] init];
+                    
+                    for (NSDictionary *section in sections) {
+                        HSKBItem *kbItem = [[HSKBItem alloc] init];
+                        [kbItem setItemType:HSKBItemTypeSection];
+                        [kbItem setKb_id:[section objectForKey:@"id"]];
+                        [kbItem setTitle:[section objectForKey:@"name"]];
+                        
+                        [sectionsToShow addObject:kbItem];
+                    }
+                    
+                    success(sectionsToShow);
+                } else {
+                    success(nil);
+                }
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                failure(error);
+            }];
+        } else {
+            [self showArticlesInSection:self.sectionID failure:failure success:success];
+        }
+    } else {
+        [self showArticlesInSection:section.kb_id failure:failure success:success];
+    }
+}
+
 
 
 #pragma mark - HAGearProtocol implementation
@@ -248,6 +320,5 @@
     }];
     
 }
-
 
 @end
