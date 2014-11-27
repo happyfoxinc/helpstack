@@ -28,38 +28,193 @@
 #import "HSNewIssueAttachmentViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "HSTableFooterCreditsView.h"
-#import "HSUtility.h"
-
-@interface HSNewIssueViewController ()<UITextFieldDelegate, UITextViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate> {
+#import "HSMainListViewController.h"
+#define drafts 1
+@interface HSNewIssueViewController ()<UITextFieldDelegate, UITextViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate> {
     UITextField* subjectField;
     HSTextViewInternal* messageField;
     UIButton *attachmentImageBtn;
     UIBarButtonItem* submitBarItem;
+    UIBarButtonItem* backBarItem;
+    NSString *sub,*msg;
+    
+    
 }
 
 @property (nonatomic, strong) UIView *messageAttachmentView;
 @property (nonatomic, strong) UIButton *addAttachment;
 @property (nonatomic, strong) NSMutableArray *attachments;
 @property UIStatusBarStyle currentStatusBarStyle;
-
+@property(nonatomic) NSInteger cancelButtonIndex;
 @end
 
 @implementation HSNewIssueViewController
 
+int count = 0;
+- (NSManagedObjectContext *)managedObjectContext {
+    NSManagedObjectContext *context = nil;
+    id delegate = [[UIApplication sharedApplication] delegate];
+    if ([delegate performSelector:@selector(managedObjectContext)]) {
+        context = [delegate managedObjectContext];
+    }
+    return context;
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSString *docsDir;
+    NSArray *dirPaths;
+    
+    // Get the documents directory
+    dirPaths = NSSearchPathForDirectoriesInDomains(
+                                                   NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    docsDir = dirPaths[0];
+    
+    // Build the path to the database file
+    _databasePath = [[NSString alloc]
+                     initWithString: [docsDir stringByAppendingPathComponent:
+                                      @"drafts.db"]];
+    
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    
+    if ([filemgr fileExistsAtPath: _databasePath ] == NO)
+    {
+        const char *dbpath = [_databasePath UTF8String];
+        
+        if (sqlite3_open(dbpath, &_draftDB) == SQLITE_OK)
+        {
+            char *errMsg;
+            const char *sql_stmt =
+            "CREATE TABLE IF NOT EXISTS DRAFTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, SUBJECT TEXT, MESSAGE TEXT)";
+            
+            if (sqlite3_exec(_draftDB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK)
+            {
+                NSLog(@"Failed to create table");
+            }
+            sqlite3_close(_draftDB);
+        } else {
+            NSLog(@"Failed to create table");
+        }
+    }
+    
     
     submitBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(submitPressed:)];
     self.navigationItem.rightBarButtonItem = submitBarItem;
     
+    backBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(backPressed:)];
+    self.navigationItem.leftBarButtonItem = backBarItem;
+    
     HSAppearance* appearance = [[HSHelpStack instance] appearance];
     self.view.backgroundColor = [appearance getBackgroundColor];
-
+    
     self.currentStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
     
     [self addCreditsToTable];
+    
+    [self GetArticlesCount];
+    
+    if(count>0)
+    {
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Draft found" message:@"Would you like to use a previouly saved draft?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        alertView.tag = drafts;
+        [alertView show];
+        
+    }
+    
 }
+
+-(void)alertView:(UIAlertView *)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag== drafts)
+    {
+        NSLog(@"Inside Alert View Action method");
+        if (buttonIndex == 0)
+        {
+            NSLog(@"Alert view action method fired 1");
+        }
+        else
+        {
+            NSLog(@"Alert view action method fired 2");
+            [self usedraft];
+        }
+    }
+}
+
+
+
+
+- (void) GetArticlesCount
+{
+    
+    if (sqlite3_open([self.databasePath UTF8String], &_draftDB) == SQLITE_OK)
+    {
+        const char* sqlStatement = "SELECT COUNT(*) FROM DRAFTS";
+        sqlite3_stmt *statement;
+        
+        if( sqlite3_prepare_v2(_draftDB, sqlStatement, -1, &statement, NULL) == SQLITE_OK )
+        {
+            //Loop through all the returned rows (should be just one)
+            while( sqlite3_step(statement) == SQLITE_ROW )
+            {
+                count = sqlite3_column_int(statement, 0);
+            }
+        }
+        else
+        {
+            NSLog( @"Failed from sqlite3_prepare_v2. Error is:  %s", sqlite3_errmsg(_draftDB) );
+        }
+        
+        // Finalize and close database.
+        sqlite3_finalize(statement);
+        sqlite3_close(_draftDB);
+    }
+    
+    
+}
+
+- (void) usedraft
+{
+    const char *dbpath = [_databasePath UTF8String];
+    sqlite3_stmt    *statement;
+    
+    if (sqlite3_open(dbpath, &_draftDB) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:
+                              @"SELECT SUBJECT, MESSAGE FROM DRAFTS WHERE ID=(SELECT MAX(ID) from DRAFTS)"];
+        
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(_draftDB,
+                               query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            if (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                NSString *sqlsubjectField = [[NSString alloc]
+                                             initWithUTF8String:
+                                             (const char *) sqlite3_column_text(
+                                                                                statement, 0)];
+                subjectField.text = sqlsubjectField;
+                NSString *sqlmessageField = [[NSString alloc]
+                                             initWithUTF8String:(const char *)
+                                             sqlite3_column_text(statement, 1)];
+                messageField.text = sqlmessageField;
+                NSLog(@"SUCCESS");
+            } else {
+                NSLog(@"FAILED");
+                
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(_draftDB);
+    }
+}
+
+
+
 
 -(void)viewWillAppear:(BOOL)animated{
     [[UIApplication sharedApplication] setStatusBarStyle:self.currentStatusBarStyle];
@@ -88,42 +243,79 @@
 
 - (IBAction)addAttachments:(id)sender {
     if(self.attachments != nil && self.attachments.count > 0){
-
+        
         //remove attachment.
-
+        
         self.attachments = nil;
     }else{
-
+        
         //add attachment.
-
+        
         [self startMediaBrowserFromViewController: self
-                                usingDelegate: self];
+                                    usingDelegate: self];
     }
 }
 
 - (IBAction)submitPressed:(id)sender {
     //Validate for name, email, subject and message
-
+    
     UIBarButtonItem* submitButton = sender;
     if([self checkValidity]) {
         submitButton.enabled = NO;
         
         NSMutableString* messageContent = [[NSMutableString alloc] initWithString:messageField.text];
-        [messageContent appendString:[HSUtility deviceInformation]];
-
+        [messageContent appendString:[self deviceInformation]];
+        
         self.createNewTicket.subject = subjectField.text;
         self.createNewTicket.content = messageContent;
         self.createNewTicket.attachments = self.attachments;
         
         [self.delegate onNewIssueRequested:self.createNewTicket];
-
+        
         [self dismissViewControllerAnimated:YES completion:nil];
-
+        
     }
+}
+- (IBAction)backPressed:(id)sender
+{
+    if ([subjectField.text length] > 0)
+    {
+        [self.view endEditing:YES];
+        [self.view endEditing:YES];
+        UIActionSheet *back = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:
+                               @"Save as drafts",
+                               nil];
+        [back showInView:self.view];
+        [back setTag:1];
+    }
+    else
+    {
+        //[self.navigationController popViewControllerAnimated:TRUE];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    
+}
+
+
+
+
+
+- (NSString*)deviceInformation
+{
+    NSString* deviceModel = [[UIDevice currentDevice] model];
+    NSString* osVersion = [[UIDevice currentDevice] systemVersion];
+    NSString* bundleName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
+    NSString* bundleVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    
+    NSString* deviceInformation = [NSString stringWithFormat:@"\n\n-----\nDevice Information:\n%@\niOS %@\n\nApp information:\n%@\nVersion %@", deviceModel, osVersion, bundleName, bundleVersion];
+    
+    return deviceInformation;
 }
 
 - (IBAction)cancelPressed:(id)sender {
+    
     [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 -(BOOL) checkValidity {
@@ -143,7 +335,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     HSAttachment *attachment = [self.attachments objectAtIndex:0];
-
+    
     HSNewIssueAttachmentViewController *attachmentsView = (HSNewIssueAttachmentViewController *)[segue destinationViewController];
     attachmentsView.attachmentImage = attachment.attachmentImage;
 }
@@ -194,6 +386,9 @@
     
 }
 
+
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if([HSAppearance isIPad]){
         //For iPad
@@ -231,7 +426,8 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
     return 1.0;
 }
 
@@ -241,8 +437,9 @@
 
 
 - (BOOL)startMediaBrowserFromViewController: (UIViewController*) controller
-                               usingDelegate: (id <UIImagePickerControllerDelegate,
-                                               UINavigationControllerDelegate>) delegate {
+                              usingDelegate: (id <UIImagePickerControllerDelegate,
+                                              UINavigationControllerDelegate>) delegate
+{
     
     if (([UIImagePickerController isSourceTypeAvailable:
           UIImagePickerControllerSourceTypeSavedPhotosAlbum] == NO)
@@ -271,27 +468,31 @@
     return YES;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if(textField == subjectField) {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if(textField == subjectField)
+    {
         [messageField becomeFirstResponder];
         messageField.inputAccessoryView = self.messageAttachmentView;
         return YES;
     }
-
+    
     return NO;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-        messageField.inputAccessoryView = self.messageAttachmentView;
-        [messageField becomeFirstResponder];    
+    messageField.inputAccessoryView = self.messageAttachmentView;
+    [messageField becomeFirstResponder];
 }
 
-- (void)handleAttachment {
+- (void)handleAttachment
+{
     if (self.attachments != nil && self.attachments.count > 0) {
         UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                                 @"Change",
                                 @"Delete",
                                 nil];
+        [popup setTag:2];
         if ([HSAppearance isIPad]) {
             [popup showFromRect:[attachmentImageBtn bounds] inView:attachmentImageBtn animated:YES];
         }
@@ -299,37 +500,107 @@
             [popup showInView:[UIApplication sharedApplication].keyWindow];
         }
         
-    } else {
+    } else
+    {
         [self startMediaBrowserFromViewController: self
                                     usingDelegate: self];
     }
+    
 }
 
-- (void)refreshAttachmentsImage {
-    if (self.attachments != nil && self.attachments.count > 0) {
+- (void)refreshAttachmentsImage
+{
+    if (self.attachments != nil && self.attachments.count > 0)
+    {
         HSAttachment *attachment = [self.attachments objectAtIndex:0];
         [attachmentImageBtn setImage:attachment.attachmentImage forState:UIControlStateNormal];
-    } else {
+        
+        
+    }
+    else
+    {
+        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            UIImage *attachImage = [UIImage imageNamed:@"attach.png"];
+            [attachmentImageBtn setImage:attachImage forState:UIControlStateNormal];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+        });
+        
         UIImage *attachImage = [UIImage imageNamed:@"attach.png"];
         [attachmentImageBtn setImage:attachImage forState:UIControlStateNormal];
+        
     }
 }
 
 #pragma mark - UIActionSheet delegate
 
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    switch(buttonIndex){
-        case 0:
-            [self startMediaBrowserFromViewController: self
-                                        usingDelegate: self];
-            break;
-        case 1:
-            [self.attachments removeAllObjects];
-            [self refreshAttachmentsImage];
-            break;
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch(actionSheet.tag)
+    {
+            
         case 2:
-            [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
+        {
+            switch(buttonIndex)
+            {
+                case 0:
+                    [self startMediaBrowserFromViewController: self
+                                                usingDelegate: self];
+                    break;
+                case 1:
+                    [self.attachments removeAllObjects];
+                    [self refreshAttachmentsImage];
+                    break;
+                case 2:
+                    [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
+                    break;
+                default:break;
+            }
+        }
+            
+        case 1:
+        {
+            switch(buttonIndex)
+            {
+                case 0: [self.navigationController popViewControllerAnimated:TRUE];
+                    break;
+                    
+                case 1:
+                {
+                    sqlite3_stmt *statement;
+                    const char *dbpath = [_databasePath UTF8String];
+                    
+                    if (sqlite3_open(dbpath, &_draftDB) == SQLITE_OK)
+                    {
+                        
+                        NSString *insertSQL = [NSString stringWithFormat:
+                                               @"INSERT INTO DRAFTS (subject, message) VALUES (\"%@\", \"%@\")",
+                                               subjectField.text, messageField.text];
+                        
+                        const char *insert_stmt = [insertSQL UTF8String];
+                        sqlite3_prepare_v2(_draftDB, insert_stmt,
+                                           -1, &statement, NULL);
+                        if (sqlite3_step(statement) == SQLITE_DONE)
+                        {
+                            NSLog(@"Draft added");
+                            [self dismissViewControllerAnimated:YES completion:nil];
+                            break;
+                            
+                            
+                        } else {
+                            NSLog(@"Failed to add Draft");
+                        }
+                        sqlite3_finalize(statement);
+                        sqlite3_close(_draftDB);
+                    }
+                }
+                    
+            }
             break;
+        }
         default:break;
     }
 }
@@ -365,7 +636,7 @@
         [self.attachments addObject:attachment];
         
         [self refreshAttachmentsImage];
-
+        
         if ([subjectField.text length] == 0) {
             [subjectField becomeFirstResponder];
         }else{

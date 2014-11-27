@@ -23,9 +23,10 @@
 #import "HSNewTicket.h"
 #import "HSTicketSource.h"
 #import "HSTableViewController.h"
-
+#import "MBProgressHUD.h"
+#import <sqlite3.h>
 /**
-    HSNewIssueViewController is reponsible for showing the reportIssue screen
+ HSNewIssueViewController is reponsible for showing the reportIssue screen
  */
 
 @protocol HSNewIssueViewControllerDelegate;
@@ -34,7 +35,8 @@
 
 @property (nonatomic, weak) id<HSNewIssueViewControllerDelegate> delegate;
 @property (nonatomic, strong) HSNewTicket* createNewTicket;
-
+@property (strong, nonatomic) NSString *databasePath;
+@property (nonatomic) sqlite3 *draftDB;
 @end
 
 @protocol HSNewIssueViewControllerDelegate <NSObject>
