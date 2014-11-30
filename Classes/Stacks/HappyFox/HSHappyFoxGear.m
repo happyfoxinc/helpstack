@@ -38,7 +38,7 @@
 
 @implementation HSHappyFoxGear
 
-- (id)initWithInstanceUrl:(NSString*) instanceUrl apiKey:(NSString *)api_key authoCode:(NSString *)auth_code priorityID: (NSString *)priority_ID categoryID: (NSString *) category_ID{
+- (id)initWithInstanceUrl:(NSString*) instanceUrl apiKey:(NSString *)api_key authCode:(NSString *)auth_code priorityID: (NSString *)priority_ID categoryID: (NSString *) category_ID{
     if ( (self = [super init]) ) {
         self.api_key = api_key;
         self.auth_code = auth_code;

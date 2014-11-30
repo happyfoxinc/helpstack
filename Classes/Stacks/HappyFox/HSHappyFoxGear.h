@@ -60,7 +60,7 @@
  @param api_key The API key as username required for authentication
  @param auth_code The Authentication code as password for authentication
  */
-- (id)initWithInstanceUrl:(NSString *) instanceUrl apiKey:(NSString *)api_key authoCode:(NSString *)auth_code priorityID: (NSString *)priority_ID categoryID: (NSString *) category_ID;
+- (id)initWithInstanceUrl:(NSString *) instanceUrl apiKey:(NSString *)api_key authCode:(NSString *)auth_code priorityID: (NSString *)priority_ID categoryID: (NSString *) category_ID;
 
 
 @end
