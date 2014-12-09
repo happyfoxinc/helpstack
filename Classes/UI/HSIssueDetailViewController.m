@@ -47,10 +47,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameDidChange:) name:UIKeyboardDidChangeFrameNotification object:nil];
+
+
     self.bubbleWidth = 240.0;
     
     self.chatTableView.backgroundColor = [UIColor clearColor];
@@ -437,6 +438,51 @@
 	[UIView commitAnimations];
     [self scrollDownToLastMessage];
 }
+
+- (void)keyboardFrameDidChange: (NSNotification *)notification {
+
+    NSDictionary* info = [notification userInfo];
+    NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+
+    CGRect kKeyBoardFrame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+
+    // get a rect for the textView frame
+    CGRect containerFrame = self.bottomMessageView.frame;
+
+    float originalMessageOrigin = containerFrame.origin.y;
+    if (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
+    {
+        containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 64;
+    }
+    else if(UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
+        containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 32;
+    }
+
+    self.keyboardHeight = containerFrame.origin.y - originalMessageOrigin;
+
+    UIEdgeInsets contentInsets = self.chatTableView.contentInset;
+
+    if(kKeyBoardFrame.origin.y) {
+        contentInsets.bottom-=self.keyboardHeight;
+    }
+
+    self.chatTableView.contentInset = contentInsets;
+    self.chatTableView.scrollIndicatorInsets = contentInsets;
+
+    [self scrollDownToLastMessage];
+
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+
+    // set views with new info
+    self.bottomMessageView.frame = containerFrame;
+
+    [UIView commitAnimations];
+}
+
 
 #pragma mark - Ticket fetch and update functions
 
