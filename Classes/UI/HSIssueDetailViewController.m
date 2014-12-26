@@ -31,8 +31,11 @@
 #import "HSLabel.h"
 #import "HSSmallLabel.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "HSEditImageViewController.h"
 
-@interface HSIssueDetailViewController ()
+@interface HSIssueDetailViewController ()<HSEditImageViewControllerDelegate> {
+    
+}
 
 @property (nonatomic, strong) NSMutableArray *attachments;
 @property (nonatomic) NSInteger keyboardHeight;
@@ -86,7 +89,6 @@
         self.messageText.text = self.enteredMsg;
         self.enteredMsg = nil;
     }
-  //  [self.messageText becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -296,8 +298,7 @@
     if(self.attachments == nil){
         self.attachments = [[NSMutableArray alloc] init];
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
-        
+    
     HSAttachment *attachment = [[HSAttachment alloc] init];
     attachment.mimeType = @"image/png";
 
@@ -318,7 +319,12 @@
         attachment.attachmentImage = img;
         [self.attachments addObject:attachment];
         [self showAttachments];
-       
+
+        HSEditImageViewController *editImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditImage"];
+        editImageViewController.attachmentImage = [UIImage imageWithCGImage:cgImg];
+        [editImageViewController setDelegate:self];
+        [picker pushViewController:editImageViewController animated:YES];
+
     };
     
     // get the asset library and fetch the asset based on the ref url (pass in block above)
@@ -333,6 +339,38 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     self.messageText.text = self.enteredMsg;
 }
+
+- (void)editImageViewController:(HSEditImageViewController *)controller didFinishEditingImage:(NSURL *)imageURL {
+    
+    if(self.attachments == nil){
+        self.attachments = [[NSMutableArray alloc] init];
+    }
+    
+    [self.attachments removeAllObjects]; // handling only one attachments
+    
+    HSAttachment *attachment = [[HSAttachment alloc] init];
+    attachment.mimeType = @"image/png";
+    
+    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *imageAsset)
+    {
+        [self.attachments removeAllObjects];
+        ALAssetRepresentation *assetRep = [imageAsset defaultRepresentation];
+        CGImageRef cgImg = [assetRep fullResolutionImage];
+        NSString *filename = [assetRep filename];
+        UIImage *img = [UIImage imageWithCGImage:cgImg];
+        NSData *data = UIImagePNGRepresentation(img);
+        attachment.attachmentData = data;
+        attachment.fileName = filename;
+        attachment.attachmentImage = img;
+        [self.attachments addObject:attachment];
+        [self showAttachments];
+    };
+    
+    // get the asset library and fetch the asset based on the ref url (pass in block above)
+    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
+    [assetslibrary assetForURL:imageURL resultBlock:resultblock failureBlock:nil];
+}
+
 
 - (void)openAttachment:(UIButton *)sender{
     
