@@ -47,6 +47,8 @@
 
 @implementation HSIssueDetailViewController
 
+NSInteger attachmentButtonTagOffset = 1000;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -374,14 +376,13 @@
 
 - (void)openAttachment:(UIButton *)sender{
     
-    UITableViewCell *cell = (UITableViewCell *)[[[sender.superview superview] superview] superview]; //ios7
-    NSIndexPath *indexPath = [self.chatTableView indexPathForCell:cell];
-    HSUpdate* updateToShow = [self.ticketSource updateAtPosition:indexPath.section];
+    NSInteger sectionID = sender.tag-attachmentButtonTagOffset;
+    HSUpdate* updateToShow = [self.ticketSource updateAtPosition:sectionID];
     if(updateToShow.attachments && updateToShow.attachments.count > 0){
         if(updateToShow.attachments.count > 1){
-            [self performSegueWithIdentifier:@"showAttachments" sender:indexPath];
+            [self performSegueWithIdentifier:@"showAttachments" sender:updateToShow.attachments];
         }else{
-            [self performSegueWithIdentifier:@"showOneAttachment" sender:indexPath];
+            [self performSegueWithIdentifier:@"showOneAttachment" sender:updateToShow.attachments];
         }
     }
 }
@@ -669,6 +670,7 @@
         UIButton *attachmentBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30.0, 25.0)];
         UIImage *btnImage = [UIImage imageNamed:@"attach.png"];
         [attachmentBtn setBackgroundImage:btnImage forState:UIControlStateNormal];
+        [attachmentBtn setTag:attachmentButtonTagOffset+indexPath.section];
         [attachmentBtn addTarget:self action:@selector(openAttachment:) forControlEvents:UIControlEventTouchUpInside];
         [cellView addSubview:attachmentBtn];
     }
@@ -788,14 +790,13 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    NSIndexPath *indexPath = (NSIndexPath *)sender;
-    HSUpdate *update = [self.ticketSource updateAtPosition:indexPath.section];
-    if(update.attachments.count > 1){
+    NSArray *attachments = sender;
+    if(attachments.count > 1){
         HSAttachmentsListViewController *viewController = (HSAttachmentsListViewController *)[segue destinationViewController];
-        viewController.attachmentsList = update.attachments;
-    }else if(update.attachments.count == 1){
+        viewController.attachmentsList = attachments;
+    }else if(attachments.count == 1){
         HSAttachmentsViewController *attachmentsVC = (HSAttachmentsViewController *)[segue destinationViewController];
-        HSAttachment *attachment = [update.attachments objectAtIndex:0];
+        HSAttachment *attachment = [attachments objectAtIndex:0];
         attachmentsVC.attachment = attachment;
         
     }

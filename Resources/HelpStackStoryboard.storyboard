@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="yHS-bc-8ZV">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Unknown constraint types" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -777,7 +776,7 @@
         <!--Edit Image View Controller-->
         <scene sceneID="dVS-0C-17x">
             <objects>
-                <viewController storyboardIdentifier="EditImage" id="jt3-EI-Kft" customClass="EditImageViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditImage" id="jt3-EI-Kft" customClass="HSEditImageViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KLt-0T-GU5"/>
                         <viewControllerLayoutGuide type="bottom" id="LHZ-5p-Ebr"/>
@@ -875,7 +874,7 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bKy-bb-p2a" userLabel="tempDrawImage">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bKy-bb-p2a" userLabel="tempDrawImage">
                                 <rect key="frame" x="0.0" y="28" width="320" height="496"/>
                             </imageView>
                         </subviews>
@@ -885,7 +884,6 @@
                             <constraint firstItem="LHZ-5p-Ebr" firstAttribute="top" secondItem="djI-H4-nJp" secondAttribute="bottom" id="DA1-H4-Rzz"/>
                             <constraint firstItem="LHZ-5p-Ebr" firstAttribute="top" secondItem="bKy-bb-p2a" secondAttribute="bottom" constant="54" id="ZbI-3L-Xcv"/>
                             <constraint firstItem="bKy-bb-p2a" firstAttribute="top" secondItem="KLt-0T-GU5" secondAttribute="top" id="eve-LG-oHf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="bKy-bb-p2a" secondAttribute="trailing" id="nSp-Ih-GXk"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Qs5-sj-hbZ"/>

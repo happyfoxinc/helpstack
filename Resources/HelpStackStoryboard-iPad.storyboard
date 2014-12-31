@@ -665,7 +665,7 @@
         <!--Edit Image View Controller-->
         <scene sceneID="D4S-Hh-aLO">
             <objects>
-                <viewController storyboardIdentifier="EditImage" id="Yga-ct-V21" customClass="EditImageViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditImage" id="Yga-ct-V21" customClass="HSEditImageViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m2z-O0-qUF"/>
                         <viewControllerLayoutGuide type="bottom" id="yNM-Uv-a3q"/>
@@ -800,4 +800,3 @@
         <segue reference="KOe-ee-0g3"/>
     </inferredMetricsTieBreakers>
 </document>
-v
