@@ -92,7 +92,7 @@ bool adjustHeightToKeyboard = true;
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
     
-    [self scrollDownToLastMessage];
+    [self scrollDownToLastMessage:YES];
     
 	self.bottomMessageView.frame = msgViewFrame;
 }
@@ -134,7 +134,8 @@ bool adjustHeightToKeyboard = true;
     
     // commit animations
     [UIView commitAnimations];
-    [self scrollDownToLastMessage];}
+    [self scrollDownToLastMessage:YES];
+}
 
 - (void)keyboardFrameDidChange: (NSNotification *)notification {
 
@@ -172,7 +173,7 @@ bool adjustHeightToKeyboard = true;
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
     
-    [self scrollDownToLastMessage];
+    [self scrollDownToLastMessage:YES];
     
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];

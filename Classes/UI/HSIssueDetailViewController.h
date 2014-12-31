@@ -48,6 +48,6 @@
 
 - (IBAction)sendReply:(id)sender;
 - (IBAction)addAttachment:(id)sender;
-- (void)scrollDownToLastMessage;
+- (void)scrollDownToLastMessage:(BOOL)animated;
 
 @end

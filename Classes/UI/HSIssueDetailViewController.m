@@ -47,9 +47,8 @@
 {
     [super viewDidLoad];
 
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameDidChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
 
     self.bubbleWidth = 240.0;
     
@@ -160,7 +159,7 @@
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
     
-    [self scrollDownToLastMessage];
+    [self scrollDownToLastMessage:YES];
     
     self.bottomMessageView.frame = msgViewFrame;
 	
@@ -193,7 +192,7 @@
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
     
-    [self scrollDownToLastMessage];
+    [self scrollDownToLastMessage:YES];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -357,44 +356,6 @@
     [self.messageText resignFirstResponder];
 }
 
-/**
-    On Keyboard showing up, push the bottomMessageView up and add insets to push the tableview up as per the keybaord
- 
-    height covering the screen
- */
-- (void) keyboardWillShow:(NSNotification *)note{
-    // get keyboard size and loctaion
-	CGRect keyboardBounds;
-    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
-    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-    
-    // Need to translate the bounds to account for rotation.
-    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
-    
-	// get a rect for the textView frame
-	CGRect containerFrame = self.bottomMessageView.frame;
-    containerFrame.origin.y = self.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height);
-    
-//    NSInteger keyboardHeight = keyboardBounds.size.height;
-    
-    
-    
-    
-	// animations settings
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:[duration doubleValue]];
-    [UIView setAnimationCurve:[curve intValue]];
-	
-	// set views with new info
-	self.bottomMessageView.frame = containerFrame;
-	
-	// commit animations
-	[UIView commitAnimations];
-    
-    [self scrollDownToLastMessage];
-}
 
 /**
     On keyboard Hide, restore the tableview and messageTextView frames
@@ -412,15 +373,6 @@
 	// get a rect for the textView frame
 	CGRect containerFrame = self.bottomMessageView.frame;
     containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
-//    NSInteger keyboardHeight = keyboardBounds.size.height;
-    
-//    UIEdgeInsets contentInsets = self.chatTableView.contentInset;
-//    
-//    if(contentInsets.bottom > 0) {
-//        contentInsets.bottom-=self.keyboardHeight ;
-//        self.chatTableView.contentInset = contentInsets;
-//        self.chatTableView.scrollIndicatorInsets = contentInsets;
-//    }
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
     self.chatTableView.contentInset = contentInsets;
@@ -439,7 +391,7 @@
 	[UIView commitAnimations];
 }
 
-- (void)keyboardFrameDidChange: (NSNotification *)notification {
+- (void)keyboardFrameWillChange: (NSNotification *)notification {
 
     NSDictionary* info = [notification userInfo];
     NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -457,16 +409,34 @@
         containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 64;
     }
     else {
-        containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 32;
+        // On ios 7 landscape x == ios 8 landscape y
+        if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+            containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 32;
+        }
+        else {
+            containerFrame.origin.y = kKeyBoardFrame.origin.x - containerFrame.size.height - 50;
+        }
+        
     }
 
     NSInteger keyboardHeightDiff = containerFrame.origin.y - originalMessageOrigin;
 
     UIEdgeInsets contentInsets = self.chatTableView.contentInset;
 
-    if(kKeyBoardFrame.origin.y > 0) {
-        contentInsets.bottom-=keyboardHeightDiff;
+    // On ios 7 landscape x == ios 8 landscape y
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0 && UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
+        if(kKeyBoardFrame.origin.x > 0) {
+            contentInsets.bottom-=keyboardHeightDiff;
+        }
     }
+    else {
+        if(kKeyBoardFrame.origin.y > 0) {
+            contentInsets.bottom-=keyboardHeightDiff;
+        }
+    }
+    
+    
+    
 
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
@@ -480,7 +450,7 @@
     self.bottomMessageView.frame = containerFrame;
 
     [UIView commitAnimations];
-    [self scrollDownToLastMessage];
+    [self scrollDownToLastMessage:YES];
     
 }
 
@@ -495,7 +465,7 @@
         [self.loadingIndicator stopAnimating];
         self.loadingIndicator.hidden = YES;
         [self.chatTableView reloadData];
-        [self scrollDownToLastMessage];
+        [self scrollDownToLastMessage:NO];
     } failure:^(NSError* e){
         self.bottomMessageView.hidden = NO;
         [self.loadingIndicator stopAnimating];
@@ -773,11 +743,11 @@
 /**
     Scrolls the table view to the last item
  */
-- (void)scrollDownToLastMessage
+- (void)scrollDownToLastMessage:(BOOL)animated
 {
     NSIndexPath *lastIndexPath = [self lastIndexPath];
     if([self.chatTableView numberOfSections] > 0){
-        [self.chatTableView scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self.chatTableView scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:animated];
     }
 }
 
