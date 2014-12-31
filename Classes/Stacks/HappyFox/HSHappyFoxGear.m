@@ -189,7 +189,11 @@
         hfUser.apiHref = userId;
         success(issue, hfUser);
     }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
         HALog(@"Failed to create a ticket %@", error);
+        if (operation.responseString) {
+            HALog(@"Error Description %@", operation.responseString);
+        }
         failure(error);
     }];
 }
@@ -220,7 +224,10 @@
         success(recentUpdate);
         //Send all the updates
     }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        HALog(@"Failed to update Ticket");
+        HALog(@"Failed to update Ticket %@", error);
+        if (operation.responseString) {
+            HALog(@"Error Description %@", operation.responseString);
+        }
         failure(error);
     }];
 }
