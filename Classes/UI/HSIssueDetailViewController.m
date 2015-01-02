@@ -374,7 +374,7 @@
 	CGRect containerFrame = self.bottomMessageView.frame;
     containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
 	
