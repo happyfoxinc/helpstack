@@ -3,8 +3,26 @@
 </p>
 
 
-**HelpStack** provides you with a simple way of adding a great in-App support for your iOS App users. You can integrate any of your favorite HelpDesk solution at ease. It currently comes with three plugged in Help desk solutions - *Desk.com*, *Zendesk* and *HappyFox* along with customizable and simple UI to interact with the user. 
+**HelpStack** is a library to provide in-app support for your app's users, by connecting with the helpdesk of your choice. Your app’s users can easily raise requests or report issues from within your app.
 
+With HelpStack, you can:
+
+- Let users report issues within your app
+- Let users attach screenshots to their support requests
+- Receive Device and App Information automatically, along with the reported issue
+- Let users view your responses to their issues
+- Provide self-support by showing FAQ articles
+- Customise your HelpStack screen to blend with your app theme
+
+HelpStack supports the following leading helpdesk solutions: 
+- [HappyFox](https://www.happyfox.com/)
+- [Zendesk](https://www.zendesk.com/)
+- [Desk.com](http://www.desk.com/)
+- Email - If you don't have a helpdesk solution, you can still configure HelpStack for users to raise requests via email.
+
+You can choose any 1 of the 4 options mentioned above, to get started with HelpStack.
+
+Check out [helpstack.io](http://www.helpstack.io) for more information.
 <p align="left" >
   <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/Screen%20Shot%202014-05-14%20at%202.46.10%20pm.png" alt="HelpStackthemes" title="screenshots">
 </p>
@@ -36,9 +54,10 @@ To integrate your existing HappyFox account into HelpStack, you just have to inc
 	HSHappyFoxGear *happyFoxGear = [[HSHappyFoxGear alloc] 
 			initWithInstanceUrl  : @"https://example.happyfox.com" 
 			apiKey               : @"<YOUR_API_KEY>" 
-			authoCode            : @"<YOUR_AUTH_CODE>" 
+			authCode             : @"<YOUR_AUTH_CODE>" 
 			priorityID           : @"<PRIORITY_ID>" 
 			categoryID           : @"<CATEGORY_ID>"];
+      
     happyFoxGear.hfSectionID     = @"<SECTION_ID>";    // Optional
     
     HSHelpStack *helpStack = [HSHelpStack instance];
@@ -64,8 +83,8 @@ To integrate your existing HappyFox account into HelpStack, you just have to inc
 
 	*Example:*
 	
-		https://example.happyfox.com/api/1.1/json/priorities/ 
-		https://example.happyfox.com/api/1.1/json/categories/
+		https://<HappyFox account domain>/api/1.1/json/priorities/ 
+		https://<HappyFox account domain>/api/1.1/json/categories/
 
 * Getting the section ID (Optional)
 	Section ID is to filter and show the Knowledge Based articles. If section ID is not provided, then all the KB articles in all the sections are fetched and showed. If you want HelpStack to fetch KB articles of a specific section, provide the appropriate section ID. The following URL command gives all the sections with their IDs.	
@@ -75,7 +94,7 @@ To integrate your existing HappyFox account into HelpStack, you just have to inc
 		
 	*Example:*
 	
-		https://example.happyfox.com/api/1.1/json/kb/sections/
+		https://<HappyFox account domain>/api/1.1/json/kb/sections/
 	
 	Use API key and Auth code for authentication.
 
@@ -188,17 +207,12 @@ These properties control the look of the NavigationBar across all the helpStack 
 
 * NavigationBarAttributes
 	
-	**BackgroundColor** Navigation bar background color
-	
-	**BackgroundImage** Navigation bar background image, you either give an image or specify a color
-	 
-	**TitleFont** Navigation bar title Font
-	 
-	**TitleSize** Navigation bar title font size
-	 
-	**TitleColor** Navigation bar title font color
-	 
-	**ButtonTintColor** Navigation bar button tint color.
+	- **BackgroundColor**: Navigation bar background color
+	- **BackgroundImage**: Navigation bar background image, you either give an image or specify a color
+	- **TitleFont**: Navigation bar title Font
+	- **TitleSize**: Navigation bar title font size
+	- **TitleColor**: Navigation bar title font color
+	- **ButtonTintColor**: Navigation bar button tint color.
 
 <p align="center" >
   <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png" alt="HelpStacktheme" title="NavigationBar">
@@ -208,9 +222,8 @@ These properties control the look of the NavigationBar across all the helpStack 
 
 You can specify a background color or an image which is included in your resources directory to be set as the Background of all the helpStack screens.
 
-**BackgroundImageName** Specify the name of the image included in your project, which has to be applied as the background 
-	
-**BackgroundColor** Background color. You can either specify a color or include an image.
+- **BackgroundImageName**: Specify the name of the image included in your project, which has to be applied as the background 
+- **BackgroundColor**: Background color. You can either specify a color or include an image.
 
 
 ##### Customizing the TableView
@@ -219,31 +232,22 @@ These tableView properties are applied to the main list view which shows up the 
 
 * TableViewAttributes 
 
-	**TableBackgroundColor** Background color of the Table View
-	
-	**SeparatorColor** TableView separator Color
-	
-	**CellBackgroundColor** Background color of the cells
-	
-	**HeadingFont** Header Title font
-		
-	**HeadingSize** Header Title size
-	
-	**HeadingColor** Header Title color
-	
-	**HeadingBackgroundColor** Header background color
+	- **TableBackgroundColor**: Background color of the Table View
+	- **SeparatorColor**: TableView separator Color
+	- **CellBackgroundColor**: Background color of the cells
+	- **HeadingFont**: Header Title font
+	- **HeadingSize**: Header Title size
+	- **HeadingColor**: Header Title color
+	- **HeadingBackgroundColor**: Header background color
 
 The cell title is a label which can be customized by providing LabelAttributes :
 
 * LabelAttributes
 
-	**BackgroundColor** Background color of the label. Ideally it would be better to give it as transparent.
-	
-	**LabelSize** Size of the label text
-	 
-	**LabelFont** Font of the label text
-		
-	**LabelColor** Color of the label text
+	- **BackgroundColor**: Background color of the label. Ideally it would be better to give it as transparent.
+	- **LabelSize**: Size of the label text
+	- **LabelFont**: Font of the label text
+	- **LabelColor**: Color of the label text
 	
 <p align="center" >
   <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/tableView%20copy.png" alt="HelpStackthemeCustomize" title="TableView">
@@ -253,39 +257,43 @@ The cell title is a label which can be customized by providing LabelAttributes :
 
 These chat screen properties allows customization of the Issue conversation view. 
 
-* ChatBubbleAttributes :
+* ChatBubbleAttributes
 
-	**TextSize** Size of the text that appears within the left and the right chat bubbles.
-
-	**TextFont** Font of the text that appears within the left and the right chat bubbles.
-
-	**MessageInfoLabelFont**, **MesssageInfoLabelSize**, **MessageInfoLabelColor** Font, Size and Color of the message information shown above and below the chat bubbles which includes the sender name and timestamp.
+  - **TextSize**: Size of the text that appears within the left and the right chat bubbles.
+  - **TextFont**: Font of the text that appears within the left and the right chat bubbles.
+  - **MessageInfoLabelFont**, **MesssageInfoLabelSize**, **MessageInfoLabelColor**: Font, Size and Color of the message information shown above and below the chat bubbles which includes the sender name and timestamp.
 
 The following attributes can be independantly customized for the right and the left chat bubbles :
 
-   * LeftChatBubbleAttributes :
+   * LeftChatBubbleAttributes
+    - **BackgroundColor** Background Color of the left chat bubble.
+    - **TextColor** Message Text color that appears within the left chat bubble.
+    
   
-  	**BackgroundColor** Background Color of the left chat bubble.
-  
-  	**TextColor** Message Text color that appears within the left chat bubble.
-  
-   * RightChatBubbleAttributes :
-  
-  	**BackgroundColor** Background Color of the right chat bubble.
-  
-  	**TextColor** Message Text color that appears within the right chat bubble.
- 
+   * RightChatBubbleAttributes
+    - **BackgroundColor** Background Color of the right chat bubble.
+    - **TextColor** Message Text color that appears within the right chat bubble.
 
 <p align="center" >
   <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/chatScreen%20copy.png" alt="HelpStacktheme" title="ChatScreen">
 </p>
 
+## Video
 
+[![HelpStack for iOS](http://img.youtube.com/vi/0UvNO-Qm0AU/0.jpg)](https://www.youtube.com/watch?v=0UvNO-Qm0AU)
+
+## About
+For more information about HelpStack, visit [helpstack.io](http://www.helpstack.io).
+
+HelpStack is maintained by the folks at [HappyFox](http://www.happyfox.com/). Being an open source project, it also contains work from the HelpStack community.
+
+<div align="center">
+<a href="http://www.happyfox.com" target="_blank"><img src="http://www.helpstack.io/startup/common-files/img/logos/happyfox.png" alt="HappyFox" width="160" ></a>
+</div>
 
 ## Contact
 
-Follow HelpStack on Twitter ([@HelpStackSDK](https://twitter.com/HelpStackSDK/))
-
+Reach out to us on Twitter at [@HelpStack](https://twitter.com/HelpStackSDK).
 
 ## License
 
