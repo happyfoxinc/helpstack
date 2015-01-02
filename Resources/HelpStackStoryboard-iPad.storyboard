@@ -674,7 +674,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8v0-CA-xxj" userLabel="tempDrawImage">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8v0-CA-xxj" userLabel="imageOnCanvas">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="980"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dMJ-Iv-aEk">
@@ -779,8 +779,8 @@
                     <connections>
                         <outlet property="blueButton" destination="BLT-wE-6dt" id="kjz-HZ-rqi"/>
                         <outlet property="greenButton" destination="7W4-kD-Mqt" id="Aaf-kY-EIv"/>
+                        <outlet property="imageOnCanvas" destination="8v0-CA-xxj" id="yub-q1-JKd"/>
                         <outlet property="redButton" destination="UVo-Yh-WCn" id="479-rh-eav"/>
-                        <outlet property="tempDrawImage" destination="8v0-CA-xxj" id="yub-q1-JKd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rOa-XS-19X" userLabel="First Responder" sceneMemberID="firstResponder"/>

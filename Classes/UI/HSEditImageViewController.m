@@ -17,9 +17,9 @@
 UIImage* resizedImage;
 
 - (void)viewDidLoad {
-    red = 255.0/255.0;
-    green = 59.0/255.0;
-    blue = 48.0/255.0;
+    redValue = 255.0/255.0;
+    greenValue = 59.0/255.0;
+    blueValue = 48.0/255.0;
     
     [[_redButton layer] setBorderColor:[UIColor blackColor].CGColor];
     [[_redButton layer] setBorderWidth:2.0f];
@@ -36,13 +36,13 @@ UIImage* resizedImage;
                                 action:@selector(save_clicked:)];
     self.navigationItem.rightBarButtonItem = btnSave;
     
-    self.tempDrawImage.image = _attachmentImage;
+    self.imageOnCanvas.image = _attachmentImage;
     
-    CGFloat maxContainerWidth = self.tempDrawImage.frame.size.width;
-    CGFloat maxContainerHeight = self.tempDrawImage.frame.size.height;
+    CGFloat maxContainerWidth = self.imageOnCanvas.frame.size.width;
+    CGFloat maxContainerHeight = self.imageOnCanvas.frame.size.height;
     
-    float widthRatio = self.tempDrawImage.bounds.size.width / _attachmentImage.size.width;
-    float heightRatio = self.tempDrawImage.bounds.size.height / _attachmentImage.size.height;
+    float widthRatio = self.imageOnCanvas.bounds.size.width / _attachmentImage.size.width;
+    float heightRatio = self.imageOnCanvas.bounds.size.height / _attachmentImage.size.height;
     float scale = MIN(widthRatio, heightRatio);
     float resizedImageWidth = scale * _attachmentImage.size.width;
     float resizedImageHeight = scale * _attachmentImage.size.height;
@@ -66,7 +66,7 @@ UIImage* resizedImage;
     resizedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    self.tempDrawImage.image = resizedImage;
+    self.imageOnCanvas.image = resizedImage;
     
 }
 
@@ -78,26 +78,26 @@ UIImage* resizedImage;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     mouseSwiped = NO;
     UITouch *touch = [touches anyObject];
-    lastPoint = [touch locationInView:self.tempDrawImage];
+    lastPoint = [touch locationInView:self.imageOnCanvas];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     
     mouseSwiped = YES;
     UITouch *touch = [touches anyObject];
-    CGPoint currentPoint = [touch locationInView:self.tempDrawImage];
+    CGPoint currentPoint = [touch locationInView:self.imageOnCanvas];
     
-    UIGraphicsBeginImageContextWithOptions(self.tempDrawImage.frame.size, NO, 0.0);
-    [self.tempDrawImage.image drawInRect:CGRectMake(0, 0, self.tempDrawImage.frame.size.width, self.tempDrawImage.frame.size.height)];
+    UIGraphicsBeginImageContextWithOptions(self.imageOnCanvas.frame.size, NO, 0.0);
+    [self.imageOnCanvas.image drawInRect:CGRectMake(0, 0, self.imageOnCanvas.frame.size.width, self.imageOnCanvas.frame.size.height)];
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
     CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y);
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
     CGContextSetLineWidth(UIGraphicsGetCurrentContext(), brush );
-    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), red, green, blue, 1.0);
+    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), redValue, greenValue, blueValue, 1.0);
     CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
     
     CGContextStrokePath(UIGraphicsGetCurrentContext());
-    self.tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext();
+    self.imageOnCanvas.image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     lastPoint = currentPoint;
@@ -106,24 +106,24 @@ UIImage* resizedImage;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
     if(!mouseSwiped) {
-        UIGraphicsBeginImageContextWithOptions(self.tempDrawImage.frame.size, NO, 0.0);
-        [self.tempDrawImage.image drawInRect:CGRectMake(0, 0, self.tempDrawImage.frame.size.width, self.tempDrawImage.frame.size.height)];
+        UIGraphicsBeginImageContextWithOptions(self.imageOnCanvas.frame.size, NO, 0.0);
+        [self.imageOnCanvas.image drawInRect:CGRectMake(0, 0, self.imageOnCanvas.frame.size.width, self.imageOnCanvas.frame.size.height)];
         CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
         CGContextSetLineWidth(UIGraphicsGetCurrentContext(), brush);
-        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), red, green, blue, 1.0);
+        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), redValue, greenValue, blueValue, 1.0);
         CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
         CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
         CGContextStrokePath(UIGraphicsGetCurrentContext());
         CGContextFlush(UIGraphicsGetCurrentContext());
-        self.tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext();
+        self.imageOnCanvas.image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
     }
     
-    UIGraphicsBeginImageContextWithOptions(self.tempDrawImage.frame.size, NO, 0.0);
+    UIGraphicsBeginImageContextWithOptions(self.imageOnCanvas.frame.size, NO, 0.0);
 
-    [self.tempDrawImage.image drawInRect:CGRectMake(0, 0, self.tempDrawImage.frame.size.width, self.tempDrawImage.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+    [self.imageOnCanvas.image drawInRect:CGRectMake(0, 0, self.imageOnCanvas.frame.size.width, self.imageOnCanvas.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
 
-    self.tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext();
+    self.imageOnCanvas.image = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();
 }
@@ -149,30 +149,30 @@ UIImage* resizedImage;
     switch(PressedButton.tag)
     {
         case 0:
-            red = 255.0/255.0;
-            green = 49.0/255.0;
-            blue = 48.0/255.0;
+            redValue = 255.0/255.0;
+            greenValue = 49.0/255.0;
+            blueValue = 48.0/255.0;
             break;
         case 1:
-            red = 76.0/255.0;
-            green = 217.0/255.0;
-            blue = 100.0/255.0;
+            redValue = 76.0/255.0;
+            greenValue = 217.0/255.0;
+            blueValue = 100.0/255.0;
             break;
         case 2:
-            red = 0.0/255.0;
-            green = 170.0/255.0;
-            blue = 255.0/255.0;
+            redValue = 0.0/255.0;
+            greenValue = 170.0/255.0;
+            blueValue = 255.0/255.0;
             break;
     }
 }
 
 - (IBAction)resetImage:(id)sender {
-    self.tempDrawImage.image = resizedImage;
+    self.imageOnCanvas.image = resizedImage;
 }
 
 - (IBAction)save_clicked:(id)sender {
-    UIGraphicsBeginImageContextWithOptions(self.tempDrawImage.bounds.size, NO,0.0);
-    [self.tempDrawImage.image drawInRect:CGRectMake(0, 0, self.tempDrawImage.frame.size.width, self.tempDrawImage.frame.size.height)];
+    UIGraphicsBeginImageContextWithOptions(self.imageOnCanvas.bounds.size, NO,0.0);
+    [self.imageOnCanvas.image drawInRect:CGRectMake(0, 0, self.imageOnCanvas.frame.size.width, self.imageOnCanvas.frame.size.height)];
     UIImage *savedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     

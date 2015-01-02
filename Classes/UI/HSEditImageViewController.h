@@ -16,9 +16,9 @@
 @interface HSEditImageViewController : UIViewController {
     
     CGPoint lastPoint;
-    CGFloat red;
-    CGFloat green;
-    CGFloat blue;
+    CGFloat redValue;
+    CGFloat greenValue;
+    CGFloat blueValue;
     CGFloat brush;
     CGFloat opacity;
     BOOL mouseSwiped;
@@ -29,7 +29,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *save;
 @property (nonatomic, strong) UIImage *attachmentImage;
-@property (nonatomic) IBOutlet UIImageView *tempDrawImage;
+@property (nonatomic) IBOutlet UIImageView *imageOnCanvas;
 @property (nonatomic, weak) id <HSEditImageViewControllerDelegate> delegate;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *redButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *greenButton;

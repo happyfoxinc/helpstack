@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="yHS-bc-8ZV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="yHS-bc-8ZV">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Unknown constraint types" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -212,7 +212,7 @@
                     </navigationItem>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
-					<connections>
+                    <connections>
                         <segue destination="v34-sT-R1f" kind="push" identifier="showAttachment" id="wbc-l3-914"/>
                     </connections>
                 </tableViewController>
@@ -352,7 +352,7 @@
                 <viewController id="Gtj-gW-pLJ" customClass="HSIssueDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7nI-OZ-V4K"/>
-                        <viewControllerLayoutGuide type="bottom" id="A7V-p7-3HV"/>
+                        <viewControllerLayoutGuide type="bottom" id="DvT-WW-Jzi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pZG-d9-Lt0">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
@@ -601,7 +601,7 @@
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="wxK-OQ-di3">
                                         <rect key="frame" x="285" y="12" width="20" height="20"/>
                                     </activityIndicatorView>
-                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="caF-bA-v3Y">
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="caF-bA-v3Y">
                                         <rect key="frame" x="43" y="5" width="226" height="32"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -901,7 +901,7 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bKy-bb-p2a" userLabel="tempDrawImage">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bKy-bb-p2a" userLabel="imageOnCanvas">
                                 <rect key="frame" x="0.0" y="28" width="320" height="496"/>
                             </imageView>
                         </subviews>
@@ -917,8 +917,8 @@
                     <connections>
                         <outlet property="blueButton" destination="rgf-US-48d" id="eaK-rb-s7U"/>
                         <outlet property="greenButton" destination="zG1-bP-kNj" id="7NO-vF-KxD"/>
+                        <outlet property="imageOnCanvas" destination="bKy-bb-p2a" id="INS-3Y-OcR"/>
                         <outlet property="redButton" destination="GRM-Nv-dp3" id="KnB-IM-vdC"/>
-                        <outlet property="tempDrawImage" destination="bKy-bb-p2a" id="INS-3Y-OcR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ynO-FC-Blj" userLabel="First Responder" sceneMemberID="firstResponder"/>
