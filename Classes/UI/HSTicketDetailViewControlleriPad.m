@@ -149,15 +149,29 @@
         containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 256;
     }
     else  {
-        containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 64;
+        // On ios 7 landscape x == ios 8 landscape y
+        if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+            containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 32;
+        }
+        else {
+            containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 50;
+        }
     }
     
     NSInteger keyboardHeightDiff = containerFrame.origin.y - originalMessageOrigin;
     
     UIEdgeInsets contentInsets = self.chatTableView.contentInset;
     
-    if(kKeyBoardFrame.origin.y > 0) {
-        contentInsets.bottom -= keyboardHeightDiff;
+    // On ios 7 landscape x == ios 8 landscape y
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0 && UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
+        if(kKeyBoardFrame.origin.x > 0) {
+            contentInsets.bottom-=keyboardHeightDiff;
+        }
+    }
+    else {
+        if(kKeyBoardFrame.origin.y > 0) {
+            contentInsets.bottom -= keyboardHeightDiff;
+        }
     }
     
     self.chatTableView.contentInset = contentInsets;
