@@ -50,6 +50,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
 
+    self.bottomMessageView.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.bubbleWidth = 240.0;
     
     self.chatTableView.backgroundColor = [UIColor clearColor];
