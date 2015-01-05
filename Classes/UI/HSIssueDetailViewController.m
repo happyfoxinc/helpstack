@@ -49,8 +49,6 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
-
-    self.bottomMessageView.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.bubbleWidth = 240.0;
     
@@ -120,6 +118,7 @@
     self.messageText.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
 	self.messageText.minNumberOfLines = 1;
 	self.messageText.maxNumberOfLines = 10;
+    self.messageText.returnKeyType = UIReturnKeyDone;
     
     UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     
@@ -437,8 +436,8 @@
         }
     }
     
-    
-    
+    self.bottomMessageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.bottomMessageView.translatesAutoresizingMaskIntoConstraints = YES;
 
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;

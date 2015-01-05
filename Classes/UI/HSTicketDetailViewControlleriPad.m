@@ -49,7 +49,6 @@
     super.bubbleWidth = 270.0;
     msgEntered = nil;
     
-    self.bottomMessageView.translatesAutoresizingMaskIntoConstraints = YES;
 	// Do any additional setup after loading the view.
 }
 
@@ -151,7 +150,7 @@
     else  {
         // On ios 7 landscape x == ios 8 landscape y
         if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-            containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 32;
+            containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 64;
         }
         else {
             containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 50;
@@ -178,6 +177,9 @@
     self.chatTableView.scrollIndicatorInsets = contentInsets;
     
     [self scrollDownToLastMessage:YES];
+    
+    self.bottomMessageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.bottomMessageView.translatesAutoresizingMaskIntoConstraints = YES;
     
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];

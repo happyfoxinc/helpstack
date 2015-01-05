@@ -610,6 +610,7 @@
                             <constraint firstAttribute="trailing" secondItem="pte-Fg-Fyj" secondAttribute="trailing" id="fCu-l1-yqO"/>
                             <constraint firstAttribute="trailing" secondItem="zH8-Up-Etj" secondAttribute="trailing" id="hxl-Fx-F7z"/>
                             <constraint firstItem="pte-Fg-Fyj" firstAttribute="top" secondItem="FP6-Kx-Q6V" secondAttribute="bottom" id="nt1-Wu-Hec"/>
+                            <constraint firstAttribute="centerX" secondItem="zH8-Up-Etj" secondAttribute="centerX" id="xW0-Sc-DY6"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
