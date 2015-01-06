@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="yHS-bc-8ZV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="yHS-bc-8ZV">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
         <!--Help-->
@@ -121,16 +121,16 @@
                             <outlet property="delegate" destination="CM6-7l-ElP" id="wPc-HX-9VP"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="P7Q-F5-Zx3"/>
                     <connections>
                         <outlet property="emailField" destination="tjr-gm-sA0" id="l8M-d6-eNs"/>
                         <outlet property="firstNameField" destination="tjE-Pe-cKC" id="Lav-rn-MUB"/>
                         <outlet property="lastNameField" destination="zKT-yV-3SN" id="YDn-Fi-Tfp"/>
-                        <segue destination="xZx-8e-8tM" kind="push" identifier="reportIssueSegue" id="quN-14-czE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CKg-AW-o4m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1404" y="-464"/>
+            <point key="canvasLocation" x="2230" y="226"/>
         </scene>
         <!--Add an Issue-->
         <scene sceneID="7vZ-ts-X3B">
@@ -213,11 +213,13 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="v34-sT-R1f" kind="push" identifier="showAttachment" id="wbc-l3-914"/>
+                        <segue destination="zpY-Fi-zMo" kind="push" identifier="reportIssueSegueios6" id="WQY-fr-rBI"/>
+                        <segue destination="CM6-7l-ElP" kind="push" identifier="reportIssueSegue" id="JKK-Ev-jAh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yVl-Ps-wtZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1832" y="-471"/>
+            <point key="canvasLocation" x="1832" y="-469"/>
         </scene>
         <!--New Issue Attachment View Controller-->
         <scene sceneID="ejC-s5-96Z">
@@ -794,11 +796,11 @@
                             <outlet property="delegate" destination="zpY-Fi-zMo" id="Mva-ek-iu6"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="UHW-if-VgE"/>
                     <connections>
                         <outlet property="emailField" destination="0mf-r5-x56" id="p0F-ZB-EbC"/>
                         <outlet property="firstNameField" destination="tU9-I3-ZwD" id="eRj-AT-sKN"/>
                         <outlet property="lastNameField" destination="BPx-TM-h7c" id="HmX-BB-tzT"/>
-                        <segue destination="xZx-8e-8tM" kind="push" identifier="reportIssueSegue" id="pJ2-BK-t6r"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ogy-Ey-J4H" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -816,6 +818,5 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="5du-Et-kqi"/>
-        <segue reference="quN-14-czE"/>
     </inferredMetricsTieBreakers>
 </document>

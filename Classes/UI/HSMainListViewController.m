@@ -372,40 +372,17 @@ BOOL finishedLoadingTickets = NO;
     HSNewTicket* ticket = [[HSNewTicket alloc] init];
     UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(newTicketCancelPressed:)];
     
-    if ([self.ticketSource shouldShowUserDetailsFormWhenCreatingTicket]) {
-
-        NSString* storyboardId = @"HSUserDetailsController";
-        if ([HSAppearance isIOS6]) {
-            storyboardId = @"HSUserDetailsController_ios6";
-        }
-        
-        
-        HSUserDetailsViewController* controller = [self.storyboard instantiateViewControllerWithIdentifier:storyboardId];
-        controller.createNewTicket = ticket;
-        controller.delegate = self;
-        controller.ticketSource = self.ticketSource;
-        controller.navigationItem.leftBarButtonItem = cancelItem;
-        newTicketNavController = [[UINavigationController alloc] initWithNavigationBarClass:[UINavigationBar class] toolbarClass:[UIToolbar class]];
-        newTicketNavController.viewControllers = [NSArray arrayWithObject:controller];
-        newTicketNavController.modalPresentationStyle = UIModalPresentationCurrentContext;
-
-        
-        [self presentViewController:newTicketNavController animated:YES completion:nil];
-
-    } else {
-        
-        HSNewIssueViewController* controller = [self.storyboard instantiateViewControllerWithIdentifier:@"HSReportIssue"];
-        controller.createNewTicket = ticket;
-        controller.delegate = self;
-        controller.ticketSource = self.ticketSource;
-        controller.navigationItem.leftBarButtonItem = cancelItem;
-        newTicketNavController = [[UINavigationController alloc] initWithNavigationBarClass:[UINavigationBar class] toolbarClass:[UIToolbar class]];
-        newTicketNavController.viewControllers = [NSArray arrayWithObject:controller];
-        newTicketNavController.modalPresentationStyle = UIModalPresentationCurrentContext;
-
-        [self presentViewController:newTicketNavController animated:YES completion:nil];
-        
-    }
+    
+    HSNewIssueViewController* controller = [self.storyboard instantiateViewControllerWithIdentifier:@"HSReportIssue"];
+    controller.createNewTicket = ticket;
+    controller.delegate = self;
+    controller.ticketSource = self.ticketSource;
+    controller.navigationItem.leftBarButtonItem = cancelItem;
+    newTicketNavController = [[UINavigationController alloc] initWithNavigationBarClass:[UINavigationBar class] toolbarClass:[UIToolbar class]];
+    newTicketNavController.viewControllers = [NSArray arrayWithObject:controller];
+    newTicketNavController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    
+    [self presentViewController:newTicketNavController animated:YES completion:nil];
 }
 
 
@@ -466,18 +443,34 @@ BOOL finishedLoadingTickets = NO;
         [self reloadTicketsSection];
         [self stopLoadingAnimation];
         
-        
     } failure:^(NSError* e){
         [self stopLoadingAnimation];
         
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Some error." message:@"There was some error in reporting your issue. Is your internet ON? Can you try after sometime?" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alertView show];
         
+        [alertView show];
     }];
+
+}
+
+- (void)registerUserAndCreateTicket:(HSNewTicket *)createNewTicket forUserFirstName:(NSString *)firstName lastName:(NSString *)lastName email:(NSString *)email {
     
+    [self startLoadingAnimation];
     
-    
-//
+    [self.ticketSource registerUserWithFirstName:firstName lastName:lastName email:email success:^ {
+        
+        [self stopLoadingAnimation];
+        [self onNewIssueRequested:createNewTicket];
+        
+        
+    } failure:^(NSError *error) {
+        [self stopLoadingAnimation];
+        
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Some error." message:@"There was some error registering you. Can you try some other email address?" delegate:self cancelButtonTitle:@"No, Leave it." otherButtonTitles:@"Ok", nil];
+        
+        alertView.tag = 20;
+        [alertView show]; 
+    }];
 }
 
 #pragma mark - MailClient

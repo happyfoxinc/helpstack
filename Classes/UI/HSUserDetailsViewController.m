@@ -43,7 +43,7 @@
 {
     [super viewDidLoad];
     
-    self.nextButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleDone target:self action:@selector(submitPressed:)];
+    self.nextButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(submitPressed:)];
     self.navigationItem.rightBarButtonItem = self.nextButtonItem;
     
     HSAppearance* appearance = [[HSHelpStack instance] appearance];
@@ -56,28 +56,8 @@
 {
     if([self checkValidity]) {
 
-        HSActivityIndicatorView* indicatorView = [[HSActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20.0, 20.0)];
-        [indicatorView startAnimating];
-
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
-
-        [self.ticketSource registerUserWithFirstName:self.firstNameField.text lastName:self.lastNameField.text email:self.emailField.text success:^ {
-
-            self.navigationItem.rightBarButtonItem = self.nextButtonItem;
-            
-            [self startIssueReportController];
-
-
-        } failure:^(NSError *error) {
-
-            self.navigationItem.rightBarButtonItem = self.nextButtonItem;
-
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Some error." message:@"There was some error registering you. Can you try some other email address?" delegate:self cancelButtonTitle:@"No, Leave it." otherButtonTitles:@"Ok", nil];
-            alertView.tag = 20;
-
-            [alertView show];
-
-        }];
+        [self.delegate registerUserAndCreateTicket:self.createNewTicket forUserFirstName:self.firstNameField.text lastName:self.lastNameField.text email:self.emailField.text];
+        [self dismissViewControllerAnimated:YES completion:nil];
 
     }
 }

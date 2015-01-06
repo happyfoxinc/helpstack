@@ -50,8 +50,14 @@
 {
     [super viewDidLoad];
     
-    submitBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(submitPressed:)];
-    self.navigationItem.rightBarButtonItem = submitBarItem;
+    if ([self.ticketSource shouldShowUserDetailsFormWhenCreatingTicket]) {
+        submitBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleDone target:self action:@selector(nextPressed:)];
+        self.navigationItem.rightBarButtonItem = submitBarItem;
+    }
+    else {
+        submitBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(submitPressed:)];
+        self.navigationItem.rightBarButtonItem = submitBarItem;
+    }
     
     HSAppearance* appearance = [[HSHelpStack instance] appearance];
     self.view.backgroundColor = [appearance getBackgroundColor];
@@ -82,10 +88,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)nextPressed:(id)sender {
-    [self performSegueWithIdentifier:@"NameAndEmailSegue" sender:self];
-}
-
 - (IBAction)addAttachments:(id)sender {
     if(self.attachments != nil && self.attachments.count > 0){
 
@@ -98,6 +100,33 @@
 
         [self startMediaBrowserFromViewController: self
                                 usingDelegate: self];
+    }
+}
+
+- (IBAction)nextPressed:(id)sender {
+    NSString* storyboardId = @"HSUserDetailsController";
+    if ([HSAppearance isIOS6]) {
+        storyboardId = @"HSUserDetailsController_ios6";
+    }
+    
+    HSNewTicket* ticket = [[HSNewTicket alloc] init];
+    UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed:)];
+    
+    if([self checkValidity]) {
+        
+        NSMutableString* messageContent = [[NSMutableString alloc] initWithString:messageField.text];
+        [messageContent appendString:[HSUtility deviceInformation]];
+        
+        ticket.subject = subjectField.text;
+        ticket.content = messageContent;
+        ticket.attachments = self.attachments;
+        HSUserDetailsViewController* controller = [self.storyboard instantiateViewControllerWithIdentifier:storyboardId];
+        controller.createNewTicket = ticket;
+        controller.delegate = self.delegate;
+        controller.ticketSource = self.ticketSource;
+        controller.navigationItem.leftBarButtonItem = cancelItem;
+        
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 
