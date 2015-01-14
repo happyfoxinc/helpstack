@@ -40,5 +40,6 @@
 @protocol HSNewIssueViewControllerDelegate <NSObject>
 
 - (void)onNewIssueRequested:(HSNewTicket *)createNewTicket;
+- (void)registerUserAndCreateTicket:(HSNewTicket *)createNewTicket forUserFirstName:(NSString *)firstName lastName:(NSString *)lastName email:(NSString *)email;
 
 @end
