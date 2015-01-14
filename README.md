@@ -9,6 +9,9 @@
   <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/Screen%20Shot%202014-05-14%20at%202.46.10%20pm.png" alt="HelpStackthemes" title="screenshots">
 </p>
 
+## App Showcase
+Have you made something awesome with HelpStack? Add yourself here: [App Showcase](https://github.com/happyfoxinc/helpstack/wiki/App-Showcase)
+
 ## How to use Help Stack
 Integrating HelpStack into your app is an easy three-step process:
 
