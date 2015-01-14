@@ -21,10 +21,12 @@
 //THE SOFTWARE.
 #import "HSTicketSource.h"
 #import "HSHelpStack.h"
+#import "HSDraft.h"
 
 #define CACHE_DIRECTORY_NAME    @"HelpStack"
 #define TICKET_CACHE_FILE_NAME  @"HelpApp_Ticket.plist"
 #define USER_CACHE_FILE_NAME    @"HelpApp_User.plist"
+#define DRAFT_FILE_NAME         @"HelpApp_Draft.plist"
 
 @interface HSTicketSource ()
 
@@ -32,6 +34,7 @@
 @property (nonatomic, strong) NSMutableArray* updateArray;
 @property (nonatomic, strong, readwrite) HSGear* gear;
 @property (nonatomic, strong, readwrite) HSUser* user;
+
 
 @end
 
@@ -46,12 +49,13 @@
 }
 
 /**
-    Set HAGear, so its method can be called.
+ Set HAGear, so its method can be called.
  */
 - (id)initWithGear:(HSGear *)gear {
     if(self = [super init]) {
         [self setGear:gear];
         [self initializeTicketFromCache];
+        [self initializeDraft];
     }
     return self;
 }
@@ -68,9 +72,20 @@
     self.user = [HSTicketSource userAtPath:USER_CACHE_FILE_NAME];
 }
 
+- (void)initializeDraft {
+    if (self.draft == nil) {
+        HSDraft* draft = [HSTicketSource draftAtPath:DRAFT_FILE_NAME];
+        if (draft!=nil) {
+            self.draft = draft;
+        }
+        else {
+            self.draft = [[HSDraft alloc] init];
+        }
+    }
+}
 
 - (void)registerUserWithFirstName:(NSString *)firstName lastName:(NSString *)lastName email:(NSString *)email success:(void (^)(void))success failure:(void (^)(NSError *error))failure {
-
+    
     HSUser* user = [[HSUser alloc] init];
     user.firstName = firstName;
     user.lastName = lastName;
@@ -82,25 +97,25 @@
         // Store user info so that it can be used when creating ticket.
         // User info is saved only when first ticket is created successfully.
         self.user = validUser;
+        [self clearTicketDraft];
+        [self clearUserDraft];
         success();
         
-
+        
     } failure:^(NSError *e) {
         HALog("searchOrRegisterUser failed: %@",e);
         failure(e);
     }];
-
+    
 }
 
-//////////////////////////////////////////////////
 
 // Store HSUser and check for it while creating a new ticket
 
 - (BOOL)shouldShowUserDetailsFormWhenCreatingTicket {
     NSFileManager* defaultManager = [NSFileManager defaultManager];
-    return (![defaultManager fileExistsAtPath:[HSTicketSource fileCachePath:USER_CACHE_FILE_NAME]]);
+    return (![defaultManager fileExistsAtPath:[HSTicketSource documentFilePath:USER_CACHE_FILE_NAME]]);
 }
-//////////////////////////////////////////////////
 
 - (void)prepareTicket:(void (^)(void))success failure:(void (^)(NSError *))failure {
     // Checking if gear implements fetchAllTicket:failure:
@@ -155,6 +170,8 @@
                     self.user = user;
                     [HSTicketSource saveUser:user atPath:USER_CACHE_FILE_NAME];
                 }
+                
+                [self clearTicketDraft];
             }
             success();
         } failure:^(NSError *e) {
@@ -168,10 +185,10 @@
 }
 
 - (void)prepareUpdate:(HSTicket *)ticketDict success:(void (^)(void))success failure:(void (^)(NSError *))failure {
-
+    
     // Preparing update array for new ticket, dumping array for old ticket
     [self.updateArray removeAllObjects];
-
+    
     // Checking if gear implements fetchAllUpdate:success:failure:
     if([self.gear respondsToSelector:@selector(fetchAllUpdateForTicket:forUser:success:failure:)]) {
         [self.gear fetchAllUpdateForTicket:ticketDict forUser:self.user success:^(NSMutableArray *updateArray) {
@@ -199,14 +216,15 @@
 
 - (void)addReply:(HSTicketReply *)details ticket:(HSTicket *)ticketDict success:(void (^)(void))success failure:(void (^)(NSError *))failure {
     // Checking if gear implements addReply:ticket:success:failure:
-
+    
     __block NSMutableArray* updates = self.updateArray;
-
+    
     if([self.gear respondsToSelector:@selector(addReply:forTicket:byUser:success:failure:)]) {
         [self.gear addReply:details forTicket:ticketDict byUser:self.user success:^(HSUpdate *update) {
             if(update!=nil){ // Safe check
                 [updates addObject:update];
             }
+            
             success();
         } failure:^(NSError *e) {
             HALog("Add reply to a ticket failed: %@",e);
@@ -234,7 +252,7 @@
 #pragma mark - Cache functions
 
 + (void)saveTickets:(NSArray *)tickets atPath:(NSString *)fileName {
-    NSString* cacheFilePath = [self fileCachePath:fileName];
+    NSString* cacheFilePath = [self documentFilePath:fileName];
     
     NSFileManager* fm = [NSFileManager defaultManager];
     if ([fm fileExistsAtPath:cacheFilePath]) {
@@ -244,13 +262,8 @@
     [NSKeyedArchiver archiveRootObject:tickets toFile:cacheFilePath];
 }
 
-+ (NSArray *)ticketsAtPath:(NSString *)fileName {
-    NSString* cacheFilePath = [self fileCachePath:fileName];
-    return [NSKeyedUnarchiver unarchiveObjectWithFile:cacheFilePath];;
-}
-
 + (void)saveUser:(HSUser *)user atPath:(NSString *)fileName {
-    NSString* cacheFilePath = [self fileCachePath:fileName];
+    NSString* cacheFilePath = [self documentFilePath:fileName];
     
     NSFileManager* fm = [NSFileManager defaultManager];
     if ([fm fileExistsAtPath:cacheFilePath]) {
@@ -262,22 +275,128 @@
     }
 }
 
+- (void)saveTicketDraft:(NSString *)subject message:(NSString *)message {
+    [self initializeDraft];
+    
+    [self.draft setDraftSubject:subject];
+    [self.draft setDraftMessage:message];
+    
+    [self saveDraftDetails];
+}
+
+- (void)saveUserDraft:(NSString *)firstName lastName:(NSString *)lastName email:(NSString *)email {
+    [self initializeDraft];
+    
+    [self.draft setDraftUserFirstName:firstName];
+    [self.draft setDraftUserLastName:lastName];
+    [self.draft setDraftUserEmail:email];
+    
+    [self saveDraftDetails];
+}
+
+- (void)saveReplyDraft:(NSString *)message {
+    [self initializeDraft];
+    [self.draft setDraftReplyMessage:message];
+    [self saveDraftDetails];
+}
+
+- (void)saveDraftDetails {
+    if (self.draft != nil) {
+        NSString* draftFilePath = [self documentFilePath:DRAFT_FILE_NAME];
+        [NSKeyedArchiver archiveRootObject:self.draft toFile:draftFilePath];
+    }
+}
+
+- (NSString *) draftSubject {
+    if (self.draft != nil) {
+        return [self.draft draftSubject];
+    }
+    return nil;
+}
+
+- (NSString *) draftMessage {
+    if (self.draft != nil) {
+        return [self.draft draftMessage];
+    }
+    return nil;
+}
+
+- (NSString *) draftUserFirstName {
+    if (self.draft != nil) {
+        return [self.draft draftUserFirstName];
+    }
+    return nil;
+}
+
+- (NSString *) draftUserLastName {
+    if (self.draft != nil) {
+        return [self.draft draftUserLastName];
+    }
+    return nil;
+}
+
+- (NSString *) draftUserEmail {
+    if (self.draft != nil) {
+        return [self.draft draftUserEmail];
+    }
+    return nil;
+}
+
+- (NSString *) draftReplyMessage {
+    if (self.draft != nil) {
+        return [self.draft draftReplyMessage];
+    }
+    return nil;
+}
+
+- (void) clearTicketDraft {
+    [self saveTicketDraft:@"" message:@""];
+}
+
+- (void) clearUserDraft {
+    [self saveUserDraft:@"" lastName:@"" email:@""];
+}
+
+- (void)clearReplyDraft {
+    [self saveReplyDraft:@""];
+}
+
++ (NSArray *)ticketsAtPath:(NSString *)fileName {
+    NSString* cacheFilePath = [self documentFilePath:fileName];
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:cacheFilePath];
+}
+
 + (HSUser *)userAtPath:(NSString *)fileName {
-    NSString* cacheFilePath = [self fileCachePath:fileName];
+    NSString* cacheFilePath = [self documentFilePath:fileName];
     return [NSKeyedUnarchiver unarchiveObjectWithFile:cacheFilePath];;
+}
+
++ (HSDraft *)draftAtPath:(NSString *)fileName {
+    NSString* draftFilePath = [self documentFilePath:fileName];
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:draftFilePath];
 }
 
 + (NSString *)directoryName {
     return CACHE_DIRECTORY_NAME;
 }
 
-+ (NSString *) fileCachePath:(NSString *)fileName {
-    NSString* cacheDirectoryPath = [self getCacheDirectory];
-    NSString* cacheFilePath = [cacheDirectoryPath stringByAppendingPathComponent:fileName];
-    return cacheFilePath;
+- (NSString *)directoryName {
+    return CACHE_DIRECTORY_NAME;
 }
 
-+ (NSString *) getCacheDirectory {
++ (NSString *) documentFilePath:(NSString *)fileName {
+    NSString* documentDirectoryPath = [self getDocumentDirectory];
+    NSString* documentFilePath = [documentDirectoryPath stringByAppendingPathComponent:fileName];
+    return documentFilePath;
+}
+
+- (NSString *) documentFilePath:(NSString *)fileName {
+    NSString* documentDirectoryPath = [self getDocumentDirectory];
+    NSString* documentFilePath = [documentDirectoryPath stringByAppendingPathComponent:fileName];
+    return documentFilePath;
+}
+
++ (NSString *) getDocumentDirectory {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     documentsDirectory = [documentsDirectory stringByAppendingPathComponent:[self directoryName]];
@@ -288,5 +407,18 @@
     
     return documentsDirectory;
 }
+
+- (NSString *) getDocumentDirectory {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    documentsDirectory = [documentsDirectory stringByAppendingPathComponent:[self directoryName]];
+    
+    // Create directory if not already exist
+    NSError *error;
+    [[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectory withIntermediateDirectories:YES attributes:nil error:&error];
+    
+    return documentsDirectory;
+}
+
 
 @end
