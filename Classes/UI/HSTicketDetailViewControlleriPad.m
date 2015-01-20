@@ -28,14 +28,11 @@
 
 }
 
-@property (nonatomic) NSInteger keyboardHeight;
 
 @end
 
 @implementation HSTicketDetailViewControlleriPad
 
-float keyboardH;
-bool adjustHeightToKeyboard = true;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,6 +48,7 @@ bool adjustHeightToKeyboard = true;
     [super viewDidLoad];
     super.bubbleWidth = 270.0;
     msgEntered = nil;
+    
 	// Do any additional setup after loading the view.
 }
 
@@ -113,15 +111,10 @@ bool adjustHeightToKeyboard = true;
     // get a rect for the textView frame
     CGRect containerFrame = self.bottomMessageView.frame;
     containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
-    self.keyboardHeight = keyboardBounds.size.height;
-    
-    UIEdgeInsets contentInsets = self.chatTableView.contentInset;
-    
-    if(contentInsets.bottom > 0) {
-        contentInsets.bottom-=self.keyboardHeight ;
-        self.chatTableView.contentInset = contentInsets;
-        self.chatTableView.scrollIndicatorInsets = contentInsets;
-    }
+
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.chatTableView.contentInset = contentInsets;
+    self.chatTableView.scrollIndicatorInsets = contentInsets;
     
     // animations settings
     [UIView beginAnimations:nil context:NULL];
@@ -137,7 +130,7 @@ bool adjustHeightToKeyboard = true;
     [self scrollDownToLastMessage:YES];
 }
 
-- (void)keyboardFrameDidChange: (NSNotification *)notification {
+- (void)keyboardFrameWillChange: (NSNotification *)notification {
 
     NSDictionary* info = [notification userInfo];
     NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -150,30 +143,43 @@ bool adjustHeightToKeyboard = true;
     
     float originalMessageOrigin = containerFrame.origin.y;
     
-    if (adjustHeightToKeyboard) {
-        if (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
-        {
-            containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 256;
-        }
-        else if(UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
+    if (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
+    {
+        containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 256;
+    }
+    else  {
+        // On ios 7 landscape x == ios 8 landscape y
+        if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
             containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 64;
         }
-        
-        self.keyboardHeight = containerFrame.origin.y - originalMessageOrigin;
+        else {
+            containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 50;
+        }
     }
-
-    adjustHeightToKeyboard = !adjustHeightToKeyboard;
+    
+    NSInteger keyboardHeightDiff = containerFrame.origin.y - originalMessageOrigin;
     
     UIEdgeInsets contentInsets = self.chatTableView.contentInset;
     
-    if(kKeyBoardFrame.origin.y) {
-        contentInsets.bottom-=self.keyboardHeight;
+    // On ios 7 landscape x == ios 8 landscape y
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0 && UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
+        if(kKeyBoardFrame.origin.x > 0) {
+            contentInsets.bottom-=keyboardHeightDiff;
+        }
+    }
+    else {
+        if(kKeyBoardFrame.origin.y > 0) {
+            contentInsets.bottom -= keyboardHeightDiff;
+        }
     }
     
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
     
     [self scrollDownToLastMessage:YES];
+    
+    self.bottomMessageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.bottomMessageView.translatesAutoresizingMaskIntoConstraints = YES;
     
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];

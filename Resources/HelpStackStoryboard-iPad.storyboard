@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="Aps-a9-uhx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="Aps-a9-uhx">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -219,6 +219,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2jj-oQ-Mqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1753" y="-447"/>
+        </scene>
+        <!--New Issue Attachment View Controller-->
+        <scene sceneID="JZs-z0-hiD">
+            <objects>
+                <viewController id="EHe-VT-RUE" customClass="HSNewIssueAttachmentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RCS-TK-AQe"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ovl-Kx-0Mu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MA5-4T-Bjf">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="49N-rn-pmK">
+                                <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="49N-rn-pmK" secondAttribute="bottom" id="7V5-oQ-d9G"/>
+                            <constraint firstItem="49N-rn-pmK" firstAttribute="leading" secondItem="MA5-4T-Bjf" secondAttribute="leading" id="dKe-6s-s51"/>
+                            <constraint firstAttribute="trailing" secondItem="49N-rn-pmK" secondAttribute="trailing" id="kAg-Xi-nEC"/>
+                            <constraint firstItem="49N-rn-pmK" firstAttribute="top" secondItem="MA5-4T-Bjf" secondAttribute="top" id="kiV-Xv-Tt9"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Abn-80-SmU"/>
+                    <connections>
+                        <outlet property="attachmentImageView" destination="49N-rn-pmK" id="qHL-t7-O4A"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y97-zA-qKx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2387" y="-452"/>
         </scene>
         <!--Group View Controller-->
         <scene sceneID="Inv-6m-bwc">
@@ -553,7 +586,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="3vN-EC-1iP"/>
+                                    <constraint firstAttribute="height" priority="900" constant="44" id="3vN-EC-1iP"/>
                                 </constraints>
                             </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="FDU-0u-pxR" customClass="HSActivityIndicatorView">
@@ -567,14 +600,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="pte-Fg-Fyj" firstAttribute="centerX" secondItem="FDU-0u-pxR" secondAttribute="centerX" id="5Da-bh-Q4h"/>
-                            <constraint firstAttribute="bottom" secondItem="zH8-Up-Etj" secondAttribute="bottom" id="9RH-LU-ahc"/>
+                            <constraint firstAttribute="bottom" secondItem="zH8-Up-Etj" secondAttribute="bottom" priority="900" id="9RH-LU-ahc"/>
                             <constraint firstItem="pte-Fg-Fyj" firstAttribute="centerY" secondItem="FDU-0u-pxR" secondAttribute="centerY" id="AaP-sV-0ej"/>
                             <constraint firstItem="zH8-Up-Etj" firstAttribute="leading" secondItem="hGl-XF-VQt" secondAttribute="leading" id="BDa-mv-KOa"/>
-                            <constraint firstItem="zH8-Up-Etj" firstAttribute="top" secondItem="pte-Fg-Fyj" secondAttribute="bottom" id="ISB-K9-Ma2"/>
                             <constraint firstItem="pte-Fg-Fyj" firstAttribute="leading" secondItem="hGl-XF-VQt" secondAttribute="leading" id="TlI-hF-sGG"/>
+                            <constraint firstItem="2OM-3a-uFC" firstAttribute="top" secondItem="pte-Fg-Fyj" secondAttribute="bottom" constant="44" id="enO-FD-KbA"/>
                             <constraint firstAttribute="trailing" secondItem="pte-Fg-Fyj" secondAttribute="trailing" id="fCu-l1-yqO"/>
                             <constraint firstAttribute="trailing" secondItem="zH8-Up-Etj" secondAttribute="trailing" id="hxl-Fx-F7z"/>
                             <constraint firstItem="pte-Fg-Fyj" firstAttribute="top" secondItem="FP6-Kx-Q6V" secondAttribute="bottom" id="nt1-Wu-Hec"/>
+                            <constraint firstAttribute="centerX" secondItem="zH8-Up-Etj" secondAttribute="centerX" id="xW0-Sc-DY6"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -797,6 +831,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="KOe-ee-0g3"/>
+        <segue reference="ImJ-I9-Ptk"/>
     </inferredMetricsTieBreakers>
 </document>

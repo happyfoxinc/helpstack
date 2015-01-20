@@ -51,14 +51,14 @@ NSInteger attachmentButtonTagOffset = 1000;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
-
+    
     self.bubbleWidth = 240.0;
     
     self.chatTableView.backgroundColor = [UIColor clearColor];
-   
+    
     [self.loadingIndicator startAnimating];
     
     self.bottomMessageView.hidden = YES;
@@ -69,14 +69,14 @@ NSInteger attachmentButtonTagOffset = 1000;
     self.navigationItem.title = self.selectedTicket.subject;
     
     /**
-        Single tapping anywhere on the chat table view to hide the keyboard
+     Single tapping anywhere on the chat table view to hide the keyboard
      */
     UITapGestureRecognizer *hideKeyboard = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     hideKeyboard.numberOfTapsRequired = 1;
     [self.chatTableView addGestureRecognizer:hideKeyboard];
     
     [self getTicketUpdates];
-
+    
     
 }
 
@@ -108,7 +108,7 @@ NSInteger attachmentButtonTagOffset = 1000;
 #pragma marks - View populating methods
 
 - (void)addMessageView {
-  //  self.messageText = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(35, 6, self.messageTextSuperView.frame.size.width, 40)];
+    //  self.messageText = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(35, 6, self.messageTextSuperView.frame.size.width, 40)];
     if(!self.messageText){
         self.messageText = [[HSGrowingTextView alloc] initWithFrame:CGRectMake(self.messageTextSuperView.frame.origin.x, self.messageTextSuperView.frame.origin.y, self.messageTextSuperView.frame.size.width, self.messageTextSuperView.frame.size.height)];
         self.messageText.editable = YES;
@@ -120,8 +120,8 @@ NSInteger attachmentButtonTagOffset = 1000;
     }
     self.messageText.isScrollable = NO;
     self.messageText.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
-	self.messageText.minNumberOfLines = 1;
-	self.messageText.maxNumberOfLines = 10;
+    self.messageText.minNumberOfLines = 1;
+    self.messageText.maxNumberOfLines = 10;
     
     UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     
@@ -131,15 +131,23 @@ NSInteger attachmentButtonTagOffset = 1000;
         self.messageText.maxHeight = 200.0f;
     }
     
-	self.messageText.returnKeyType = UIReturnKeyGo;
-	self.messageText.font = [UIFont systemFontOfSize:14.0f];
-	self.messageText.delegate = self;
+    self.messageText.returnKeyType = UIReturnKeyGo;
+    self.messageText.font = [UIFont systemFontOfSize:14.0f];
+    self.messageText.delegate = self;
     self.messageText.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0);
     
     self.messageText.textColor = [UIColor darkGrayColor];
-    self.messageText.placeholder = @"Reply here";
+    
+    if([[self ticketSource] draftReplyMessage]!=nil) {
+        self.messageText.text = [[self ticketSource] draftReplyMessage];
+    }
+    else {
+        self.messageText.text = @"";
+        self.messageText.placeholder = @"Reply here";
+    }
+    
     self.messageText.internalTextView.layer.cornerRadius = 5.0;
-  //  [self.messageTextSuperView addSubview:self.messageText];
+    //  [self.messageTextSuperView addSubview:self.messageText];
     [self.messageText removeFromSuperview];
     [self.bottomMessageView addSubview:self.messageText];
     
@@ -147,7 +155,7 @@ NSInteger attachmentButtonTagOffset = 1000;
 }
 
 /**
-    Callback method whenever the messageTextView increases in size, accordingly push the chat tableView up
+ Callback method whenever the messageTextView increases in size, accordingly push the chat tableView up
  */
 - (void)growingTextView:(HSGrowingTextView *)growingTextView willChangeHeight:(float)height
 {
@@ -166,14 +174,15 @@ NSInteger attachmentButtonTagOffset = 1000;
     [self scrollDownToLastMessage:YES];
     
     self.bottomMessageView.frame = msgViewFrame;
-	
+    
 }
 
 -(void)growingTextViewDidChange:(HSGrowingTextView *)growingTextView{
-   
     if([growingTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""].length > 0){
         self.sendButton.enabled = YES;
         self.sendButton.alpha = 1.0;
+        
+        [self.ticketSource saveReplyDraft:growingTextView.text];
     }else{
         self.sendButton.enabled = NO;
         self.sendButton.alpha = 0.5;
@@ -205,7 +214,7 @@ NSInteger attachmentButtonTagOffset = 1000;
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-   // [self.chatTableView reloadData];
+    // [self.chatTableView reloadData];
     CGRect msgTextFrame = self.messageText.frame;
     msgTextFrame.size.width = self.messageTextSuperView.frame.size.width;
     msgTextFrame.size.height = self.messageTextSuperView.frame.size.height;
@@ -233,7 +242,7 @@ NSInteger attachmentButtonTagOffset = 1000;
 #pragma mark - Attachment functions
 
 /**
-    Shows the attachment selected when adding a reply
+ Shows the attachment selected when adding a reply
  */
 - (void)showAttachments{
     
@@ -302,10 +311,12 @@ NSInteger attachmentButtonTagOffset = 1000;
     if(self.attachments == nil){
         self.attachments = [[NSMutableArray alloc] init];
     }
+
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     HSAttachment *attachment = [[HSAttachment alloc] init];
     attachment.mimeType = @"image/png";
-
+    
     [self.attachments removeAllObjects]; // we are handling only 1 attachment for now.
     
     NSURL *imagePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
@@ -397,50 +408,50 @@ NSInteger attachmentButtonTagOffset = 1000;
 
 
 /**
-    On keyboard Hide, restore the tableview and messageTextView frames
+ On keyboard Hide, restore the tableview and messageTextView frames
  */
 -(void) keyboardWillHide:(NSNotification *)note{
     NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-	
+    
     CGRect keyboardBounds;
     [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
     
     // Need to translate the bounds to account for rotation.
     keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
     
-	// get a rect for the textView frame
-	CGRect containerFrame = self.bottomMessageView.frame;
+    // get a rect for the textView frame
+    CGRect containerFrame = self.bottomMessageView.frame;
     containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
-	
-	// animations settings
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationBeginsFromCurrentState:YES];
+    
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:[duration doubleValue]];
     [UIView setAnimationCurve:[curve intValue]];
     
-	// set views with new info
-	self.bottomMessageView.frame = containerFrame;
-	
-	// commit animations
-	[UIView commitAnimations];
+    // set views with new info
+    self.bottomMessageView.frame = containerFrame;
+    
+    // commit animations
+    [UIView commitAnimations];
 }
 
 - (void)keyboardFrameWillChange: (NSNotification *)notification {
-
+    
     NSDictionary* info = [notification userInfo];
     NSNumber *duration = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSNumber *curve = [notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-
+    
     CGRect kKeyBoardFrame = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-
+    
     // get a rect for the textView frame
     CGRect containerFrame = self.bottomMessageView.frame;
-
+    
     float originalMessageOrigin = containerFrame.origin.y;
     
     if (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
@@ -457,11 +468,11 @@ NSInteger attachmentButtonTagOffset = 1000;
         }
         
     }
-
+    
     NSInteger keyboardHeightDiff = containerFrame.origin.y - originalMessageOrigin;
-
+    
     UIEdgeInsets contentInsets = self.chatTableView.contentInset;
-
+    
     // On ios 7 landscape x == ios 8 landscape y
     if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0 && UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)) {
         if(kKeyBoardFrame.origin.x > 0) {
@@ -474,9 +485,6 @@ NSInteger attachmentButtonTagOffset = 1000;
         }
     }
     
-    
-    
-
     self.chatTableView.contentInset = contentInsets;
     self.chatTableView.scrollIndicatorInsets = contentInsets;
     
@@ -484,13 +492,12 @@ NSInteger attachmentButtonTagOffset = 1000;
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:[duration doubleValue]];
     [UIView setAnimationCurve:[curve intValue]];
-
+    
     // set views with new info
     self.bottomMessageView.frame = containerFrame;
-
+    
     [UIView commitAnimations];
     [self scrollDownToLastMessage:YES];
-    
 }
 
 
@@ -527,7 +534,7 @@ NSInteger attachmentButtonTagOffset = 1000;
     [self.sendReplyIndicator startAnimating];
     [self.messageText resignFirstResponder];
     HSIssueDetailViewController *weakSelf = self;
-
+    
     [self.ticketSource addReply:tickUpdate ticket:self.selectedTicket success:^{
         [weakSelf onTicketUpdated];
     }failure:^(NSError* e){
@@ -597,10 +604,10 @@ NSInteger attachmentButtonTagOffset = 1000;
     if(messageText.length > 0){
         UIFont *bubbleTextFont = [[[HSHelpStack instance] appearance] getBubbleTextFont];
         NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                bubbleTextFont, NSFontAttributeName,
-                                                [UIColor blackColor], NSForegroundColorAttributeName,
-                                                nil];
-     
+                                         bubbleTextFont, NSFontAttributeName,
+                                         [UIColor blackColor], NSForegroundColorAttributeName,
+                                         nil];
+        
         NSAttributedString *msgText = [[NSAttributedString alloc] initWithString:messageText attributes:attrsDictionary];
         CGSize maximumLabelSize = CGSizeMake(self.bubbleWidth - 20, CGFLOAT_MAX);
         CGRect newTextSize = [msgText boundingRectWithSize:maximumLabelSize options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) context:nil];
@@ -628,21 +635,21 @@ NSInteger attachmentButtonTagOffset = 1000;
 }
 
 - (void)refreshCell:(UITableViewCell *)cell{
-
+    
     UILabel *senderLabel = (UILabel *)[cell viewWithTag:1];
     UITextView *messageLabel = (UITextView *)[cell viewWithTag:2];
     UILabel *timeLabel = (UILabel *)[cell viewWithTag:3];
     UIView *messageView = (UIView *)[cell viewWithTag:4];
     UILabel *attachmentLabel = (UILabel *)[cell viewWithTag:5];
-
+    
     if(senderLabel){
         [senderLabel removeFromSuperview];
     }
-
+    
     if(messageLabel){
         [messageLabel removeFromSuperview];
     }
-
+    
     if(timeLabel){
         [timeLabel removeFromSuperview];
     }
@@ -781,7 +788,7 @@ NSInteger attachmentButtonTagOffset = 1000;
 }
 
 /**
-    Scrolls the table view to the last item
+ Scrolls the table view to the last item
  */
 - (void)scrollDownToLastMessage:(BOOL)animated
 {
@@ -792,7 +799,7 @@ NSInteger attachmentButtonTagOffset = 1000;
 }
 
 /**
-    Gets the last index path of the table view
+ Gets the last index path of the table view
  */
 - (NSIndexPath *)lastIndexPath
 {
@@ -817,7 +824,7 @@ NSInteger attachmentButtonTagOffset = 1000;
         attachmentsVC.attachment = attachment;
         
     }
-   
+    
 }
 
 - (void)didReceiveMemoryWarning

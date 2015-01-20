@@ -43,42 +43,42 @@
 {
     [super viewDidLoad];
     
-    self.nextButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleDone target:self action:@selector(submitPressed:)];
+    self.nextButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(submitPressed:)];
     self.navigationItem.rightBarButtonItem = self.nextButtonItem;
     
     HSAppearance* appearance = [[HSHelpStack instance] appearance];
     self.view.backgroundColor = [appearance getBackgroundColor];
-   
+    
     self.title = @"Creating New Issue";
+    
+    _firstNameField.delegate = self;
+    _lastNameField.delegate = self;
+    _emailField.delegate = self;
+    
+    [_firstNameField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [_lastNameField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [_emailField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    if([[self ticketSource] draftUserFirstName]!=nil) {
+        _firstNameField.text = [[self ticketSource] draftUserFirstName];
+    }
+    
+    if([[self ticketSource] draftUserLastName]!=nil) {
+        _lastNameField.text = [[self ticketSource] draftUserLastName];
+    }
+    
+    if([[self ticketSource] draftUserEmail]!=nil) {
+        _emailField.text = [[self ticketSource] draftUserEmail];
+    }
 }
 
 - (IBAction)submitPressed:(id)sender
 {
     if([self checkValidity]) {
-
-        HSActivityIndicatorView* indicatorView = [[HSActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20.0, 20.0)];
-        [indicatorView startAnimating];
-
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
-
-        [self.ticketSource registerUserWithFirstName:self.firstNameField.text lastName:self.lastNameField.text email:self.emailField.text success:^ {
-
-            self.navigationItem.rightBarButtonItem = self.nextButtonItem;
-            
-            [self startIssueReportController];
-
-
-        } failure:^(NSError *error) {
-
-            self.navigationItem.rightBarButtonItem = self.nextButtonItem;
-
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Oops! Some error." message:@"There was some error registering you. Can you try some other email address?" delegate:self cancelButtonTitle:@"No, Leave it." otherButtonTitles:@"Ok", nil];
-            alertView.tag = 20;
-
-            [alertView show];
-
-        }];
-
+        
+        [self.delegate registerUserAndCreateTicket:self.createNewTicket forUserFirstName:self.firstNameField.text lastName:self.lastNameField.text email:self.emailField.text];
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
     }
 }
 
@@ -96,44 +96,36 @@
 
 - (IBAction)cancelPressed:(id)sender
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*Validates the email address entered by the user */
 - (BOOL)checkValidity {
-
+    
     if(self.firstNameField.text ==nil || self.firstNameField.text.length == 0) {
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Missing First Name" message:@"Please give your first name." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         return NO;
     }
-
+    
     if(self.lastNameField.text ==nil || self.lastNameField.text.length == 0) {
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Missing Last Name" message:@"Please give your last name." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         return NO;
     }
-
+    
     if(self.emailField.text == nil || self.emailField.text.length == 0 || ![HSUtility isValidEmail:self.emailField.text]) {
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Missing Email" message:@"Please give your valid email address." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         return NO;
     }
-
+    
     return YES;
 }
 
 
 - (void)startIssueReportController {
     HSNewIssueViewController* controller = [self.storyboard instantiateViewControllerWithIdentifier:@"HSReportIssue"];
-    controller.createNewTicket = self.createNewTicket;
-    controller.delegate = self.delegate;
-    controller.ticketSource = self.ticketSource;
-    [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    HSNewIssueViewController* controller = (HSNewIssueViewController *)[segue destinationViewController];
     controller.createNewTicket = self.createNewTicket;
     controller.delegate = self.delegate;
     controller.ticketSource = self.ticketSource;
@@ -148,7 +140,7 @@
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-
+    
     if(textField == self.firstNameField) {
         [self.lastNameField becomeFirstResponder];
         return YES;
@@ -161,6 +153,11 @@
     }
     
     return NO;
+}
+
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    [self.ticketSource saveUserDraft:self.firstNameField.text lastName:self.lastNameField.text email:self.emailField.text];
 }
 
 

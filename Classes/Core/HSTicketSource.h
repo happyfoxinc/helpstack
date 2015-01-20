@@ -22,6 +22,7 @@
 #import <Foundation/Foundation.h>
 #import "HSGear.h"
 #import "HSUser.h"
+#import "HSDraft.h"
 
 @interface HSTicketSource : NSObject
 
@@ -35,6 +36,8 @@
 
 @property(nonatomic, strong, readonly) HSGear *gear;
 
+@property (nonatomic, strong, readwrite) HSDraft* draft;
+
 
 /**
  Fetches ticket properties from given gear.
@@ -42,6 +45,21 @@
  */
 - (void)prepareTicket:(void (^)(void))success failure:(void (^)(NSError *))failure;
 - (void)prepareUpdate:(HSTicket *)ticketDict success:(void (^)(void))success failure:(void (^)(NSError *))failure;
+
+- (void)saveTicketDraft:(NSString *)subject message:(NSString *)message;
+- (void)saveUserDraft:(NSString *)firstName lastName:(NSString *)lastName email:(NSString *)email;
+- (void)saveReplyDraft:(NSString *)message;
+
+- (NSString *) draftSubject;
+- (NSString *) draftMessage;
+- (NSString *) draftUserFirstName;
+- (NSString *) draftUserLastName;
+- (NSString *) draftUserEmail;
+- (NSString *) draftReplyMessage;
+
+- (void) clearTicketDraft;
+- (void) clearUserDraft;
+- (void) clearReplyDraft;
 
 /**
  Read Ticket properties.

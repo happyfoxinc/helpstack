@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="yHS-bc-8ZV">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Unknown constraint types" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -122,16 +123,16 @@
                             <outlet property="delegate" destination="CM6-7l-ElP" id="wPc-HX-9VP"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="P7Q-F5-Zx3"/>
                     <connections>
                         <outlet property="emailField" destination="tjr-gm-sA0" id="l8M-d6-eNs"/>
                         <outlet property="firstNameField" destination="tjE-Pe-cKC" id="Lav-rn-MUB"/>
                         <outlet property="lastNameField" destination="zKT-yV-3SN" id="YDn-Fi-Tfp"/>
-                        <segue destination="xZx-8e-8tM" kind="push" identifier="reportIssueSegue" id="quN-14-czE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CKg-AW-o4m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1404" y="-464"/>
+            <point key="canvasLocation" x="2230" y="226"/>
         </scene>
         <!--Add an Issue-->
         <scene sceneID="7vZ-ts-X3B">
@@ -214,11 +215,13 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="v34-sT-R1f" kind="push" identifier="showAttachment" id="wbc-l3-914"/>
+                        <segue destination="zpY-Fi-zMo" kind="push" identifier="reportIssueSegueios6" id="WQY-fr-rBI"/>
+                        <segue destination="CM6-7l-ElP" kind="push" identifier="reportIssueSegue" id="JKK-Ev-jAh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yVl-Ps-wtZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1832" y="-471"/>
+            <point key="canvasLocation" x="1832" y="-469"/>
         </scene>
         <!--New Issue Attachment View Controller-->
         <scene sceneID="ejC-s5-96Z">
@@ -355,11 +358,11 @@
                         <viewControllerLayoutGuide type="bottom" id="DvT-WW-Jzi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pZG-d9-Lt0">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="91" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="TW8-Xg-jkl">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell_Right" rowHeight="91" id="WEV-eZ-sqq" userLabel="Table View Cell - MessageCell-Right">
@@ -369,7 +372,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="91"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ynb-qZ-Df2" customClass="HSBubbleRightArrow">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ynb-qZ-Df2" customClass="HSBubbleRightArrow">
                                                     <rect key="frame" x="302" y="70" width="7" height="10"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -377,7 +380,7 @@
                                                         <constraint firstAttribute="height" constant="10" id="WF8-0p-WJ8"/>
                                                     </constraints>
                                                 </view>
-                                                <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CYp-VD-2ss" customClass="HSChatBubbleRight">
+                                                <view tag="3" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CYp-VD-2ss" customClass="HSChatBubbleRight">
                                                     <rect key="frame" x="63" y="0.0" width="240" height="91"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -433,7 +436,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="28"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xbY-oa-i6g">
+                                                <view tag="3" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xbY-oa-i6g">
                                                     <rect key="frame" x="61" y="0.0" width="240" height="28"/>
                                                     <subviews>
                                                         <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="15 Days ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Puh-2r-Dcb" customClass="HSLabel">
@@ -507,7 +510,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="28"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XTI-d0-ixS">
+                                                <view tag="3" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XTI-d0-ixS">
                                                     <rect key="frame" x="65" y="7" width="238" height="21"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oKK-Zw-xJC" userLabel="Label" customClass="HSLabel">
@@ -567,10 +570,10 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vxc-PN-oSd" userLabel="MessageView">
-                                <rect key="frame" x="0.0" y="460" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="559" width="375" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1DX-py-x4b" customClass="HSButton">
-                                        <rect key="frame" x="272" y="7" width="46" height="30"/>
+                                        <rect key="frame" x="327" y="7" width="46" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="VEd-GX-VW4"/>
                                             <constraint firstAttribute="width" constant="46" id="r9t-s2-xzs"/>
@@ -599,10 +602,10 @@
                                         </connections>
                                     </button>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="wxK-OQ-di3">
-                                        <rect key="frame" x="285" y="12" width="20" height="20"/>
+                                        <rect key="frame" x="340" y="12" width="20" height="20"/>
                                     </activityIndicatorView>
-                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="caF-bA-v3Y">
-                                        <rect key="frame" x="43" y="5" width="226" height="32"/>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="caF-bA-v3Y" userLabel="growingmessageview">
+                                        <rect key="frame" x="43" y="5" width="281" height="34"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="900" constant="34" id="cTJ-IJ-qYt"/>
@@ -626,7 +629,7 @@
                                 </constraints>
                             </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="7Zs-2i-DGZ" customClass="HSActivityIndicatorView">
-                                <rect key="frame" x="150" y="220" width="20" height="20"/>
+                                <rect key="frame" x="178" y="270" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="hTG-iv-gdC"/>
                                     <constraint firstAttribute="width" constant="20" id="vCh-ob-aDi"/>
@@ -644,10 +647,12 @@
                             <constraint firstItem="7Zs-2i-DGZ" firstAttribute="centerY" secondItem="TW8-Xg-jkl" secondAttribute="centerY" id="ZOC-Sg-p5c"/>
                             <constraint firstItem="DvT-WW-Jzi" firstAttribute="top" secondItem="vxc-PN-oSd" secondAttribute="bottom" priority="900" id="d4H-zu-c8U"/>
                             <constraint firstAttribute="trailing" secondItem="TW8-Xg-jkl" secondAttribute="trailing" id="dqh-dJ-nSD"/>
+                            <constraint firstAttribute="centerX" secondItem="vxc-PN-oSd" secondAttribute="centerX" id="jGw-sy-JBG"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="x2e-AY-rsZ"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="addAttachmentButton" destination="Szx-vb-Fom" id="DSU-JC-imu"/>
                         <outlet property="bottomMessageView" destination="vxc-PN-oSd" id="EcQ-K1-Qua"/>
@@ -662,7 +667,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hpZ-Mu-wAS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="979" y="-1205"/>
+            <point key="canvasLocation" x="974.5" y="-1647.5"/>
         </scene>
         <!--Attachments View Controller-->
         <scene sceneID="5h3-HU-biq">
@@ -673,15 +678,21 @@
                         <viewControllerLayoutGuide type="bottom" id="3bf-rj-Biz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mPS-Oo-IHA">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f4f-qf-cSQ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f4f-qf-cSQ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="f4f-qf-cSQ" firstAttribute="top" secondItem="dzs-oH-hlA" secondAttribute="bottom" id="RwH-1J-BHU"/>
+                            <constraint firstItem="f4f-qf-cSQ" firstAttribute="leading" secondItem="mPS-Oo-IHA" secondAttribute="leadingMargin" constant="-16" id="pdw-E4-ntu"/>
+                            <constraint firstItem="3bf-rj-Biz" firstAttribute="top" secondItem="f4f-qf-cSQ" secondAttribute="bottom" id="vNd-7I-oSt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="f4f-qf-cSQ" secondAttribute="trailing" constant="-16" id="wu6-8S-XSP"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="men-Fs-4nK"/>
@@ -691,14 +702,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJq-2p-Ar4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1513" y="-1861"/>
+            <point key="canvasLocation" x="2039.5" y="-1647.5"/>
         </scene>
         <!--Attachments List View Controller-->
         <scene sceneID="3bm-s7-icD">
             <objects>
                 <tableViewController id="wuj-rX-nEg" customClass="HSAttachmentsListViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="PXu-X7-muB">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -723,7 +734,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IjD-BH-3tc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1507" y="-1205"/>
+            <point key="canvasLocation" x="1508.5" y="-1203.5"/>
         </scene>
         <!--User Details View Controller-->
         <scene sceneID="JyF-4C-H5b">
@@ -789,11 +800,11 @@
                             <outlet property="delegate" destination="zpY-Fi-zMo" id="Mva-ek-iu6"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="UHW-if-VgE"/>
                     <connections>
                         <outlet property="emailField" destination="0mf-r5-x56" id="p0F-ZB-EbC"/>
                         <outlet property="firstNameField" destination="tU9-I3-ZwD" id="eRj-AT-sKN"/>
                         <outlet property="lastNameField" destination="BPx-TM-h7c" id="HmX-BB-tzT"/>
-                        <segue destination="xZx-8e-8tM" kind="push" identifier="reportIssueSegue" id="pJ2-BK-t6r"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ogy-Ey-J4H" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -812,9 +823,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="djI-H4-nJp">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="djI-H4-nJp">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="Ekd-af-0Pg"/>
                                     <constraint firstAttribute="height" constant="44" id="VIb-Ox-TnT"/>
                                 </constraints>
                                 <items>
@@ -901,14 +913,18 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bKy-bb-p2a" userLabel="imageOnCanvas">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bKy-bb-p2a" userLabel="imageOnCanvas">
                                 <rect key="frame" x="0.0" y="28" width="320" height="496"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="Uvp-PJ-48S"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="bKy-bb-p2a" firstAttribute="leading" secondItem="zcl-dN-Hm5" secondAttribute="leading" id="8sU-fR-m4k"/>
                             <constraint firstItem="LHZ-5p-Ebr" firstAttribute="top" secondItem="djI-H4-nJp" secondAttribute="bottom" id="DA1-H4-Rzz"/>
+                            <constraint firstItem="djI-H4-nJp" firstAttribute="leading" secondItem="bKy-bb-p2a" secondAttribute="leading" id="VdE-hJ-5rY"/>
                             <constraint firstItem="LHZ-5p-Ebr" firstAttribute="top" secondItem="bKy-bb-p2a" secondAttribute="bottom" constant="54" id="ZbI-3L-Xcv"/>
                             <constraint firstItem="bKy-bb-p2a" firstAttribute="top" secondItem="KLt-0T-GU5" secondAttribute="top" id="eve-LG-oHf"/>
                         </constraints>
@@ -936,6 +952,5 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="5du-Et-kqi"/>
-        <segue reference="pJ2-BK-t6r"/>
     </inferredMetricsTieBreakers>
 </document>

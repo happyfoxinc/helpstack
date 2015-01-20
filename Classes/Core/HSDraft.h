@@ -1,8 +1,8 @@
-//  HAZendDeskReportViewController.h
+//  HSDraft.h
 //
 //Copyright (c) 2014 HelpStack (http://helpstack.io)
 //
-//Permission is hereby granted, free of charge, to any person obtaining a cop
+//Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
 //in the Software without restriction, including without limitation the rights
 //to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
@@ -20,26 +20,18 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
 
-#import "HSNewTicket.h"
-#import "HSTicketSource.h"
-#import "HSTableViewController.h"
+#import <Foundation/Foundation.h>
+#import "HSUser.h"
 
-/**
-    HSNewIssueViewController is reponsible for showing the reportIssue screen
- */
+@interface HSDraft : NSObject <NSCoding>
 
-@protocol HSNewIssueViewControllerDelegate;
+@property (nonatomic, strong) NSString* draftSubject;
+@property (nonatomic, strong) NSString* draftMessage;
 
-@interface HSNewIssueViewController : HSTableViewController
+@property (nonatomic, strong) NSString* draftUserFirstName;
+@property (nonatomic, strong) NSString* draftUserLastName;
+@property (nonatomic, strong) NSString* draftUserEmail;
 
-@property (nonatomic, weak) id<HSNewIssueViewControllerDelegate> delegate;
-@property (nonatomic, strong) HSNewTicket* createNewTicket;
-
-@end
-
-@protocol HSNewIssueViewControllerDelegate <NSObject>
-
-- (void)onNewIssueRequested:(HSNewTicket *)createNewTicket;
-- (void)registerUserAndCreateTicket:(HSNewTicket *)createNewTicket forUserFirstName:(NSString *)firstName lastName:(NSString *)lastName email:(NSString *)email;
+@property (nonatomic, strong) NSString* draftReplyMessage;
 
 @end

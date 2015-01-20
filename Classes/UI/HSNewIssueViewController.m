@@ -52,13 +52,22 @@
 {
     [super viewDidLoad];
     
-    submitBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(submitPressed:)];
-    self.navigationItem.rightBarButtonItem = submitBarItem;
+    if ([self.ticketSource shouldShowUserDetailsFormWhenCreatingTicket]) {
+        submitBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleDone target:self action:@selector(nextPressed:)];
+        self.navigationItem.rightBarButtonItem = submitBarItem;
+    }
+    else {
+        submitBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(submitPressed:)];
+        self.navigationItem.rightBarButtonItem = submitBarItem;
+    }
     
     HSAppearance* appearance = [[HSHelpStack instance] appearance];
     self.view.backgroundColor = [appearance getBackgroundColor];
-
+    
     self.currentStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
+    
+    [subjectField setText:[self.ticketSource draftSubject]];
+    [messageField setText:[self.ticketSource draftMessage]];
     
     [self addCreditsToTable];
 }
@@ -84,43 +93,64 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)nextPressed:(id)sender {
-    [self performSegueWithIdentifier:@"NameAndEmailSegue" sender:self];
-}
-
 - (IBAction)addAttachments:(id)sender {
     if(self.attachments != nil && self.attachments.count > 0){
-
+        
         //remove attachment.
-
+        
         self.attachments = nil;
     }else{
-
+        
         //add attachment.
-
+        
         [self startMediaBrowserFromViewController: self
-                                usingDelegate: self];
+                                    usingDelegate: self];
+    }
+}
+
+- (IBAction)nextPressed:(id)sender {
+    NSString* storyboardId = @"HSUserDetailsController";
+    if ([HSAppearance isIOS6]) {
+        storyboardId = @"HSUserDetailsController_ios6";
+    }
+    
+    HSNewTicket* ticket = [[HSNewTicket alloc] init];
+    
+    if([self checkValidity]) {
+        
+        NSMutableString* messageContent = [[NSMutableString alloc] initWithString:messageField.text];
+        [messageContent appendString:[HSUtility deviceInformation]];
+        
+        ticket.subject = subjectField.text;
+        ticket.content = messageContent;
+        ticket.attachments = self.attachments;
+        HSUserDetailsViewController* controller = [self.storyboard instantiateViewControllerWithIdentifier:storyboardId];
+        controller.createNewTicket = ticket;
+        controller.delegate = self.delegate;
+        controller.ticketSource = self.ticketSource;
+        
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 
 - (IBAction)submitPressed:(id)sender {
     //Validate for name, email, subject and message
-
+    
     UIBarButtonItem* submitButton = sender;
     if([self checkValidity]) {
         submitButton.enabled = NO;
         
         NSMutableString* messageContent = [[NSMutableString alloc] initWithString:messageField.text];
         [messageContent appendString:[HSUtility deviceInformation]];
-
+        
         self.createNewTicket.subject = subjectField.text;
         self.createNewTicket.content = messageContent;
         self.createNewTicket.attachments = self.attachments;
         
         [self.delegate onNewIssueRequested:self.createNewTicket];
-
+        
         [self dismissViewControllerAnimated:YES completion:nil];
-
+        
     }
 }
 
@@ -140,6 +170,14 @@
         return NO;
     }
     return YES;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    HSAttachment *attachment = [self.attachments objectAtIndex:0];
+    
+    HSNewIssueAttachmentViewController *attachmentsView = (HSNewIssueAttachmentViewController *)[segue destinationViewController];
+    attachmentsView.attachmentImage = attachment.attachmentImage;
 }
 
 #pragma mark - Table view data source
@@ -166,6 +204,12 @@
         subjectField = (UITextField*) [cell viewWithTag:11];
         subjectField.delegate = self;
         
+        if([[self ticketSource] draftSubject] != nil) {
+            subjectField.text = [[self ticketSource] draftSubject];
+        }
+        
+        [subjectField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        
         attachmentImageBtn = (UIButton *) [cell viewWithTag:2];
         [attachmentImageBtn addTarget:self action:@selector(handleAttachment) forControlEvents:UIControlEventTouchUpInside];
         if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -178,9 +222,14 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MessageCellIdentifier forIndexPath:indexPath];
         messageField = (HSTextViewInternal*) [cell viewWithTag:12];
         
+        if([[self ticketSource] draftMessage] != nil) {
+            messageField.text = [[self ticketSource] draftMessage];
+        }
+        
         CGRect messageFrame = messageField.frame;
         messageFrame.size.height = cell.frame.size.height - 40.0;
         messageField.frame = messageFrame;
+        messageField.delegate = self;
         return cell;
     }
     
@@ -235,7 +284,8 @@
 
 
 - (BOOL)startMediaBrowserFromViewController: (UIViewController*) controller
-                               usingDelegate: (id <UINavigationControllerDelegate>) delegate {
+                              usingDelegate: (id <UIImagePickerControllerDelegate,
+                                              UINavigationControllerDelegate>) delegate {
     
     if (([UIImagePickerController isSourceTypeAvailable:
           UIImagePickerControllerSourceTypeSavedPhotosAlbum] == NO)
@@ -262,13 +312,17 @@
         messageField.inputAccessoryView = self.messageAttachmentView;
         return YES;
     }
-
+    
     return NO;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-        messageField.inputAccessoryView = self.messageAttachmentView;
-        [messageField becomeFirstResponder];    
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    [self.ticketSource saveTicketDraft:subjectField.text message:messageField.text];
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    [self.ticketSource saveTicketDraft:subjectField.text message:messageField.text];
 }
 
 - (void)handleAttachment {
