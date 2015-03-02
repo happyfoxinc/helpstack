@@ -24,7 +24,7 @@
 #import "HSDeskCase.h"
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import "UIImage+Extended.h"
-#import <AFNetworkActivityIndicatorManager.h>
+#import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 @interface HSDeskGear ()
 

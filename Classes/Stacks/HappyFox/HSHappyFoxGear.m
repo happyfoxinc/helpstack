@@ -23,7 +23,7 @@
 #import "HSHappyFoxGear.h"
 #import "HSAttachment.h"
 #import "UIImage+Extended.h"
-#import <AFNetworkActivityIndicatorManager.h>
+#import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 @interface HSHappyFoxGear ()
 
