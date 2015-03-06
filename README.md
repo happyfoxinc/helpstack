@@ -153,6 +153,11 @@ Once you have integrated your helpStack, use the **'showHelp'** API call to open
 			[[HSHelpStack instance] showHelp:self];
 		}
 
+Using Swift, show HelpStack using the following invocation:
+
+	let helpStack = HSHelpStack.instance() as HSHelpStack
+        helpStack.showHelp(self)
+
 
 ###Customizing Help Stack UI
 
