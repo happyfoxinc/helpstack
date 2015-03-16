@@ -39,7 +39,7 @@ To integrate your existing HappyFox account into HelpStack, you just have to inc
 	HSHappyFoxGear *happyFoxGear = [[HSHappyFoxGear alloc] 
 			initWithInstanceUrl  : @"https://example.happyfox.com" 
 			apiKey               : @"<YOUR_API_KEY>" 
-			authoCode            : @"<YOUR_AUTH_CODE>" 
+			authCode            : @"<YOUR_AUTH_CODE>" 
 			priorityID           : @"<PRIORITY_ID>" 
 			categoryID           : @"<CATEGORY_ID>"];
     happyFoxGear.hfSectionID     = @"<SECTION_ID>";    // Optional
