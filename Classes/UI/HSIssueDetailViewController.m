@@ -31,6 +31,13 @@
 #import "HSLabel.h"
 #import "HSSmallLabel.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "MBProgressHUD.h"
+
+@interface HSIssueDetailViewController ()<MBProgressHUDDelegate> {
+    MBProgressHUD *HUD;
+    long long expectedLength;
+    long long currentLength;
+}
 
 @interface HSIssueDetailViewController ()
 
@@ -476,6 +483,15 @@
         [errorAlert show];
     }];
 }
+- (void)myProgressTask {
+    // This just increases the progress indicator in a loop
+    float progress = 0.0f;
+    while (progress < 1.0f) {
+        progress += 0.01f;
+        HUD.progress = progress;
+        usleep(100000);
+    }
+}
 
 -(void)updateTicket:(NSString *)ticketMessage{
     
@@ -485,20 +501,48 @@
         tickUpdate.attachments = self.attachments;
     }
     self.sendButton.hidden = YES;
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
+    
+    // Set determinate mode
+    HUD.mode = MBProgressHUDModeAnnularDeterminate;
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Sending Attachment";
+    
+    // myProgressTask uses the HUD instance to update progress
+    [HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
     self.sendReplyIndicator.hidden = NO;
     [self.sendReplyIndicator startAnimating];
     [self.messageText resignFirstResponder];
     HSIssueDetailViewController *weakSelf = self;
-
+    
     [self.ticketSource addReply:tickUpdate ticket:self.selectedTicket success:^{
+        [HUD hide:YES];
         [weakSelf onTicketUpdated];
     }failure:^(NSError* e){
         [weakSelf onTicketUpdateFailed];
     }];
 }
 
+
 -(void)onTicketUpdated{
     [self.sendReplyIndicator stopAnimating];
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
+    
+    
+    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark.png"]];
+    
+    // Set custom view mode
+    HUD.mode = MBProgressHUDModeCustomView;
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Sent";
+    
+    [HUD show:YES];
+    [HUD hide:YES afterDelay:3];
+    
     self.sendReplyIndicator.hidden = YES;
     self.sendButton.hidden = NO;
     [self.attachments removeAllObjects];
@@ -508,6 +552,7 @@
     [self.messageText resignFirstResponder];
     [self removeInsetsOnChatTable];
 }
+
 
 -(void)onTicketUpdateFailed{
     [self.sendReplyIndicator stopAnimating];
