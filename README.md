@@ -20,6 +20,8 @@ The UI is also customizable so that it can go along with your app's theme.
 ## App Showcase
 Have you made something awesome with HelpStack? Add yourself here: [App Showcase](https://github.com/happyfoxinc/helpstack/wiki/App-Showcase)
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/happyfoxinc/helpstack?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 ## How to use HelpStack
 Integrating HelpStack into your app is an easy 3-step process:
 
