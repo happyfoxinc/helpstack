@@ -41,6 +41,7 @@
 @property (nonatomic, strong) UIButton *addAttachment;
 @property (nonatomic, strong) NSMutableArray *attachments;
 @property UIStatusBarStyle currentStatusBarStyle;
+@property (strong) UIPopoverController* imagePickerPopover;
 
 @end
 
@@ -250,24 +251,29 @@
         || (controller == nil))
         return NO;
     
-    UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
-    mediaUI.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     
     // Displays saved pictures and movies, if both are available, from the
     // Camera Roll album.
-    mediaUI.mediaTypes =
+    imagePicker.mediaTypes =
     [UIImagePickerController availableMediaTypesForSourceType:
      UIImagePickerControllerSourceTypeSavedPhotosAlbum];
     
     // Hides the controls for moving & scaling pictures, or for
     // trimming movies. To instead show the controls, use YES.
-    mediaUI.allowsEditing = NO;
+    imagePicker.allowsEditing = NO;
     
-    mediaUI.delegate = self;
-    
-    mediaUI.modalPresentationStyle = UIModalPresentationCurrentContext;
-    
-    [controller presentViewController:mediaUI animated:YES completion:nil];
+    imagePicker.delegate = self;
+
+    // show image picker in popover on iPad
+    if([HSAppearance isIPad]) {
+        self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+        
+        [self.imagePickerPopover presentPopoverFromRect:[attachmentImageBtn bounds] inView:attachmentImageBtn permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else { // or modally on iPhone
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
     return YES;
 }
 
@@ -337,8 +343,6 @@
 #pragma mark - UIImagePicker delegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
     if(self.attachments == nil){
         self.attachments = [[NSMutableArray alloc] init];
     }
@@ -376,6 +380,18 @@
     // get the asset library and fetch the asset based on the ref url (pass in block above)
     ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
     [assetslibrary assetForURL:imagePath resultBlock:resultblock failureBlock:nil];
+
+    // dismiss image picker popover
+    if([HSAppearance isIPad]) {
+        [self.imagePickerPopover dismissPopoverAnimated:YES];
+        self.imagePickerPopover = nil;
+    } else {
+        [picker dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
