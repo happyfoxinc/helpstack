@@ -98,18 +98,12 @@ You can start with one of these themes as your base. Download any of these pList
 
 Certain pList properties must be provided in a pre-defined format as listed below:
 
-* Color
+- **Color** - Specify colors by providing its R,G,B,alpha value separated by commas. e.g: **255,255,255,1.0** is white.
 	
-	Specify colors by providing its R,G,B,alpha value separated by commas. e.g: **255,255,255,1.0** is white.
-	
-* Font
-	
-	The font name and font size are to be provided as two separate properties in the pList file. Fonts are to be specified by its font family name and font style. e.g: **Helvetica-Bold** The specified font size will be taken as 'pts' by default. 
+- **Font** - The font name and font size are to be provided as two separate properties in the pList file. Fonts are to be specified by its font family name and font style. e.g: **Helvetica-Bold** The specified font size will be taken as 'pts' by default. 
 Refer to [iosfonts.com](http://iosfonts.com) for the fonts supported by iOS.
 	
-* Image
-
-	Images which are included in your project must be specified with their filenames. e.g: **example.png**
+- **Image** - Images which are included in your project must be specified with their filenames. e.g: **example.png**
 	
 #### Customization
 
