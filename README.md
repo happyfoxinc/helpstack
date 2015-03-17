@@ -119,17 +119,18 @@ The following is a list of UI items you can customize, along with the instructio
   - [TableView](https://github.com/happyfoxinc/helpstack/wiki/Customization-Instructions#iii-customizing-the-tableview)
   - [Chat screen](https://github.com/happyfoxinc/helpstack/wiki/Customization-Instructions#iv-customizing-the-chat-screen)
 	
+**Navigation Bar:**
 
 <p align="center" >
   <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png" alt="HelpStacktheme" title="NavigationBar">
 </p>
 
-
+**Table View:**
 <p align="center" >
   <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/tableView%20copy.png" alt="HelpStackthemeCustomize" title="TableView">
 </p>
 
-
+**Chat Screen:**
 <p align="center" >
   <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/chatScreen%20copy.png" alt="HelpStacktheme" title="ChatScreen">
 </p>
