@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="Aps-a9-uhx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="Aps-a9-uhx">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -229,11 +229,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Ovl-Kx-0Mu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MA5-4T-Bjf">
-                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="49N-rn-pmK">
-                                <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -709,9 +709,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8v0-CA-xxj" userLabel="imageOnCanvas">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="980"/>
+                                <rect key="frame" x="0.0" y="28" width="768" height="952"/>
                             </imageView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dMJ-Iv-aEk">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dMJ-Iv-aEk">
                                 <rect key="frame" x="0.0" y="980" width="768" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" id="zmJ-Cx-77i">
@@ -800,13 +800,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="dMJ-Iv-aEk" firstAttribute="leading" secondItem="xFk-FB-gN2" secondAttribute="leading" id="9TW-be-l3Q"/>
-                            <constraint firstItem="8v0-CA-xxj" firstAttribute="top" secondItem="m2z-O0-qUF" secondAttribute="top" id="HqG-NE-jO2"/>
-                            <constraint firstAttribute="trailing" secondItem="8v0-CA-xxj" secondAttribute="trailing" id="M7g-Nd-7zV"/>
-                            <constraint firstItem="8v0-CA-xxj" firstAttribute="leading" secondItem="xFk-FB-gN2" secondAttribute="leading" id="Pa5-ik-xed"/>
-                            <constraint firstItem="yNM-Uv-a3q" firstAttribute="top" secondItem="dMJ-Iv-aEk" secondAttribute="bottom" id="hFp-yH-wWS"/>
-                            <constraint firstItem="yNM-Uv-a3q" firstAttribute="top" secondItem="8v0-CA-xxj" secondAttribute="bottom" constant="54" id="jkd-A0-6TZ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="dMJ-Iv-aEk" secondAttribute="trailingMargin" id="y3n-Gb-0Kw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dMJ-Iv-aEk" secondAttribute="trailing" constant="-16" id="3xv-QG-myu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8v0-CA-xxj" secondAttribute="trailing" constant="-16" id="46f-qD-bsu"/>
+                            <constraint firstItem="dMJ-Iv-aEk" firstAttribute="leading" secondItem="xFk-FB-gN2" secondAttribute="leadingMargin" constant="-16" id="RHA-W0-0G7"/>
+                            <constraint firstItem="yNM-Uv-a3q" firstAttribute="top" secondItem="8v0-CA-xxj" secondAttribute="bottom" constant="44" id="lZ3-d0-IPp"/>
+                            <constraint firstItem="dMJ-Iv-aEk" firstAttribute="top" secondItem="8v0-CA-xxj" secondAttribute="bottom" id="tsT-Lo-6Fc"/>
+                            <constraint firstItem="8v0-CA-xxj" firstAttribute="top" secondItem="m2z-O0-qUF" secondAttribute="bottom" constant="8" id="ubT-DY-nek"/>
+                            <constraint firstItem="8v0-CA-xxj" firstAttribute="leading" secondItem="xFk-FB-gN2" secondAttribute="leadingMargin" constant="-16" id="vcq-zV-7LC"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="XYU-mf-uHi"/>
@@ -819,7 +819,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rOa-XS-19X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2786" y="-395"/>
+            <point key="canvasLocation" x="3254" y="-452"/>
         </scene>
     </scenes>
     <resources>

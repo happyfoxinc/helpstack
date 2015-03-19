@@ -17,15 +17,7 @@
 UIImage* resizedImage;
 
 - (void)viewDidLoad {
-    redValue = 255.0/255.0;
-    greenValue = 59.0/255.0;
-    blueValue = 48.0/255.0;
-    
-    [[_redButton layer] setBorderColor:[UIColor blackColor].CGColor];
-    [[_redButton layer] setBorderWidth:2.0f];
-    
-    brush = 10.0;
-    opacity = 1.0;
+    [self setInitialPaintAndBrushValues];
     
     [super viewDidLoad];
     
@@ -36,6 +28,22 @@ UIImage* resizedImage;
                                 action:@selector(save_clicked:)];
     self.navigationItem.rightBarButtonItem = btnSave;
     
+    [self drawAttachmentImage];
+}
+
+- (void)setInitialPaintAndBrushValues {
+    redValue = 255.0/255.0;
+    greenValue = 59.0/255.0;
+    blueValue = 48.0/255.0;
+    
+    [[_redButton layer] setBorderColor:[UIColor blackColor].CGColor];
+    [[_redButton layer] setBorderWidth:2.0f];
+    
+    brush = 10.0;
+    opacity = 1.0;
+}
+
+- (void)drawAttachmentImage {
     self.imageOnCanvas.image = _attachmentImage;
     
     CGFloat maxContainerWidth = self.imageOnCanvas.frame.size.width;
@@ -46,7 +54,7 @@ UIImage* resizedImage;
     float scale = MIN(widthRatio, heightRatio);
     float resizedImageWidth = scale * _attachmentImage.size.width;
     float resizedImageHeight = scale * _attachmentImage.size.height;
-
+    
     CGSize resizingSize = CGSizeMake(resizedImageWidth, resizedImageHeight);
     
     UIGraphicsBeginImageContextWithOptions(resizingSize, NO, 0.0);
@@ -65,14 +73,8 @@ UIImage* resizedImage;
     UIGraphicsPopContext();
     resizedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
-    self.imageOnCanvas.image = resizedImage;
     
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.imageOnCanvas.image = resizedImage;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -144,26 +146,26 @@ UIImage* resizedImage;
     UIButton * PressedButton = (UIButton*)sender;
     
     [[sender layer] setBorderColor:[UIColor blackColor].CGColor];
-    [[sender layer] setBorderWidth:2.0f];
+    [[sender layer] setBorderWidth:3.0f];
     
     switch(PressedButton.tag)
     {
         case 0:
-            redValue = 255.0/255.0;
-            greenValue = 49.0/255.0;
-            blueValue = 48.0/255.0;
+            [self setValueRed:255.0 Green:49.0 Blue:48.0];
             break;
         case 1:
-            redValue = 76.0/255.0;
-            greenValue = 217.0/255.0;
-            blueValue = 100.0/255.0;
+            [self setValueRed:76.0 Green:217.0 Blue:100.0];
             break;
         case 2:
-            redValue = 0.0/255.0;
-            greenValue = 170.0/255.0;
-            blueValue = 255.0/255.0;
+            [self setValueRed:0.0 Green:170.0 Blue:255.0];
             break;
     }
+}
+
+- (void)setValueRed:(CGFloat)valueRed Green:(CGFloat)valueGreen Blue:(CGFloat)valueBlue {
+    redValue = valueRed/255.0;
+    greenValue = valueGreen/255.0;
+    blueValue = valueBlue/255.0;
 }
 
 - (IBAction)resetImage:(id)sender {
@@ -198,6 +200,11 @@ UIImage* resizedImage;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Image could not be saved.Please try again"  delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil];
         [alert show];
     }
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end
