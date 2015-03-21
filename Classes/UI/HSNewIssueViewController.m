@@ -28,7 +28,6 @@
 #import "HSNewIssueAttachmentViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "HSTableFooterCreditsView.h"
-#import "HSUtility.h"
 
 @interface HSNewIssueViewController ()<UITextFieldDelegate, UITextViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate> {
     UITextField* subjectField;
@@ -92,6 +91,8 @@
         //remove attachment.
 
         self.attachments = nil;
+        [self refreshAttachmentsImage];
+        
     }else{
 
         //add attachment.
@@ -109,7 +110,7 @@
         submitButton.enabled = NO;
         
         NSMutableString* messageContent = [[NSMutableString alloc] initWithString:messageField.text];
-        [messageContent appendString:[HSUtility deviceInformation]];
+        [messageContent appendString:[self deviceInformation]];
 
         self.createNewTicket.subject = subjectField.text;
         self.createNewTicket.content = messageContent;
@@ -120,6 +121,18 @@
         [self dismissViewControllerAnimated:YES completion:nil];
 
     }
+}
+
+- (NSString*)deviceInformation
+{
+    NSString* deviceModel = [[UIDevice currentDevice] model];
+    NSString* osVersion = [[UIDevice currentDevice] systemVersion];
+    NSString* bundleName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
+    NSString* bundleVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+
+    NSString* deviceInformation = [NSString stringWithFormat:@"\n\n-----\nDevice Information:\n%@\niOS %@\n\nApp information:\n%@\nVersion %@", deviceModel, osVersion, bundleName, bundleVersion];
+
+    return deviceInformation;
 }
 
 - (IBAction)cancelPressed:(id)sender {
@@ -305,15 +318,33 @@
     }
 }
 
-- (void)refreshAttachmentsImage {
-    if (self.attachments != nil && self.attachments.count > 0) {
-        HSAttachment *attachment = [self.attachments objectAtIndex:0];
-        [attachmentImageBtn setImage:attachment.attachmentImage forState:UIControlStateNormal];
-    } else {
+- (void)refreshAttachmentsImage
+{
+    if (self.attachments != nil && self.attachments.count > 0)
+    {
+     HSAttachment *attachment = [self.attachments objectAtIndex:0];
+    [attachmentImageBtn setImage:attachment.attachmentImage forState:UIControlStateNormal];
+       
+        
+    }
+    else
+    {
+        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            UIImage *attachImage = [UIImage imageNamed:@"attach.png"];
+            [attachmentImageBtn setImage:attachImage forState:UIControlStateNormal];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+        });
+        
         UIImage *attachImage = [UIImage imageNamed:@"attach.png"];
         [attachmentImageBtn setImage:attachImage forState:UIControlStateNormal];
+
     }
 }
+
 
 #pragma mark - UIActionSheet delegate
 
@@ -326,6 +357,7 @@
         case 1:
             [self.attachments removeAllObjects];
             [self refreshAttachmentsImage];
+            
             break;
         case 2:
             [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];

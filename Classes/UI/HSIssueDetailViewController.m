@@ -31,8 +31,14 @@
 #import "HSLabel.h"
 #import "HSSmallLabel.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "MBProgressHUD.h"
 
-@interface HSIssueDetailViewController ()
+@interface HSIssueDetailViewController ()<MBProgressHUDDelegate> {
+	MBProgressHUD *HUD;
+	long long expectedLength;
+	long long currentLength;
+}
+
 
 @property (nonatomic, strong) NSMutableArray *attachments;
 @property (nonatomic, strong) NSString *enteredMsg;
@@ -74,6 +80,7 @@
 
     
 }
+
 
 -(void)viewWillAppear:(BOOL)animated{
     [[UIApplication sharedApplication] setStatusBarStyle:self.currentStatusBarStyle];
@@ -247,39 +254,114 @@
 
 - (IBAction)addAttachment:(id)sender{
     
-    if(self.attachments == nil || self.attachments.count == 0){
-        [self openImagePicker];
-    }else{
+    if(self.attachments == nil || self.attachments.count == 0)
+    {
+        //Show UIAction sheet menu
+        UIActionSheet *popup1 = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                                @"Attach from gallery",
+                                @"Attach from Dropbox",
+                                nil];
+        if ([HSAppearance isIPad]) {
+            [popup1 showFromRect:[self.addAttachmentButton bounds] inView:self.addAttachmentButton animated:YES];
+        }
+        else {
+            [popup1 showInView:[self.navigationController view]];
+        }
+        [popup1 setTag:1];
+    }
+    else{
         //Show UIAction sheet menu
         UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                                 @"Change",
                                 @"Delete",
                                 nil];
-        if ([HSAppearance isIPad]) {
+        if ([HSAppearance isIPad])
+        {
             [popup showFromRect:[self.addAttachmentButton bounds] inView:self.addAttachmentButton animated:YES];
         }
-        else {
+        else
+        {
             [popup showInView:[self.navigationController view]];
+        }
+        [popup setTag:2];
+    }
+    
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch(actionSheet.tag)
+    {
+        
+        case 1:
+        {
+            switch(buttonIndex)
+            {
+                case 0:
+                
+                    [self openImagePicker];
+                    break;
+                
+                    
+                case 1:
+                {
+                    [[DBChooser defaultChooser] openChooserForLinkType:DBChooserLinkTypePreview
+                                                    fromViewController:self completion:^(NSArray *results)
+                     {
+                         if ([results count])
+                         {
+                             NSString *myString = [[(DBChooserResult *)[results objectAtIndex:0] link] absoluteString];
+                             self.messageText.text=myString;
+                             
+                         }
+                         else
+                         {
+                             // User canceled the action
+                         }
+                     }];
+                }
+                break;
+                
+                case 2:
+                
+                    [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
+                    break;
+                
+                default:break;
+            }
+            
+        }
+        
+        
+        case 2:
+        {
+            switch(buttonIndex)
+            {
+                case 0:
+                
+                    [self openImagePicker];
+                    break;
+                
+                case 1:
+                
+                    [self.attachments removeAllObjects];
+                    [self showAttachments];
+                    break;
+                
+                case 2:
+                
+                    [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
+                    break;
+                
+                default:break;
+            }
         }
     }
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    switch(buttonIndex){
-        case 0:
-            [self openImagePicker];
-            break;
-        case 1:
-            [self.attachments removeAllObjects];
-            [self showAttachments];
-            break;
-        case 2:
-            [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
-            break;
-        default:break;
-    }
-}
+
+
+
 
 - (void)openImagePicker {
     
@@ -476,8 +558,18 @@
         [errorAlert show];
     }];
 }
+- (void)myProgressTask {
+	
+	float progress = 0.0f;
+	while (progress < 1.0f) {
+		progress += 0.01f;
+		HUD.progress = progress;
+		usleep(200000);
+	}
+}
 
--(void)updateTicket:(NSString *)ticketMessage{
+-(void)updateTicket:(NSString *)ticketMessage
+{
     
     HSTicketReply *tickUpdate = [[HSTicketReply alloc] init];
     tickUpdate.content = self.messageText.text;
@@ -485,20 +577,49 @@
         tickUpdate.attachments = self.attachments;
     }
     self.sendButton.hidden = YES;
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
+	
+	
+	HUD.mode = MBProgressHUDModeAnnularDeterminate;
+	
+	HUD.delegate = self;
+	HUD.labelText = @"Sending Attachment";
+	
+	
+	[HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
     self.sendReplyIndicator.hidden = NO;
     [self.sendReplyIndicator startAnimating];
     [self.messageText resignFirstResponder];
     HSIssueDetailViewController *weakSelf = self;
 
     [self.ticketSource addReply:tickUpdate ticket:self.selectedTicket success:^{
+        [HUD hide:YES];
         [weakSelf onTicketUpdated];
-    }failure:^(NSError* e){
+       }failure:^(NSError* e){
         [weakSelf onTicketUpdateFailed];
     }];
 }
 
--(void)onTicketUpdated{
+-(void)onTicketUpdated
+{
     [self.sendReplyIndicator stopAnimating];
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:HUD];
+    
+    
+    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark.png"]];
+    
+    
+    
+    HUD.mode = MBProgressHUDModeCustomView;
+    
+    HUD.delegate = self;
+    HUD.labelText = @"Sent";
+    
+    [HUD show:YES];
+    [HUD hide:YES afterDelay:3];
+
     self.sendReplyIndicator.hidden = YES;
     self.sendButton.hidden = NO;
     [self.attachments removeAllObjects];
