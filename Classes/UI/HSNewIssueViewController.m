@@ -44,6 +44,9 @@
 @property (nonatomic, strong) NSMutableArray *attachments;
 @property UIStatusBarStyle currentStatusBarStyle;
 
+@property UIImagePickerController *imagePickerViewController;
+@property HSEditImageViewController *editImageViewController;
+
 @end
 
 @implementation HSNewIssueViewController
@@ -392,10 +395,12 @@
         
         CGImageRef cgImg = [assetRep fullResolutionImage];
         
-        HSEditImageViewController *editImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditImage"];
-        editImageViewController.attachmentImage = [UIImage imageWithCGImage:cgImg];
-        [editImageViewController setDelegate:self];
-        [picker pushViewController:editImageViewController animated:YES];
+        _editImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditImage"];
+        _editImageViewController.attachmentImage = [UIImage imageWithCGImage:cgImg];
+        [_editImageViewController setDelegate:self];
+        
+        _imagePickerViewController = picker;
+        [_imagePickerViewController pushViewController:_editImageViewController animated:YES];
     };
 
     // get the asset library and fetch the asset based on the ref url (pass in block above)
@@ -405,6 +410,9 @@
 
 - (void)editImageViewController:(HSEditImageViewController *)controller didFinishEditingImage:(NSURL *)imageURL {
     
+
+    [_editImageViewController dismissViewControllerAnimated:YES completion:nil];
+    
     if(self.attachments == nil){
         self.attachments = [[NSMutableArray alloc] init];
     }
@@ -412,7 +420,10 @@
     [self.attachments removeAllObjects]; // handling only one attachments
     [self refreshAttachmentsImage];
     
-
+    if (imageURL == nil) {
+        return;
+    }
+    
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *imageAsset)
     {
         ALAssetRepresentation *assetRep = [imageAsset defaultRepresentation];

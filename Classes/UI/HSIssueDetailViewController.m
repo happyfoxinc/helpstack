@@ -42,6 +42,9 @@
 @property (nonatomic) CGRect messageFrame;
 @property UIStatusBarStyle currentStatusBarStyle;
 
+@property UIImagePickerController *imagePickerViewController;
+@property HSEditImageViewController *editImageViewController;
+
 @end
 
 @implementation HSIssueDetailViewController
@@ -311,42 +314,28 @@ NSInteger attachmentButtonTagOffset = 1000;
     if(self.attachments == nil){
         self.attachments = [[NSMutableArray alloc] init];
     }
-
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    HSAttachment *attachment = [[HSAttachment alloc] init];
-    attachment.mimeType = @"image/png";
     
     [self.attachments removeAllObjects]; // we are handling only 1 attachment for now.
+    [self showAttachments];
     
     NSURL *imagePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
-    
+
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *imageAsset)
     {
-        [self.attachments removeAllObjects];
         ALAssetRepresentation *assetRep = [imageAsset defaultRepresentation];
         CGImageRef cgImg = [assetRep fullResolutionImage];
-        NSString *filename = [assetRep filename];
-        UIImage *img = [UIImage imageWithCGImage:cgImg];
-        NSData *data = UIImagePNGRepresentation(img);
-        attachment.attachmentData = data;
-        attachment.fileName = filename;
-        attachment.attachmentImage = img;
-        [self.attachments addObject:attachment];
-        [self showAttachments];
 
         HSEditImageViewController *editImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditImage"];
         editImageViewController.attachmentImage = [UIImage imageWithCGImage:cgImg];
         [editImageViewController setDelegate:self];
-        [picker pushViewController:editImageViewController animated:YES];
 
+        _imagePickerViewController = picker;
+        [picker pushViewController:editImageViewController animated:YES];
     };
     
     // get the asset library and fetch the asset based on the ref url (pass in block above)
     ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
-    [assetslibrary assetForURL:imagePath resultBlock:resultblock failureBlock:^(NSError *error) {
-        
-    }];
+    [assetslibrary assetForURL:imagePath resultBlock:resultblock failureBlock:nil];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
@@ -357,28 +346,39 @@ NSInteger attachmentButtonTagOffset = 1000;
 
 - (void)editImageViewController:(HSEditImageViewController *)controller didFinishEditingImage:(NSURL *)imageURL {
     
+    [_editImageViewController dismissViewControllerAnimated:YES completion:nil];
+    
     if(self.attachments == nil){
         self.attachments = [[NSMutableArray alloc] init];
     }
     
     [self.attachments removeAllObjects]; // handling only one attachments
+    [self showAttachments];
+
     
-    HSAttachment *attachment = [[HSAttachment alloc] init];
-    attachment.mimeType = @"image/png";
+    if (imageURL == nil) {
+        return;
+    }
     
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *imageAsset)
     {
-        [self.attachments removeAllObjects];
         ALAssetRepresentation *assetRep = [imageAsset defaultRepresentation];
+        
         CGImageRef cgImg = [assetRep fullResolutionImage];
-        NSString *filename = [assetRep filename];
         UIImage *img = [UIImage imageWithCGImage:cgImg];
+        NSString *filename = [assetRep filename];
         NSData *data = UIImagePNGRepresentation(img);
-        attachment.attachmentData = data;
+        
+        HSAttachment *attachment = [[HSAttachment alloc] init];
         attachment.fileName = filename;
+        attachment.mimeType = @"image/png";
         attachment.attachmentImage = img;
+        attachment.attachmentData = data;
         [self.attachments addObject:attachment];
+        
         [self showAttachments];
+        
+        [self.messageText becomeFirstResponder];
     };
     
     // get the asset library and fetch the asset based on the ref url (pass in block above)

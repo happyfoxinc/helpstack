@@ -22,7 +22,7 @@ UIImage* resizedImage;
     [super viewDidLoad];
     
     UIBarButtonItem *btnSave = [[UIBarButtonItem alloc]
-                                initWithTitle:@"Save"
+                                initWithTitle:@"Done"
                                 style:UIBarButtonItemStylePlain
                                 target:self
                                 action:@selector(save_clicked:)];
@@ -184,12 +184,11 @@ UIImage* resizedImage;
     [library writeImageToSavedPhotosAlbum:[viewImage CGImage] orientation:(ALAssetOrientation)[viewImage imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
         if (error) {
             NSLog(@"error");
+            [self.delegate editImageViewController:self didFinishEditingImage:nil];
         } else {
             [self.delegate editImageViewController:self didFinishEditingImage:assetURL];
         }
     }];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
