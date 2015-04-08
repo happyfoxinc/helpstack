@@ -346,7 +346,7 @@ NSInteger attachmentButtonTagOffset = 1000;
 
 - (void)editImageViewController:(HSEditImageViewController *)controller didFinishEditingImage:(NSURL *)imageURL {
     
-    [_editImageViewController dismissViewControllerAnimated:YES completion:nil];
+    [controller dismissViewControllerAnimated:YES completion:nil];
     
     if(self.attachments == nil){
         self.attachments = [[NSMutableArray alloc] init];
