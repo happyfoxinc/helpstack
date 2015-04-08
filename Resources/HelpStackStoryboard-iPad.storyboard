@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="Aps-a9-uhx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="Aps-a9-uhx">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Help-->
@@ -127,19 +128,18 @@
                         <outlet property="emailField" destination="2Xo-CP-vtA" id="vRj-tf-P3J"/>
                         <outlet property="firstNameField" destination="tTK-sv-74H" id="Zqa-7P-X7W"/>
                         <outlet property="lastNameField" destination="oby-ob-AZn" id="Atd-1F-Uie"/>
-                        <segue destination="CxL-lv-OpX" kind="push" identifier="reportIssueSegue" id="g5U-3a-qHV"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ifq-pF-A3f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1112" y="-439"/>
+            <point key="canvasLocation" x="840" y="-439"/>
         </scene>
         <!--Add an Issue-->
         <scene sceneID="Zw6-Bi-sH7">
             <objects>
                 <tableViewController storyboardIdentifier="HSReportIssue" id="CxL-lv-OpX" customClass="HSNewIssueViewControlleriPad" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="10" id="S0v-Ke-UbJ">
-                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -151,13 +151,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="540" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Subject" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tUs-9D-zpu">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Subject" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tUs-9D-zpu">
                                             <rect key="frame" x="15" y="0.0" width="477" height="44"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                         </textField>
-                                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jhF-I5-FqK">
+                                        <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jhF-I5-FqK">
                                             <rect key="frame" x="500" y="0.0" width="40" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="ZHV-DT-KGm"/>
@@ -214,13 +214,10 @@
                     </navigationItem>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <segue destination="EHe-VT-RUE" kind="push" identifier="showAttachment" id="Laj-y3-5hi"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2jj-oQ-Mqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1753" y="-447"/>
+            <point key="canvasLocation" x="1769" y="-355"/>
         </scene>
         <!--New Issue Attachment View Controller-->
         <scene sceneID="JZs-z0-hiD">
@@ -231,11 +228,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Ovl-Kx-0Mu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MA5-4T-Bjf">
-                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="49N-rn-pmK">
-                                <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -253,7 +250,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y97-zA-qKx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2387" y="-452"/>
+            <point key="canvasLocation" x="2663" y="-465"/>
         </scene>
         <!--Group View Controller-->
         <scene sceneID="Inv-6m-bwc">
@@ -664,7 +661,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tCn-PA-8vd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1759" y="-2037"/>
+            <point key="canvasLocation" x="2307" y="-2197"/>
         </scene>
         <!--Attachments List View Controller-->
         <scene sceneID="RFz-la-BJJ">
@@ -697,6 +694,131 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TVt-2S-Pyb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1753" y="-1214"/>
+        </scene>
+        <!--Edit Image View Controller-->
+        <scene sceneID="D4S-Hh-aLO">
+            <objects>
+                <viewController storyboardIdentifier="EditImage" id="Yga-ct-V21" customClass="HSEditImageViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="m2z-O0-qUF"/>
+                        <viewControllerLayoutGuide type="bottom" id="yNM-Uv-a3q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xFk-FB-gN2">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8v0-CA-xxj" userLabel="imageOnCanvas">
+                                <rect key="frame" x="0.0" y="28" width="768" height="952"/>
+                            </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dMJ-Iv-aEk">
+                                <rect key="frame" x="0.0" y="980" width="768" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" id="zmJ-Cx-77i">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xxe-GR-oCZ">
+                                            <rect key="frame" x="16" y="522" width="40" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Reset">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="resetImage:" destination="Yga-ct-V21" eventType="touchUpInside" id="OXq-Ht-hAW"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="N5M-iB-94w"/>
+                                    <barButtonItem style="plain" id="oI0-oa-Mp3">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UVo-Yh-WCn">
+                                            <rect key="frame" x="146" y="5" width="36" height="36"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.90588235289999997" green="0.25882352939999997" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="18"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="16" y="539" width="28" height="185"/>
+                                            </variation>
+                                            <connections>
+                                                <action selector="pencilPressed:" destination="Yga-ct-V21" eventType="touchUpInside" id="oMx-Fx-6i8"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem width="24" style="plain" systemItem="fixedSpace" id="Hkg-MR-3QJ"/>
+                                    <barButtonItem style="plain" id="RKm-fr-mxd">
+                                        <button key="customView" opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7W4-kD-Mqt">
+                                            <rect key="frame" x="208" y="5" width="36" height="36"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.4039215686" green="0.7843137255" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="18"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="16" y="539" width="28" height="185"/>
+                                            </variation>
+                                            <connections>
+                                                <action selector="pencilPressed:" destination="Yga-ct-V21" eventType="touchUpInside" id="gWc-Jk-iAw"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem width="24" style="plain" systemItem="fixedSpace" id="TTR-AY-ijd"/>
+                                    <barButtonItem style="plain" id="uOS-pj-JYv">
+                                        <button key="customView" opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BLT-wE-6dt">
+                                            <rect key="frame" x="270" y="5" width="36" height="36"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.16862745100000001" green="0.56078431370000004" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="18"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="16" y="539" width="28" height="185"/>
+                                            </variation>
+                                            <connections>
+                                                <action selector="pencilPressed:" destination="Yga-ct-V21" eventType="touchUpInside" id="xEf-Sq-kqb"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="dMJ-Iv-aEk" secondAttribute="trailing" constant="-16" id="3xv-QG-myu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8v0-CA-xxj" secondAttribute="trailing" constant="-16" id="46f-qD-bsu"/>
+                            <constraint firstItem="dMJ-Iv-aEk" firstAttribute="leading" secondItem="xFk-FB-gN2" secondAttribute="leadingMargin" constant="-16" id="RHA-W0-0G7"/>
+                            <constraint firstItem="yNM-Uv-a3q" firstAttribute="top" secondItem="8v0-CA-xxj" secondAttribute="bottom" constant="44" id="lZ3-d0-IPp"/>
+                            <constraint firstItem="dMJ-Iv-aEk" firstAttribute="top" secondItem="8v0-CA-xxj" secondAttribute="bottom" id="tsT-Lo-6Fc"/>
+                            <constraint firstItem="8v0-CA-xxj" firstAttribute="top" secondItem="m2z-O0-qUF" secondAttribute="bottom" constant="8" id="ubT-DY-nek"/>
+                            <constraint firstItem="8v0-CA-xxj" firstAttribute="leading" secondItem="xFk-FB-gN2" secondAttribute="leadingMargin" constant="-16" id="vcq-zV-7LC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="XYU-mf-uHi"/>
+                    <connections>
+                        <outlet property="blueButton" destination="BLT-wE-6dt" id="kjz-HZ-rqi"/>
+                        <outlet property="greenButton" destination="7W4-kD-Mqt" id="Aaf-kY-EIv"/>
+                        <outlet property="imageOnCanvas" destination="8v0-CA-xxj" id="yub-q1-JKd"/>
+                        <outlet property="redButton" destination="UVo-Yh-WCn" id="479-rh-eav"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rOa-XS-19X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3482" y="-460"/>
         </scene>
     </scenes>
     <resources>

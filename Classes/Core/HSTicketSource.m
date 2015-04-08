@@ -97,8 +97,6 @@
         // Store user info so that it can be used when creating ticket.
         // User info is saved only when first ticket is created successfully.
         self.user = validUser;
-        [self clearTicketDraft];
-        [self clearUserDraft];
         success();
         
         
@@ -118,7 +116,7 @@
 }
 
 - (void)prepareTicket:(void (^)(void))success failure:(void (^)(NSError *))failure {
-    // Checking if gear implements fetchAllTicket:failure:
+    // Checking if gear implements fetchAllTicket:failure:, not used in any of gear yet
     if ([self.gear respondsToSelector:@selector(fetchAllTicketForUser:success:failure:)]) {
         [self.gear fetchAllTicketForUser:self.user success:^(NSMutableArray *ticketarray) {
             if (ticketarray != nil) {
@@ -165,13 +163,15 @@
                 
                 //Saves ticket array in cache and user detail in cache
                 [HSTicketSource saveTickets:self.ticketArray atPath:TICKET_CACHE_FILE_NAME];
+                [self clearTicketDraft];
                 
                 if ( user != nil) {
                     self.user = user;
                     [HSTicketSource saveUser:user atPath:USER_CACHE_FILE_NAME];
+                    [self clearUserDraft];
                 }
                 
-                [self clearTicketDraft];
+                
             }
             success();
         } failure:^(NSError *e) {
@@ -218,13 +218,14 @@
     // Checking if gear implements addReply:ticket:success:failure:
     
     __block NSMutableArray* updates = self.updateArray;
+    __block HSTicketSource *currentSelf = self;
     
     if([self.gear respondsToSelector:@selector(addReply:forTicket:byUser:success:failure:)]) {
         [self.gear addReply:details forTicket:ticketDict byUser:self.user success:^(HSUpdate *update) {
             if(update!=nil){ // Safe check
                 [updates addObject:update];
             }
-            
+            [currentSelf clearReplyDraft];
             success();
         } failure:^(NSError *e) {
             HALog("Add reply to a ticket failed: %@",e);
@@ -302,7 +303,7 @@
 
 - (void)saveDraftDetails {
     if (self.draft != nil) {
-        NSString* draftFilePath = [self documentFilePath:DRAFT_FILE_NAME];
+        NSString* draftFilePath = [HSTicketSource documentFilePath:DRAFT_FILE_NAME];
         [NSKeyedArchiver archiveRootObject:self.draft toFile:draftFilePath];
     }
 }
@@ -380,17 +381,7 @@
     return CACHE_DIRECTORY_NAME;
 }
 
-- (NSString *)directoryName {
-    return CACHE_DIRECTORY_NAME;
-}
-
 + (NSString *) documentFilePath:(NSString *)fileName {
-    NSString* documentDirectoryPath = [self getDocumentDirectory];
-    NSString* documentFilePath = [documentDirectoryPath stringByAppendingPathComponent:fileName];
-    return documentFilePath;
-}
-
-- (NSString *) documentFilePath:(NSString *)fileName {
     NSString* documentDirectoryPath = [self getDocumentDirectory];
     NSString* documentFilePath = [documentDirectoryPath stringByAppendingPathComponent:fileName];
     return documentFilePath;
@@ -407,18 +398,5 @@
     
     return documentsDirectory;
 }
-
-- (NSString *) getDocumentDirectory {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    documentsDirectory = [documentsDirectory stringByAppendingPathComponent:[self directoryName]];
-    
-    // Create directory if not already exist
-    NSError *error;
-    [[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectory withIntermediateDirectories:YES attributes:nil error:&error];
-    
-    return documentsDirectory;
-}
-
 
 @end

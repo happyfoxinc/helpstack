@@ -29,8 +29,10 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "HSTableFooterCreditsView.h"
 #import "HSUtility.h"
+#import "HSEditImageViewController.h"
 
-@interface HSNewIssueViewController ()<UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate> {
+@interface HSNewIssueViewController ()<UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, HSEditImageViewControllerDelegate> {
+    
     UITextField* subjectField;
     HSTextViewInternal* messageField;
     UIButton *attachmentImageBtn;
@@ -41,6 +43,9 @@
 @property (nonatomic, strong) UIButton *addAttachment;
 @property (nonatomic, strong) NSMutableArray *attachments;
 @property UIStatusBarStyle currentStatusBarStyle;
+
+@property UIImagePickerController *imagePickerViewController;
+@property HSEditImageViewController *editImageViewController;
 
 @end
 
@@ -113,7 +118,6 @@
     }
     
     HSNewTicket* ticket = [[HSNewTicket alloc] init];
-    UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed:)];
     
     if([self checkValidity]) {
         
@@ -127,7 +131,6 @@
         controller.createNewTicket = ticket;
         controller.delegate = self.delegate;
         controller.ticketSource = self.ticketSource;
-        controller.navigationItem.leftBarButtonItem = cancelItem;
         
         [self.navigationController pushViewController:controller animated:YES];
     }
@@ -294,20 +297,12 @@
         return NO;
     
     UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
-    mediaUI.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     
-    // Displays saved pictures and movies, if both are available, from the
-    // Camera Roll album.
-    mediaUI.mediaTypes =
-    [UIImagePickerController availableMediaTypesForSourceType:
-     UIImagePickerControllerSourceTypeSavedPhotosAlbum];
-    
-    // Hides the controls for moving & scaling pictures, or for
-    // trimming movies. To instead show the controls, use YES.
+    mediaUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    mediaUI.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     mediaUI.allowsEditing = NO;
     
     mediaUI.delegate = self;
-    
     mediaUI.modalPresentationStyle = UIModalPresentationCurrentContext;
     
     [controller presentViewController:mediaUI animated:YES completion:nil];
@@ -384,8 +379,7 @@
 #pragma mark - UIImagePicker delegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
+
     if(self.attachments == nil){
         self.attachments = [[NSMutableArray alloc] init];
     }
@@ -394,6 +388,41 @@
     [self refreshAttachmentsImage];
     
     NSURL *imagePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
+
+    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *imageAsset)
+    {
+        ALAssetRepresentation *assetRep = [imageAsset defaultRepresentation];
+        
+        CGImageRef cgImg = [assetRep fullResolutionImage];
+        
+        _editImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditImage"];
+        _editImageViewController.attachmentImage = [UIImage imageWithCGImage:cgImg];
+        [_editImageViewController setDelegate:self];
+        
+        _imagePickerViewController = picker;
+        [_imagePickerViewController pushViewController:_editImageViewController animated:YES];
+    };
+
+    // get the asset library and fetch the asset based on the ref url (pass in block above)
+    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
+    [assetslibrary assetForURL:imagePath resultBlock:resultblock failureBlock:nil];
+}
+
+- (void)editImageViewController:(HSEditImageViewController *)controller didFinishEditingImage:(NSURL *)imageURL {
+    
+
+    [_editImageViewController dismissViewControllerAnimated:YES completion:nil];
+    
+    if(self.attachments == nil){
+        self.attachments = [[NSMutableArray alloc] init];
+    }
+
+    [self.attachments removeAllObjects]; // handling only one attachments
+    [self refreshAttachmentsImage];
+    
+    if (imageURL == nil) {
+        return;
+    }
     
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *imageAsset)
     {
@@ -422,7 +451,7 @@
     
     // get the asset library and fetch the asset based on the ref url (pass in block above)
     ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
-    [assetslibrary assetForURL:imagePath resultBlock:resultblock failureBlock:nil];
+    [assetslibrary assetForURL:imageURL resultBlock:resultblock failureBlock:nil];
 }
 
 @end

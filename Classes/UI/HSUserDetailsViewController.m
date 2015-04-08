@@ -96,7 +96,7 @@
 
 - (IBAction)cancelPressed:(id)sender
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*Validates the email address entered by the user */
