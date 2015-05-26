@@ -17,6 +17,9 @@ The UI is also customizable so that it can go along with your app's theme.
   <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/Screen%20Shot%202014-05-14%20at%202.46.10%20pm.png" alt="HelpStackthemes" title="screenshots">
 </p>
 
+## How to progress with HelpStack
+Checkout this wiki page if you want a clear idea on how you can progress with HelpStack: [Wiki - How to progress with HelpStack](https://github.com/happyfoxinc/helpstack/wiki/How-to-Progress-with-HelpStack)
+
 ## App Showcase
 Have you made something awesome with HelpStack? Add yourself here: [App Showcase](https://github.com/happyfoxinc/helpstack/wiki/App-Showcase)
 
