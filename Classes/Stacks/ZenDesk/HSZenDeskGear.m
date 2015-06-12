@@ -21,7 +21,7 @@
 //THE SOFTWARE.
 
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
-#import <AFNetworkActivityIndicatorManager.h>
+#import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 #import "HSZenDeskGear.h"
 #import "HSZenDeskTicket.h"
