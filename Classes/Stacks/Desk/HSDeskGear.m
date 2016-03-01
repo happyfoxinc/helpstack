@@ -347,8 +347,11 @@
                 NSArray* supportArticles = [articles filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
 
                     NSDictionary* article = (NSDictionary*)evaluatedObject;
-                    return [[article objectForKey:@"in_support_center"] boolValue];
-
+                    id returnval = [article objectForKey:@"in_support_center"];
+                    if ([returnval isKindOfClass:[NSNull class]]) {
+                        return NO;
+                    }
+                    return [returnval boolValue];                    
                 }]]; // show just support center articles
 
 
