@@ -47,6 +47,18 @@
     return self;
 }
 
+- (id)initAsArticle:(NSString*)title markdownContent:(NSString*)content baseUrl:(NSString*)baseUrl kbID:(NSString*)kbID
+{
+    if(self = [super init]) {
+        self.title = title;
+        self.htmlContent = [MMMarkdown HTMLStringWithMarkdown:content extensions:MMMarkdownExtensionsGitHubFlavored error:NULL];
+        self.baseUrl = baseUrl;
+        self.itemType = HSKBItemTypeArticle;
+        self.kb_id = kbID;
+    }
+    return self;
+}
+
 - (id)initAsSection:(NSString*)title kbID:(NSString*)kbID{
     if(self = [super init]) {
         self.title = title;

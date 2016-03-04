@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/happyfoxinc/helpstack.git", :tag => "1.1.1", :submodules => true }
   s.resources        = ['Resources/*.png','Resources/*.storyboard']
   s.dependency         'AFNetworking', '~> 2.0'
+  s.dependency         'MMMarkdown', '~> 0.5'
   s.frameworks       = 'UIKit', 'CoreGraphics'
   s.requires_arc     = true
 

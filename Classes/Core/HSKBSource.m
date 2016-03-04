@@ -90,7 +90,14 @@
     
     
     for (NSDictionary *object in articleDict) {
-        HSKBItem* kb = [[HSKBItem alloc] initAsArticle:[object objectForKey:@"title"] textContent:[object objectForKey:@"content"] kbID:nil];
+        HSKBItem* kb = [HSKBItem alloc];
+        if ([object objectForKey:@"html"] != nil) {
+            kb = [[HSKBItem alloc] initAsArticle:[object objectForKey:@"title"] htmlContent:[object objectForKey:@"html"] baseUrl:@"" kbID:nil];
+        } else if ([object objectForKey:@"markdown"] != nil) {
+            kb = [[HSKBItem alloc] initAsArticle:[object objectForKey:@"title"] markdownContent:[object objectForKey:@"markdown"] baseUrl:@"" kbID:nil];
+        } else {
+            kb = [[HSKBItem alloc] initAsArticle:[object objectForKey:@"title"] textContent:[object objectForKey:@"content"] kbID:nil];
+        }
         [articles addObject:kb];
     }
     
