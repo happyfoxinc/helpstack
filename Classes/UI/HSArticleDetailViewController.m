@@ -76,7 +76,12 @@
 
     if(navigationType == UIWebViewNavigationTypeLinkClicked)
     {
-        [[UIApplication sharedApplication] openURL:[request URL]];
+        if ([SFSafariViewController class] != nil) {
+            SFSafariViewController *safariVC = [[SFSafariViewController alloc]initWithURL:[request URL] entersReaderIfAvailable:NO];
+            [self presentViewController:safariVC animated:YES completion:nil];
+        } else {
+            [[UIApplication sharedApplication] openURL:[request URL]];
+        }
         return false;
     }
     return true;
