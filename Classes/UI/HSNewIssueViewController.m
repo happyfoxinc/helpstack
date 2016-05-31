@@ -454,4 +454,8 @@
     [assetslibrary assetForURL:imageURL resultBlock:resultblock failureBlock:nil];
 }
 
+- (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
