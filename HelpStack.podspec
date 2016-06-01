@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "HelpStack"
-  s.version          = "1.1.1"
+  s.version          = "1.1.2"
   s.summary          = "In-app customer support framework"
   s.description      = 'See helpstack.io for more details'
   s.homepage         = "https://github.com/happyfoxinc/helpstack"
