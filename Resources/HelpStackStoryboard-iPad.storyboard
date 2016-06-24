@@ -41,6 +41,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="xY8-yf-3xb" id="tJB-9D-L4i"/>
                         <segue destination="mSz-ZP-fGv" kind="push" identifier="MyIssueDetail" id="UtT-9D-aS4"/>
