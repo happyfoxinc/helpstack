@@ -43,6 +43,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *addAttachmentButton;
 @property (nonatomic, assign) float bubbleWidth;
 @property (strong, nonatomic) IBOutlet HSGrowingTextView *messageText;
+@property (unsafe_unretained, nonatomic) IBOutlet NSLayoutConstraint *messageViewHeightConstraint;
+@property (unsafe_unretained, nonatomic) IBOutlet NSLayoutConstraint *textViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *messageTextSuperView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
