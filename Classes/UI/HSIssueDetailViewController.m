@@ -262,39 +262,112 @@ NSInteger attachmentButtonTagOffset = 1000;
 
 - (IBAction)addAttachment:(id)sender{
     
-    if(self.attachments == nil || self.attachments.count == 0){
-        [self openImagePicker];
-    }else{
+    if(self.attachments == nil || self.attachments.count == 0)
+    {
+        //Show UIAction sheet menu
+        UIActionSheet *popup1 = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                                 @"Attach from gallery",
+                                 @"Attach from Dropbox",
+                                 nil];
+        if ([HSAppearance isIPad]) {
+            [popup1 showFromRect:[self.addAttachmentButton bounds] inView:self.addAttachmentButton animated:YES];
+        }
+        else {
+            [popup1 showInView:[self.navigationController view]];
+        }
+        [popup1 setTag:1];
+    }
+    else{
         //Show UIAction sheet menu
         UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                                 @"Change",
                                 @"Delete",
                                 nil];
-        if ([HSAppearance isIPad]) {
+        if ([HSAppearance isIPad])
+        {
             [popup showFromRect:[self.addAttachmentButton bounds] inView:self.addAttachmentButton animated:YES];
         }
-        else {
+        else
+        {
             [popup showInView:[self.navigationController view]];
+        }
+        [popup setTag:2];
+    }
+    
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch(actionSheet.tag)
+    {
+            
+        case 1:
+        {
+            switch(buttonIndex)
+            {
+                case 0:
+                    
+                    [self openImagePicker];
+                    break;
+                    
+                    
+                case 1:
+                {
+                    [[DBChooser defaultChooser] openChooserForLinkType:DBChooserLinkTypePreview
+                                                    fromViewController:self completion:^(NSArray *results)
+                     {
+                         if ([results count])
+                         {
+                             NSString *myString = [[(DBChooserResult *)[results objectAtIndex:0] link] absoluteString];
+                             self.messageText.text=myString;
+                             
+                         }
+                         else
+                         {
+                             // User canceled the action
+                         }
+                     }];
+                }
+                    break;
+                    
+                case 2:
+                    
+                    [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
+                    break;
+                    
+                default:break;
+            }
+            
+        }
+            
+            
+        case 2:
+        {
+            switch(buttonIndex)
+            {
+                case 0:
+                    
+                    [self openImagePicker];
+                    break;
+                    
+                case 1:
+                    
+                    [self.attachments removeAllObjects];
+                    [self showAttachments];
+                    break;
+                    
+                case 2:
+                    
+                    [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
+                    break;
+                    
+                default:break;
+            }
         }
     }
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    switch(buttonIndex){
-        case 0:
-            [self openImagePicker];
-            break;
-        case 1:
-            [self.attachments removeAllObjects];
-            [self showAttachments];
-            break;
-        case 2:
-            [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
-            break;
-        default:break;
-    }
-}
+
 
 - (void)openImagePicker {
     
