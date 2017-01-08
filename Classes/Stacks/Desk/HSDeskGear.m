@@ -89,12 +89,14 @@
         NSDictionary* responsedata = (NSDictionary*)responseObject;
 
         NSString* subject = [responsedata objectForKey:@"subject"];
+        NSString* ticketId = [responsedata objectForKey:@"id"];        
         NSString* caseLink = [[[responsedata objectForKey:@"_links"] objectForKey:@"self"] objectForKey:@"href"];
 
         //report success
         HSDeskCase* deskCase = [[HSDeskCase alloc] init];
         deskCase.subject = subject;
         deskCase.apiHref = caseLink;
+        deskCase.ticketID = ticketId;
 
         if (newTicket.attachments && [newTicket.attachments count] > 0) {
 

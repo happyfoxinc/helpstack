@@ -135,6 +135,7 @@ NSInteger attachmentButtonTagOffset = 1000;
     }
     
     self.messageText.returnKeyType = UIReturnKeyGo;
+    self.messageText.enablesReturnKeyAutomatically = YES;
     self.messageText.font = [UIFont systemFontOfSize:14.0f];
     self.messageText.delegate = self;
     self.messageText.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0);
@@ -201,6 +202,10 @@ NSInteger attachmentButtonTagOffset = 1000;
         self.sendButton.enabled = NO;
         self.sendButton.alpha = 0.5;
     }
+}
+
+-(BOOL)growingTextViewShouldReturn:(HSGrowingTextView *)growingTextView {
+    [self sendReply:nil];
 }
 
 -(void)removeInsetsOnChatTable{
