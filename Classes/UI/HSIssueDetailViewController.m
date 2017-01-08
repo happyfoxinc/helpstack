@@ -204,6 +204,10 @@ NSInteger attachmentButtonTagOffset = 1000;
     }
 }
 
+-(BOOL)growingTextViewShouldReturn:(HSGrowingTextView *)growingTextView {
+    [self sendReply:nil];
+}
+
 -(void)removeInsetsOnChatTable{
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0 , 0.0);
     self.chatTableView.contentInset = contentInsets;
