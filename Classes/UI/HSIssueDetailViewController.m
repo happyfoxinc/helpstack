@@ -44,6 +44,7 @@
 
 @property UIImagePickerController *imagePickerViewController;
 @property HSEditImageViewController *editImageViewController;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageViewBottomLayoutConstraint;
 
 @end
 
@@ -422,6 +423,9 @@ NSInteger attachmentButtonTagOffset = 1000;
     CGRect keyboardBounds;
     [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
     
+    //Move the message view to the bottom of the screen along with the keyboard
+    self.messageViewBottomLayoutConstraint.constant = 0;
+    
     // Need to translate the bounds to account for rotation.
     keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
     
@@ -462,6 +466,9 @@ NSInteger attachmentButtonTagOffset = 1000;
     if (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
     {
         containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 64;
+        
+        //Move the message view up by Keyboard's height
+        self.messageViewBottomLayoutConstraint.constant = kKeyBoardFrame.size.height;
     }
     else {
         // On ios 7 landscape x == ios 8 landscape y
