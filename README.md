@@ -1,5 +1,5 @@
 <p align="center" >
-  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/Helpstack%20by%20Happyfox%20logos.png" alt="HelpStack" title="Logo">
+  <img src="https://s3-us-west-2.amazonaws.com/helpstack-screenshots-dont-delete/Helpstack+by+Happyfox+logos.png" alt="HelpStack" title="Logo">
 </p>
 
 
@@ -14,7 +14,7 @@ HelpStack currently supports the following helpdesk solutions:
 The UI is also customizable so that it can go along with your app's theme.
 
 <p align="left" >
-  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/Screen%20Shot%202014-05-14%20at%202.46.10%20pm.png" alt="HelpStackthemes" title="screenshots">
+  <img src="https://s3-us-west-2.amazonaws.com/helpstack-screenshots-dont-delete/Screen+Shot+2014-05-14+at+2.46.10+pm.png" alt="HelpStackthemes" title="screenshots">
 </p>
 
 ## How to progress with HelpStack
@@ -121,17 +121,17 @@ The following is a list of UI items you can customize, along with the instructio
 **Navigation Bar:**
 
 <p align="center" >
-  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/11962138646_1ee89f5fb3_o.png" alt="HelpStacktheme" title="NavigationBar">
+  <img src="https://s3-us-west-2.amazonaws.com/helpstack-screenshots-dont-delete/11962138646_1ee89f5fb3_o.png" alt="HelpStacktheme" title="NavigationBar">
 </p>
 
 **Table View:**
 <p align="center" >
-  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/tableView%20copy.png" alt="HelpStackthemeCustomize" title="TableView">
+  <img src="https://s3-us-west-2.amazonaws.com/helpstack-screenshots-dont-delete/tableView+copy.png" alt="HelpStackthemeCustomize" title="TableView">
 </p>
 
 **Chat Screen:**
 <p align="center" >
-  <img src="https://dl.dropboxusercontent.com/u/55774910/HelpStack/chatScreen%20copy.png" alt="HelpStacktheme" title="ChatScreen">
+  <img src="https://s3-us-west-2.amazonaws.com/helpstack-screenshots-dont-delete/chatScreen+copy.png" alt="HelpStacktheme" title="ChatScreen">
 </p>
 
 ## About
