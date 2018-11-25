@@ -72,14 +72,16 @@
     
     UIViewController* mainController;
     if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        UIStoryboard* helpStoryboard = [UIStoryboard storyboardWithName:@"HelpStackStoryboard-iPad" bundle:[NSBundle mainBundle]];
+        UIStoryboard* helpStoryboard = [UIStoryboard storyboardWithName:@"HelpStackStoryboard-iPad"
+                                                                 bundle:[NSBundle bundleForClass:[self class]]];
         mainController = [helpStoryboard instantiateInitialViewController];
         [mainController setModalPresentationStyle:UIModalPresentationFormSheet];
         [parentController presentViewController:mainController animated:YES completion:completion];
         
     }
     else {
-        UIStoryboard* helpStoryboard = [UIStoryboard storyboardWithName:@"HelpStackStoryboard" bundle:[NSBundle mainBundle]];
+        UIStoryboard* helpStoryboard = [UIStoryboard storyboardWithName:@"HelpStackStoryboard"
+                                                                 bundle:[NSBundle bundleForClass:[self class]]];
         mainController = [helpStoryboard instantiateInitialViewController];
         [parentController presentViewController:mainController animated:YES completion:completion];
     }
