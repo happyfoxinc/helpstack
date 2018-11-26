@@ -40,6 +40,8 @@
 @property (nonatomic, strong) NSMutableArray *attachments;
 @property (nonatomic, strong) NSString *enteredMsg;
 @property (nonatomic) CGRect messageFrame;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+    
 @property UIStatusBarStyle currentStatusBarStyle;
 
 @property UIImagePickerController *imagePickerViewController;
@@ -70,6 +72,19 @@ NSInteger attachmentButtonTagOffset = 1000;
     self.sendButton.alpha = 0.5;
     self.currentStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
     self.navigationItem.title = self.selectedTicket.subject;
+    
+    /**
+     Adding UIRefreshControl to refresh the chat
+     */
+    
+    self.refreshControl = [[UIRefreshControl alloc]init];
+    [self.refreshControl addTarget:self action:@selector(getTicketUpdates) forControlEvents:UIControlEventValueChanged];
+    
+    if (@available(iOS 10.0, *)) {
+        self.chatTableView.refreshControl = self.refreshControl;
+    } else {
+        [self.chatTableView addSubview: self.refreshControl];
+    }
     
     /**
      Single tapping anywhere on the chat table view to hide the keyboard
@@ -136,7 +151,6 @@ NSInteger attachmentButtonTagOffset = 1000;
     
     self.messageText.returnKeyType = UIReturnKeyGo;
     self.messageText.font = [UIFont systemFontOfSize:14.0f];
-    self.messageText.delegate = self;
     self.messageText.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0);
     
     self.messageText.textColor = [UIColor darkGrayColor];
@@ -153,7 +167,7 @@ NSInteger attachmentButtonTagOffset = 1000;
     //  [self.messageTextSuperView addSubview:self.messageText];
     [self.messageText removeFromSuperview];
     [self.bottomMessageView addSubview:self.messageText];
-    
+    self.messageText.delegate = self;
     self.sendButton.titleLabel.textColor = [UIColor darkGrayColor];
 }
 
@@ -506,6 +520,7 @@ NSInteger attachmentButtonTagOffset = 1000;
 -(void)getTicketUpdates{
     
     [self.ticketSource prepareUpdate:self.selectedTicket success:^{
+        [self.refreshControl endRefreshing];
         self.bottomMessageView.hidden = NO;
         [self addMessageView];
         [self.loadingIndicator stopAnimating];
@@ -513,6 +528,7 @@ NSInteger attachmentButtonTagOffset = 1000;
         [self.chatTableView reloadData];
         [self scrollDownToLastMessage:NO];
     } failure:^(NSError* e){
+        [self.refreshControl endRefreshing];
         self.bottomMessageView.hidden = NO;
         [self.loadingIndicator stopAnimating];
         self.loadingIndicator.hidden = YES;
