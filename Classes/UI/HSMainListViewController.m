@@ -260,6 +260,12 @@ BOOL finishedLoadingTickets = NO;
     
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    scrollView.scrollEnabled = true;
+}
+
+
+
 #pragma mark - TableView Delegate methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
