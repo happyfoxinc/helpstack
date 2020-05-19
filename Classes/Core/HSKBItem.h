@@ -22,7 +22,7 @@
 
 
 #import <Foundation/Foundation.h>
-
+#import <MMMarkdown/MMMarkdown.h>
 
 typedef NS_OPTIONS(NSUInteger, HSKBItemType) {
     HSKBItemTypeArticle = 0,
@@ -56,6 +56,7 @@ typedef NS_OPTIONS(NSUInteger, HSKBItemType) {
  */
 - (id)initAsArticle:(NSString*)title textContent:(NSString*)content kbID:(NSString*)kbID;
 - (id)initAsArticle:(NSString*)title htmlContent:(NSString*)content baseUrl:(NSString*)baseUrl kbID:(NSString*)kbID;
+- (id)initAsArticle:(NSString*)title markdownContent:(NSString*)content baseUrl:(NSString*)baseUrl kbID:(NSString*)kbID;
 
 /**
  Kb will be prepared with given title, content and id,  its type will be set as Section.
