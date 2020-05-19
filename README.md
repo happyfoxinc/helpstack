@@ -70,7 +70,7 @@ You must note that since the FAQs/KB articles are being fetched from the server,
 
 	yourGear.localArticlePath = @"<FAQs file name>";
 	
-####[Download Sample Article](./Article/)
+#### [Download Sample Article](./Article/)
 
 ### Showing your HelpStack
 
@@ -87,11 +87,11 @@ Using Swift, show HelpStack using the following invocation:
 	let helpStack = HSHelpStack.instance() as HSHelpStack
         helpStack.showHelp(self)
 
-###Customizing HelpStack UI
+### Customizing HelpStack UI
 
 HelpStack comes with built in screens with a default theme. It also comes with a set of pre configured themes, which you can download from the link below:
 
-####[Download Themes](./Themes/)
+#### [Download Themes](./Themes/)
 
 You can start with one of these themes as your base. Download any of these pList files, include it in your project and rename it as required. In order to apply the themes for the HelpStack screens, include the following line of code when you configure HelpStack.
 
