@@ -23,13 +23,13 @@
 
 #import <Foundation/Foundation.h>
 #import "HSAppearance.h"
-#import "HSKBitem.h"
+#import "HSKBItem.h"
 #import "HSTicket.h"
 #import "HSUpdate.h"
 #import "HSNewTicket.h"
 #import "HSAttachment.h"
 #import "HSTicketReply.h"
-#import <AFNetworking/AFHTTPRequestOperationManager.h>
+#import <AFNetworking/AFHTTPSessionManager.h>
 
 
 
@@ -162,7 +162,7 @@
 
 @property (nonatomic, strong) NSString* supportEmailAddress;
 @property (nonatomic, strong) NSString* localArticlePath;
-@property (nonatomic, strong) AFHTTPRequestOperationManager* networkManager;
+@property (nonatomic, strong) AFHTTPSessionManager* networkManager;
 
 
 @end

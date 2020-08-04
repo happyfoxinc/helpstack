@@ -23,7 +23,7 @@
 #import "HSAttachmentsViewController.h"
 #import "HSActivityIndicatorView.h"
 
-@interface HSAttachmentsViewController () <UIWebViewDelegate>
+@interface HSAttachmentsViewController () <WKNavigationDelegate>
 
 @property (nonatomic, strong) HSActivityIndicatorView *loadingView;
 
@@ -36,6 +36,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.webView = [WKWebView new];
     }
     return self;
 }
@@ -49,20 +50,21 @@
     self.navigationItem.rightBarButtonItem = rightBarButton;
     self.loadingView.hidden = YES;
     
-    self.webView.delegate = self;
+    self.webView.navigationDelegate = self;
     
     if (_attachment.url) {
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_attachment.url]];
         [self.webView loadRequest:request];
     }
     else {
-        [self.webView loadData:_attachment.attachmentData MIMEType:_attachment.mimeType textEncodingName:nil baseURL:nil];
+        [self.webView loadData:_attachment.attachmentData MIMEType:_attachment.mimeType characterEncodingName:nil baseURL:nil];
     }
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
     
-    
-    
-    
-	// Do any additional setup after loading the view.
+    self.webView.frame = self.view.bounds;
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,32 +73,29 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
-    if(navigationType == UIWebViewNavigationTypeLinkClicked)
-    {
-        [[UIApplication sharedApplication] openURL:[request URL]];
-        return false;
+    if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
+        [[UIApplication sharedApplication] openURL:[navigationAction.request URL]];
+        decisionHandler(WKNavigationActionPolicyCancel);
+    } else {
+        decisionHandler(WKNavigationActionPolicyAllow);
     }
-    return true;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
-{
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     self.loadingView.hidden = NO;
     [self.loadingView startAnimating];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.loadingView stopAnimating];
     self.loadingView.hidden = YES;
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.loadingView stopAnimating];
     self.loadingView.hidden = YES;

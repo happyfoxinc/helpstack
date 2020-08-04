@@ -20,20 +20,32 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
 
+@import WebKit;
+
 #import "HSArticleDetailViewController.h"
 #import "HSHelpStack.h"
 #import "HSActivityIndicatorView.h"
 
 #define HTML_WRAPPER_WITH_TITLE @"<!DOCTYPE html><html><head><link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'><style>body{padding: 0 8px} .heading{ font-family: 'Helvetica Neue'; font-size: 20px; color: #000000; padding: 8px 0; line-height:30px;} .content{ font-family: 'Open Sans', sans-serif;  font-size: 16px; color: #313131; line-height:30px;} p{ line-height: 30px; text-align: left !important; margin-bottom:20px;}</style></head><body><h2 class='heading'>%@</h3><div class='content'>%@</div></body></html>"
 
-@interface HSArticleDetailViewController ()<UIWebViewDelegate>
+@interface HSArticleDetailViewController ()
 
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) WKWebView *webView;
 @property (nonatomic, strong) HSActivityIndicatorView *loadingView;
 
 @end
 
 @implementation HSArticleDetailViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        self.webView = [WKWebView new];
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -62,8 +74,13 @@
     
     NSURL* baseUrl = [NSURL URLWithString:self.article.baseUrl];
     [self.webView loadHTMLString:wrapperContent baseURL:baseUrl];
-    self.webView.scalesPageToFit = false;
-    self.webView.delegate = self;
+    self.webView.navigationDelegate = self;
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    self.webView.frame = self.view.bounds;
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,41 +89,38 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-
-    if(navigationType == UIWebViewNavigationTypeLinkClicked)
-    {
-        [[UIApplication sharedApplication] openURL:[request URL]];
-        return false;
-    }
-    return true;
+- (NSString *)stripUnwantedHtmlTags:(NSString *)htmlString
+{
+    // Removing a empty P tags so view looks perfect
+    return [htmlString stringByReplacingOccurrencesOfString:@"<p>&nbsp;</p>" withString:@""];
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
-{
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    
+    if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
+        [[UIApplication sharedApplication] openURL:[navigationAction.request URL]];
+        decisionHandler(WKNavigationActionPolicyCancel);
+    } else {
+        decisionHandler(WKNavigationActionPolicyAllow);
+    }
+}
+
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     self.loadingView.hidden = NO;
     [self.loadingView startAnimating];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.loadingView stopAnimating];
     self.loadingView.hidden = YES;
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.loadingView stopAnimating];
     self.loadingView.hidden = YES;
-}
-
-- (NSString *)stripUnwantedHtmlTags:(NSString *)htmlString
-{
-    // Removing a empty P tags so view looks perfect
-    return [htmlString stringByReplacingOccurrencesOfString:@"<p>&nbsp;</p>" withString:@""];
 }
 
 @end

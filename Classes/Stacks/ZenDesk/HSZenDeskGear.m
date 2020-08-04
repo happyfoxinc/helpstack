@@ -20,7 +20,7 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
 
-#import <AFNetworking/AFHTTPRequestOperationManager.h>
+#import <AFNetworking/AFHTTPSessionManager.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 #import "HSZenDeskGear.h"
@@ -53,7 +53,7 @@
         self.staffEmailAddress = staffEmailAddress;
         self.apiToken = apiToken;
         
-        self.networkManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:instanceUrl]];
+        self.networkManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:instanceUrl]];
         
         [self.networkManager setRequestSerializer:[AFJSONRequestSerializer serializer]];
         [self.networkManager setResponseSerializer:[AFJSONResponseSerializer serializer]];
@@ -65,7 +65,7 @@
 
 - (void)showArticlesInSection:(NSString *)sectionID failure:(void (^)(NSError *))failure success:(void (^)(NSMutableArray *))success
 {
-    [self.networkManager GET:[NSString stringWithFormat:@"/api/v2/help_center/sections/%@/articles.json", sectionID] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.networkManager GET:[NSString stringWithFormat:@"/api/v2/help_center/sections/%@/articles.json", sectionID] parameters:nil headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSDictionary *response = (NSDictionary *)responseObject;
         NSNumber *numEntries = [response objectForKey:@"count"];
         
@@ -88,7 +88,7 @@
             success(nil);
         }
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         failure(error);
     }];
 }
@@ -101,7 +101,7 @@
         
         if(!self.sectionID) {
             NSString *url = @"/api/v2/help_center/sections.json";
-            [self.networkManager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self.networkManager GET:url parameters:nil headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
                 
                 NSDictionary *response = (NSDictionary *)responseObject;
                 NSNumber *numOfTopics = [response objectForKey:@"count"];
@@ -124,7 +124,7 @@
                     success(nil);
                 }
                 
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
                 failure(error);
             }];
         } else {
@@ -203,11 +203,11 @@
                                            };
         
         
-        [self.networkManager POST:url parameters:ticketDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.networkManager POST:url parameters:ticketDictionary headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
             // Save ticket details so next time it is ready for user to use.
             HSZenDeskTicket* ticket = [[HSZenDeskTicket alloc] initWithTicketFields:responseObject];
             operationSuccess(ticket);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
             operationFailure(error);
         }];
     } failure:^(NSError* error) {
@@ -229,33 +229,21 @@
     
     NSString* URLString = [[NSURL URLWithString:[NSString stringWithFormat:@"api/v2/uploads.json?filename=%@", attachment.fileName] relativeToURL:[NSURL URLWithString:self.instanceUrl]] absoluteString];
     
-    AFHTTPRequestOperationManager* attachmentnetworkManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:self.instanceUrl]];
+    AFHTTPSessionManager* attachmentnetworkManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:self.instanceUrl]];
     
     [attachmentnetworkManager.requestSerializer setAuthorizationHeaderFieldWithUsername:[self.staffEmailAddress stringByAppendingString:@"/token"] password:self.apiToken];
-    
-    // Create NSURLRequest
-    NSURL *url = [NSURL URLWithString:URLString];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    [request setHTTPMethod:@"POST"];
-    [attachmentnetworkManager.requestSerializer.HTTPRequestHeaders enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL * __unused stop) {
-        [request setValue:value forHTTPHeaderField:field];
-    }];
-    
-    [request setValue:@"application/binary" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:attachment.attachmentData];
-    
     [attachmentnetworkManager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@"text/plain"]];
     
-    // Use [self.networkManager HTTPRequestOperationWithRequest
-    AFHTTPRequestOperation *operation = [attachmentnetworkManager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary* uploadDict = [responseObject objectForKey:@"upload"];
-        success(@[[uploadDict objectForKey:@"token"]]);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        operationFailure(error);
-    }];
-    
-    [operation start];
-    
+     [attachmentnetworkManager POST:URLString parameters:nil headers:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+         [formData appendPartWithFileData:attachment.attachmentData
+             name:@"files"
+         fileName:attachment.fileName mimeType:@"image/jpeg"];
+     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+         NSDictionary* uploadDict = [responseObject objectForKey:@"upload"];
+         success(@[[uploadDict objectForKey:@"token"]]);
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+         NSLog(@"Error: %@", error);
+     }];
 }
 
 - (void)reloadTicket:(NSString*)ticketId success:(void (^) (NSMutableArray* ticketUpdate))success failure:(void (^)(NSError *))failure {
@@ -264,7 +252,7 @@
     NSDictionary* parameter = @{@"include":@"users"};
     [self.networkManager.requestSerializer setAuthorizationHeaderFieldWithUsername:[self.staffEmailAddress stringByAppendingString:@"/token"] password:self.apiToken];
     
-    [self.networkManager GET:url parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.networkManager GET:url parameters:parameter headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
         // Read all data
         NSArray* auditsDictionary = [responseObject objectForKey:@"audits"];
         NSArray* usersDictionary = [responseObject objectForKey:@"users"];
@@ -285,7 +273,7 @@
         
         success(filteredArray);
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         failure(error);
         
@@ -303,12 +291,12 @@
         NSString* url = [NSString stringWithFormat:@"api/v2/requests/%@.json", ticketId];
         NSDictionary* parameter = @{@"request":@{ @"comment":@{ @"body":message, @"uploads":attachmentTokens } }};
         [self.networkManager.requestSerializer setAuthorizationHeaderFieldWithUsername:[user.email stringByAppendingString:@"/token"] password:self.apiToken];
-        [self.networkManager PUT:url parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.networkManager PUT:url parameters:parameter headers: nil success:^(NSURLSessionDataTask *task, id responseObject) {
             
             HSZenDeskTicketUpdate* update = [[HSZenDeskTicketUpdate alloc] initUserReplyWithAuthorName:user.name message:message attachments:attachments];
             success(update);
             
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
             failure(error);
             

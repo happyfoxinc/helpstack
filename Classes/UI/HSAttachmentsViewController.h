@@ -20,6 +20,8 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
 
+@import WebKit;
+
 #import <UIKit/UIKit.h>
 #import "HSViewController.h"
 #import "HSAttachment.h"
@@ -29,7 +31,7 @@
  */
 @interface HSAttachmentsViewController : HSViewController
 
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) WKWebView *webView;
 
 @property (nonatomic, strong) HSAttachment *attachment;
 
