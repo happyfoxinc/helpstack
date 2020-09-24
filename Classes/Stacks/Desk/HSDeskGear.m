@@ -22,7 +22,7 @@
 #import "HSDeskGear.h"
 #import "HSDeskKBItem.h"
 #import "HSDeskCase.h"
-#import <AFNetworking/AFHTTPRequestOperationManager.h>
+#import <AFNetworking/AFHTTPSessionManager.h>
 #import "UIImage+Extended.h"
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
@@ -44,7 +44,7 @@
         
         
         NSURL* baseURL = [[NSURL alloc] initWithString:instanceBaseURL];
-        AFHTTPRequestOperationManager* operationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+        AFHTTPSessionManager* operationManager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
         
         [operationManager setRequestSerializer:[AFJSONRequestSerializer serializer]];
         [operationManager.requestSerializer setAuthorizationHeaderFieldWithUsername:loginEmail password:password];
@@ -84,7 +84,7 @@
     NSDictionary* params = @{ @"type":@"email", @"subject": newTicket.subject, @"_links":customerLinks, @"message":messageFields};
 
 
-    [self.networkManager POST:@"api/v2/cases" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.networkManager POST:@"api/v2/cases" parameters:params headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSDictionary* responsedata = (NSDictionary*)responseObject;
 
@@ -104,9 +104,9 @@
             NSString* attachmentPostURL = [caseLink stringByAppendingPathComponent:@"attachments"];
             NSDictionary* attachmentParams = @{ @"file_name": attachment.fileName, @"content_type":@"image/png", @"content": attachment.attachmentImage.base64EncodedString };
 
-            [self.networkManager POST:attachmentPostURL parameters:attachmentParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self.networkManager POST:attachmentPostURL parameters:attachmentParams headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
                 success(deskCase, user);
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
                 NSLog(@"Case created. But Error creating attachment %@", error.localizedDescription);
                 success(deskCase, user);
             }];
@@ -116,7 +116,7 @@
         }
 
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"Error creating case %@", error.localizedDescription);
         
         failure(error);
@@ -141,7 +141,7 @@
 
     NSString* messageURL = [NSString stringWithFormat:@"%@/message", deskCase.apiHref];
 
-    [self.networkManager GET:messageURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.networkManager GET:messageURL parameters:nil headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
 
         HSUpdate* originalMessage = [[HSUpdate alloc] init];
         originalMessage.content = [responseObject objectForKey:@"body"];
@@ -158,7 +158,7 @@
         
         NSDictionary* params = @{@"sort_field": @"updated_at", @"sort_direction": @"asc"};
         
-        [self.networkManager GET:repliesURL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.networkManager GET:repliesURL parameters:params headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
 
             //got the replies
 
@@ -189,13 +189,13 @@
             
             success(allReplies);
             
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
             failure(error);
         }];
 
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
 
         failure(error);
     }];
@@ -224,7 +224,7 @@
 
     NSDictionary* messageFields = @{@"direction": @"in", @"body":reply.content, @"to": self.toHelpEmail}; //creating a user reply.
 
-    [self.networkManager POST:[NSString stringWithFormat:@"%@/replies", deskCase.apiHref] parameters:messageFields success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.networkManager POST:[NSString stringWithFormat:@"%@/replies", deskCase.apiHref] parameters:messageFields headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
 
         NSDictionary* responsedata = (NSDictionary*)responseObject;
 
@@ -245,12 +245,12 @@
                 NSString* attachmentPostURL = [deskCase.apiHref stringByAppendingPathComponent:@"attachments"];
                 NSDictionary* attachmentParams = @{ @"file_name": @"Screenshot", @"content_type":@"image/png", @"content": attachment.attachmentImage.base64EncodedString };
 
-                [self.networkManager POST:attachmentPostURL parameters:attachmentParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [self.networkManager POST:attachmentPostURL parameters:attachmentParams headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
 
                     userReply.attachments = reply.attachments;
 
                     success(userReply);
-                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                } failure:^(NSURLSessionDataTask *task, NSError *error) {
                     NSLog(@"Case created. But Error creating attachment %@", error.localizedDescription);
                     success(userReply);
                 }];
@@ -265,7 +265,7 @@
             success(userReply);
         }
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
 
         NSLog(@"Error replying to case %@", error.localizedDescription);
         failure(error);
@@ -292,7 +292,7 @@
     if (!section) {
 
         // GET ALL SUPPORT CENTER TOPICS
-        [self.networkManager GET:@"/api/v2/topics" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.networkManager GET:@"/api/v2/topics" parameters:nil headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
             NSDictionary* response = (NSDictionary*)responseObject;
             NSNumber* numOfTopics = [response objectForKey:@"total_entries"];
 
@@ -322,7 +322,7 @@
             }else{
                 success(nil);
             }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
             failure(error);
         }];
 
@@ -334,7 +334,7 @@
 
         NSDictionary* articlesLinks = [deskTopic.apiLinks objectForKey:@"articles"];
 
-        [self.networkManager GET:[articlesLinks objectForKey:@"href"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.networkManager GET:[articlesLinks objectForKey:@"href"] parameters:nil headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
 
             NSDictionary* response = (NSDictionary*)responseObject;
             NSNumber* numEntries = [response objectForKey:@"total_entries"];
@@ -369,7 +369,7 @@
             }else{
                 success(nil);
             }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
             failure(error);
         }];
     }
@@ -386,7 +386,7 @@
 
     NSDictionary* params = @{@"email": user.email};
 
-    [self.networkManager GET:@"api/v2/customers/search" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.networkManager GET:@"api/v2/customers/search" parameters:params headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
 
         NSNumber* totalEntries = [responseObject objectForKey:@"total_entries"];
 
@@ -448,7 +448,7 @@
             NSArray* emails = @[@{@"type": @"home", @"value":user.email}];
             NSDictionary* params = @{@"first_name": user.firstName, @"last_name":user.lastName, @"emails":emails };
 
-            [self.networkManager POST:@"api/v2/customers" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self.networkManager POST:@"api/v2/customers" parameters:params headers: nil progress: nil success:^(NSURLSessionDataTask *task, id responseObject) {
 
                 HSUser* validUser = nil;
                 validUser = [[HSUser alloc] init];
@@ -465,14 +465,14 @@
 
                 success(validUser);
 
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
 
                 NSLog(@"Error while creating customer record.");
                 failure(error);
             }];
         }
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
 
         NSLog(@"Error while searching customer record.");
         failure(error);
