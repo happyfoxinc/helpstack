@@ -48,7 +48,7 @@
 
 
 - (void)setThemeFrompList:(NSString *)pListPath {
-    [self.appearance setCustomThemeProperties:[self readThemePropertiesFrompList:pListPath]];
+    [self.hsAppearance setCustomThemeProperties:[self readThemePropertiesFrompList:pListPath]];
 }
 
 - (NSDictionary *)readThemePropertiesFrompList:(NSString *)pListPath {
