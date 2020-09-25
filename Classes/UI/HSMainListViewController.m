@@ -71,7 +71,7 @@ BOOL finishedLoadingTickets = NO;
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:self.loadingView];
     self.navigationItem.rightBarButtonItem = rightBarButton;
     
-    HSAppearance* appearance = [[HSHelpStack instance] appearance];
+    HSAppearance* appearance = [[HSHelpStack instance] hsAppearance];
     self.view.backgroundColor = [appearance getBackgroundColor];
     self.tableView.tableFooterView = [UIView new];
     // Fetching KB and Tickets

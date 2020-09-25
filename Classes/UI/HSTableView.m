@@ -30,7 +30,7 @@
     self = [super initWithFrame:frame style:style];
     if (self) {
         // Initialization code
-        HSAppearance* appearance = [[HSHelpStack instance] appearance];
+        HSAppearance* appearance = [[HSHelpStack instance] hsAppearance];
         [appearance customizeTableView:self];
         
     }
@@ -42,8 +42,8 @@
     UILabel *headerTitle = [[UILabel alloc] initWithFrame:CGRectMake(15.0, 0, 200.0, 30.0)];
     [headerView addSubview:headerTitle];
     headerTitle.text = title;
-    [[[HSHelpStack instance] appearance] customizeTableHeader:headerView];
-    [[[HSHelpStack instance] appearance] customizeHeaderTitle:headerTitle];
+    [[[HSHelpStack instance] hsAppearance] customizeTableHeader:headerView];
+    [[[HSHelpStack instance] hsAppearance] customizeHeaderTitle:headerTitle];
     return headerView;
 }
 

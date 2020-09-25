@@ -46,7 +46,7 @@
     self.nextButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStyleDone target:self action:@selector(submitPressed:)];
     self.navigationItem.rightBarButtonItem = self.nextButtonItem;
     
-    HSAppearance* appearance = [[HSHelpStack instance] appearance];
+    HSAppearance* appearance = [[HSHelpStack instance] hsAppearance];
     self.view.backgroundColor = [appearance getBackgroundColor];
     
     self.title = @"Creating New Issue";

@@ -25,7 +25,7 @@
 
 @interface HSHelpStack ()
 
-@property (nonatomic, strong, readwrite) HSAppearance* appearance;
+@property (nonatomic, strong, readwrite) HSAppearance* hsAppearance;
 
 @end
 
@@ -39,7 +39,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         helpStack = [[self alloc] init];
-        helpStack.appearance = [HSAppearance instance];
+        helpStack.hsAppearance = [HSAppearance instance];
         helpStack.requiresNetwork = YES;
         helpStack.showCredits = YES;
     });

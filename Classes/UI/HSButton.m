@@ -30,7 +30,7 @@
     
     if (self) {
         // Initialization code
-        [[[HSHelpStack instance] appearance] customizeButton:self];
+        [[[HSHelpStack instance] hsAppearance] customizeButton:self];
     }
     
     return self;
@@ -40,7 +40,7 @@
     
     self = [super initWithCoder:aDecoder];
     if(self) {
-        [[[HSHelpStack instance] appearance] customizeButton:self];
+        [[[HSHelpStack instance] hsAppearance] customizeButton:self];
     }
     return self;
     

@@ -618,7 +618,7 @@ NSInteger attachmentButtonTagOffset = 1000;
     NSString *messageText = updateToShow.content;
     
     if(messageText.length > 0){
-        UIFont *bubbleTextFont = [[[HSHelpStack instance] appearance] getBubbleTextFont];
+        UIFont *bubbleTextFont = [[[HSHelpStack instance] hsAppearance] getBubbleTextFont];
         NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                          bubbleTextFont, NSFontAttributeName,
                                          [UIColor blackColor], NSForegroundColorAttributeName,

@@ -37,7 +37,7 @@
  */
 @property (nonatomic, strong, readwrite) HSGear* gear;
 
-@property (nonatomic, strong, readonly) HSAppearance* appearance;
+@property (nonatomic, strong, readonly) HSAppearance* hsAppearance;
 
 @property (nonatomic, assign) BOOL requiresNetwork;
 

@@ -64,7 +64,7 @@
         self.navigationItem.rightBarButtonItem = submitBarItem;
     }
     
-    HSAppearance* appearance = [[HSHelpStack instance] appearance];
+    HSAppearance* appearance = [[HSHelpStack instance] hsAppearance];
     self.view.backgroundColor = [appearance getBackgroundColor];
     
     self.currentStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];

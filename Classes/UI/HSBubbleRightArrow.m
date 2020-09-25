@@ -29,7 +29,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [[[HSHelpStack instance] appearance] customizeBubbleArrowForRightChatBubble:self];
+        [[[HSHelpStack instance] hsAppearance] customizeBubbleArrowForRightChatBubble:self];
     }
     return self;
 }
@@ -38,7 +38,7 @@
     
     self = [super initWithCoder:aDecoder];
     if(self) {
-        [[[HSHelpStack instance] appearance] customizeBubbleArrowForRightChatBubble:self];
+        [[[HSHelpStack instance] hsAppearance] customizeBubbleArrowForRightChatBubble:self];
     }
     return self;
     

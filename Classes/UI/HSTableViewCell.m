@@ -63,8 +63,8 @@
 }
 
 - (void)initialize {
-    [[[HSHelpStack instance] appearance] customizeCell:self];
-    [[[HSHelpStack instance] appearance] customizeTextLabel:self.textLabel];
+    [[[HSHelpStack instance] hsAppearance] customizeCell:self];
+    [[[HSHelpStack instance] hsAppearance] customizeTextLabel:self.textLabel];
 }
 
 

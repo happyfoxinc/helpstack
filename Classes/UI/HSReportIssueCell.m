@@ -37,7 +37,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-        [[[HSHelpStack instance] appearance] customizeTextLabel:self.textLabel];
+        [[[HSHelpStack instance] hsAppearance] customizeTextLabel:self.textLabel];
         self.textLabel.textColor = [UIColor colorWithRed:233.0/255.0f green:76.0/255.0f blue:67.0/255.0f alpha:1.0];
         self.selectionStyle = UITableViewCellSelectionStyleGray;
         self.textLabel.textAlignment = NSTextAlignmentCenter;
@@ -52,7 +52,7 @@
     self = [super initWithCoder:aDecoder];
     if(self) {
         self.backgroundColor = [UIColor whiteColor];
-        [[[HSHelpStack instance] appearance] customizeTextLabel:self.textLabel];
+        [[[HSHelpStack instance] hsAppearance] customizeTextLabel:self.textLabel];
         self.textLabel.textColor = [UIColor colorWithRed:233.0/255.0f green:76.0/255.0f blue:67.0/255.0f alpha:1.0];
         self.selectionStyle = UITableViewCellSelectionStyleGray;
         self.textLabel.textAlignment = NSTextAlignmentCenter;

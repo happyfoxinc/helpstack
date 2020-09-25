@@ -63,7 +63,7 @@
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         [self commonInitialiser];
-        [[[HSHelpStack instance] appearance] customizeTextView:self.internalTextView];
+        [[[HSHelpStack instance] hsAppearance] customizeTextView:self.internalTextView];
     }
     return self;
 }

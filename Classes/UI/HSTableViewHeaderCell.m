@@ -54,8 +54,8 @@
 
 - (void)refreshCellProperties
 {
-    [[[HSHelpStack instance] appearance] customizeTableHeader:self];
-    [[[HSHelpStack instance] appearance] customizeHeaderTitle:self.titleLabel];
+    [[[HSHelpStack instance] hsAppearance] customizeTableHeader:self];
+    [[[HSHelpStack instance] hsAppearance] customizeHeaderTitle:self.titleLabel];
 }
 
 @end

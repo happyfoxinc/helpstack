@@ -42,7 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    HSAppearance* appearance = [[HSHelpStack instance] appearance];
+    HSAppearance* appearance = [[HSHelpStack instance] hsAppearance];
     self.view.backgroundColor = [appearance getBackgroundColor];
     [appearance customizeNavigationBar:self.navigationController.navigationBar];
 

@@ -39,8 +39,8 @@
         self.messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, -5, frame.size.width, frame.size.height)];
         self.messageTextView.userInteractionEnabled = NO;
         [self addSubview:self.messageTextView];
-        [[[HSHelpStack instance] appearance] customizeRightBubble:self];
-        [[[HSHelpStack instance] appearance] customizeRightBubbleText:self.messageTextView];
+        [[[HSHelpStack instance] hsAppearance] customizeRightBubble:self];
+        [[[HSHelpStack instance] hsAppearance] customizeRightBubbleText:self.messageTextView];
         self.layer.cornerRadius = 5.0;
     }
     
@@ -56,8 +56,8 @@
         self.messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, -5, self.frame.size.width, self.frame.size.height)];
         self.messageTextView.userInteractionEnabled = NO;
         [self addSubview:self.messageTextView];
-        [[[HSHelpStack instance] appearance] customizeRightBubble:self];
-        [[[HSHelpStack instance] appearance] customizeRightBubbleText:self.messageTextView];
+        [[[HSHelpStack instance] hsAppearance] customizeRightBubble:self];
+        [[[HSHelpStack instance] hsAppearance] customizeRightBubbleText:self.messageTextView];
         self.layer.cornerRadius = 5.0;
     }
     
@@ -72,8 +72,8 @@
     }
     self.messageTextView.frame = CGRectMake(0, -2, self.frame.size.width, self.frame.size.height);
     self.messageTextView.userInteractionEnabled = NO;
-    [[[HSHelpStack instance] appearance] customizeRightBubble:self];
-    [[[HSHelpStack instance] appearance] customizeRightBubbleText:self.messageTextView];
+    [[[HSHelpStack instance] hsAppearance] customizeRightBubble:self];
+    [[[HSHelpStack instance] hsAppearance] customizeRightBubbleText:self.messageTextView];
     self.layer.cornerRadius = 10.0;
     [self addSubview:self.messageTextView];
     return self.messageTextView;
