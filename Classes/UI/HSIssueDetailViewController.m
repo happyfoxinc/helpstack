@@ -135,7 +135,7 @@ NSInteger attachmentButtonTagOffset = 1000;
     }
     
     self.messageText.returnKeyType = UIReturnKeyGo;
-    self.messageText.font = [UIFont systemFontOfSize:14.0f];
+    self.messageText.font = [UIFont systemFontOfSize:17.0f];
     self.messageText.delegate = self;
     self.messageText.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0);
     
@@ -168,7 +168,7 @@ NSInteger attachmentButtonTagOffset = 1000;
     msgViewFrame.size.height -= diff;
     msgViewFrame.origin.y += diff;
     
-    self.messageText.frame = growingTextView.frame;
+   // self.messageText.frame = growingTextView.frame;
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.chatTableView.contentInset.bottom - diff , 0.0);
     self.chatTableView.contentInset = contentInsets;
@@ -177,7 +177,8 @@ NSInteger attachmentButtonTagOffset = 1000;
     [self scrollDownToLastMessage:YES];
     
     self.bottomMessageView.frame = msgViewFrame;
-    
+    self.textViewHeightConstraint.constant = msgViewFrame.size.height;
+
 }
 
 -(void)growingTextViewDidChange:(HSGrowingTextView *)growingTextView{
@@ -496,6 +497,9 @@ NSInteger attachmentButtonTagOffset = 1000;
     // set views with new info
     self.bottomMessageView.frame = containerFrame;
     
+    self.messageViewHeightConstraint.constant = ([[[UIApplication sharedApplication] delegate] window].frame.size.height - kKeyBoardFrame.origin.y);
+    NSLog(@"window %f",self.messageViewHeightConstraint.constant);
+
     [UIView commitAnimations];
     [self scrollDownToLastMessage:YES];
 }

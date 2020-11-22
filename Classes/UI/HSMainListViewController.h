@@ -29,7 +29,9 @@
 #import "HSTableViewController.h"
 
 @interface HSMainListViewController : HSTableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
+@property (strong, nonatomic) UISearchController *searchController;
 
 - (IBAction)cancelPressed:(UIBarButtonItem *)sender;
+
 
 @end

@@ -45,7 +45,7 @@
         self.instanceUrl = instanceUrl;
         self.hfCategoryID = category_ID;
         self.hfPriorityID = priority_ID;
-        self.networkManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:instanceUrl]];
+        self.networkManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:instanceUrl]];
         [self.networkManager setRequestSerializer:[AFJSONRequestSerializer serializer]];
         [self.networkManager setResponseSerializer:[AFJSONResponseSerializer serializer]];
         [self.networkManager.requestSerializer setAuthorizationHeaderFieldWithUsername:self.api_key password:self.auth_code];
@@ -64,7 +64,7 @@
             url = [url stringByAppendingString:self.hfSectionID];
             url = [url stringByAppendingString:@"/"];
         }
-        [self.networkManager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.networkManager GET:url parameters:nil success:^(NSURLSessionTask *operation, id responseObject) {
             self.articleSections = responseObject;
             if(self.hfSectionID){
                 NSMutableArray *articles = [self getArticlesFromSection:responseObject];
@@ -73,7 +73,7 @@
                 NSMutableArray *sections = [self getSectionsFromData:responseObject];
                 success(sections);
             }
-        }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        }failure:^(NSURLSessionTask *operation, NSError *error) {
             failure(error);
         }];
     } else {
@@ -111,10 +111,10 @@
 - (void)fetchAllUpdateForTicket:(HSTicket *)ticket forUser:(HSUser *)user success:(void (^)(NSMutableArray* updateArray))success failure:(void (^)(NSError* e))failure {
     NSString *getString = @"api/1.1/json/ticket/";
     getString = [getString stringByAppendingString:ticket.ticketID];
-    [self.networkManager GET:getString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.networkManager GET:getString parameters:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSMutableArray *tickUpdates = [self getTicketUpdatesFromResponseData:responseObject];
         success(tickUpdates);
-    }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }failure:^(NSURLSessionTask *operation, NSError *error) {
         failure(error);
     }];
 }
@@ -179,7 +179,7 @@
                 [formData appendPartWithFileData:attachment.attachmentData name:@"attachments" fileName:((HSAttachment *)attachment).fileName mimeType:((HSAttachment *)attachment).mimeType];
             }
         }
-    }success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    }success:^(NSURLSessionTask *operation, id responseObject) {
         HSTicket *issue = [[HSTicket alloc] init];
         issue.subject = [responseObject objectForKey:@"subject"];
         issue.ticketID = [[responseObject objectForKey:@"id"] stringValue];
@@ -188,11 +188,11 @@
         NSString* userId = [[[responseObject objectForKey:@"user"] objectForKey:@"id"] stringValue];
         hfUser.apiHref = userId;
         success(issue, hfUser);
-    }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }failure:^(NSURLSessionTask *operation, NSError *error) {
         
         HALog(@"Failed to create a ticket %@", error);
-        if (operation.responseString) {
-            HALog(@"Error Description %@", operation.responseString);
+        if (operation.taskDescription) {
+            HALog(@"Error Description %@", operation.taskDescription);
         }
         failure(error);
     }];
@@ -213,7 +213,7 @@
         for(HSAttachment *attachment in attachments){
             [formData appendPartWithFileData:attachment.attachmentData name:@"attachments" fileName:attachment.fileName mimeType:attachment.mimeType];
         }
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } success:^(NSURLSessionTask *operation, id responseObject) {
         
         HSUpdate *recentUpdate = [[HSUpdate alloc] init];
         recentUpdate.from = user.name;
@@ -223,10 +223,10 @@
         recentUpdate.updateType = HATypeUserReply;
         success(recentUpdate);
         //Send all the updates
-    }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }failure:^(NSURLSessionTask *operation, NSError *error) {
         HALog(@"Failed to update Ticket %@", error);
-        if (operation.responseString) {
-            HALog(@"Error Description %@", operation.responseString);
+        if (operation.taskDescription) {
+            HALog(@"Error Description %@", operation.taskDescription);
         }
         failure(error);
     }];

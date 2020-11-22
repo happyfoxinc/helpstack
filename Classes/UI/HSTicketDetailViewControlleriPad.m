@@ -70,6 +70,16 @@
     self.messageText.layer.cornerRadius = 5.0;
     [self.bottomMessageView addSubview:self.messageText];
     
+    if([[self ticketSource] draftReplyMessage]!=nil) {
+        self.messageText.text = [[self ticketSource] draftReplyMessage];
+    }
+    else {
+        self.messageText.text = @"";
+        self.messageText.placeholder = @"Reply here";
+    }
+    
+
+    
 }
 
 - (void)growingTextView:(HSGrowingTextView *)growingTextView willChangeHeight:(float)height
@@ -91,7 +101,8 @@
     self.chatTableView.scrollIndicatorInsets = contentInsets;
     
     [self scrollDownToLastMessage:YES];
-    
+    self.textViewHeightConstraint.constant = msgViewFrame.size.height;
+
 	self.bottomMessageView.frame = msgViewFrame;
 }
 
@@ -145,7 +156,7 @@
     
     if (UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation))
     {
-        containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 256;
+        containerFrame.origin.y = kKeyBoardFrame.origin.y - containerFrame.size.height - 256 + 33;
     }
     else  {
         // On ios 7 landscape x == ios 8 landscape y
@@ -188,7 +199,10 @@
     
     // set views with new info
     self.bottomMessageView.frame = containerFrame;
+    // self.messageViewHeightConstraint.constant = ([[[UIApplication sharedApplication] delegate] window].frame.size.height - kKeyBoardFrame.origin.y);
+    NSLog(@"window %f",self.messageViewHeightConstraint.constant);
     
+
     [UIView commitAnimations];
 }
 

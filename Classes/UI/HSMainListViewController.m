@@ -80,6 +80,18 @@ BOOL finishedLoadingTickets = NO;
     [self refreshMyIssue];
     
     [self addCreditsToTable];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self;
+    
+    [self.searchController.searchBar sizeToFit];
+    
+    // Add the UISearchBar to the top header of the table view
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    
+    // Hides search bar initially.  When the user pulls down on the list, the search bar is revealed.
+    [self.tableView setContentOffset:CGPointMake(0, self.searchController.searchBar.frame.size.height)];
 }
 
 - (void)viewDidAppear:(BOOL)animated
